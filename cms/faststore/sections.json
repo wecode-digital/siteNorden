@@ -1,0 +1,110 @@
+[
+    {
+        "name": "VideoHero",
+        "schema": {
+            "title": "[Norden] Video Hero",
+            "description": "Vídeo em tela cheia no topo da Home.",
+            "type": "object",
+            "properties": {
+                "videoDesktop": {
+                    "title": "Vídeo Desktop",
+                    "type": "string",
+                    "widget": { "ui:widget": "media-gallery" }
+                },
+                "videoMobile": {
+                    "title": "Vídeo Mobile",
+                    "description": "Se vazio, usa o vídeo de desktop.",
+                    "type": "string",
+                    "widget": { "ui:widget": "media-gallery" }
+                },
+                "poster": {
+                    "title": "Imagem de fallback (poster)",
+                    "description": "Exibida antes do vídeo carregar e como fallback.",
+                    "type": "string",
+                    "widget": { "ui:widget": "media-gallery" }
+                },
+                "alt": {
+                    "title": "Texto alternativo / descrição (SEO e acessibilidade)",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "autoplay": {
+                    "title": "Reproduzir automaticamente?",
+                    "type": "boolean",
+                    "default": true
+                },
+                "loop": {
+                    "title": "Repetir em loop?",
+                    "type": "boolean",
+                    "default": false
+                },
+                "muted": {
+                    "title": "Iniciar sem som?",
+                    "description": "Necessário para o autoplay funcionar nos navegadores.",
+                    "type": "boolean",
+                    "default": true
+                }
+            }
+        }
+    },
+    {
+        "name": "Header",
+        "schema": {
+            "title": "[Norden] Header",
+            "description": "Cabeçalho do site: itens de menu (links) e botão de contato. Textos em PT/EN/ES.",
+            "type": "object",
+            "properties": {
+                "menuItems": {
+                    "title": "Itens do menu",
+                    "type": "array",
+                    "items": {
+                        "title": "Item menu",
+                        "type": "object",
+                        "properties": {
+                            "label": {
+                                "title": "Rótulo do link",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            },
+                            "url": {
+                                "title": "Link (URL)",
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "contactLabel": {
+                    "title": "Botão de contato (header) — texto",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "default": "Contato" },
+                        "en": { "title": "English", "type": "string", "default": "Contact" },
+                        "es": { "title": "Español", "type": "string", "default": "Contacto" }
+                    }
+                },
+                "menuContactLabel": {
+                    "title": "Botão de contato (menu mobile) — texto",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "default": "Entre em contato" },
+                        "en": { "title": "English", "type": "string", "default": "Contact Us" },
+                        "es": { "title": "Español", "type": "string", "default": "Contáctanos" }
+                    }
+                },
+                "contactUrl": {
+                    "title": "Botão de contato — link (URL)",
+                    "type": "string",
+                    "default": "/contato"
+                }
+            }
+        }
+    }
+]

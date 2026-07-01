@@ -1,0 +1,46 @@
+.videoHero {
+  // position: relative;
+  margin: 56px 16px 16px;
+  height: fit-content;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: #FFF;
+  // Poster (definido via style inline) exibido como fundo cobrindo a área.
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  .media {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover; // aplica-se ao <video>; o <iframe> do Vimeo já cobre a área
+    aspect-ratio: 1080/1920;
+  }
+
+  .desktopOnly {
+    display: none;
+  }
+
+  .mobileOnly {
+    display: block;
+  }
+
+  // Desktop (mobile-first: media query sempre com min-width)
+  @media (min-width: 769px) {
+    margin: 0 16px;
+
+    .media {
+      aspect-ratio: 1920/639;
+    }
+
+    .desktopOnly {
+      display: block;
+    }
+
+    .mobileOnly {
+      display: none;
+    }
+  }
+}

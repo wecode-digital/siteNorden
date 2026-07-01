@@ -1,0 +1,34 @@
+@use "../themes/norden-theme";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  // Fundo padrão do site. (A fonte Inter é aplicada via className do next/font no layout.)
+  background-color: var(--norden-color-gray-light);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+}
+
+// Elementos de formulário não herdam font-family por padrão (usam a fonte do
+// navegador). Forçamos a herança para que a Inter aplicada no body (via next/font)
+// valha em botões, inputs, selects e textareas em todo o site.
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}

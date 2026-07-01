@@ -1,0 +1,269 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto 0; // top / right / bottom(auto) / left
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 8px 16px;
+  color: var(--norden-color-text); // cor base do texto (mobile: navy)
+  background-color: transparent;
+  // Transição elegante entre transparente e branco (e cor do texto no desktop).
+  transition: background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out,
+    color 0.4s ease-in-out;
+}
+
+// Estado rolado: fundo branco.
+.scrolled {
+  background-color: var(--norden-color-white);
+  box-shadow: 0 2px 16px rgba(0, 0, 80, 0.08);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  color: inherit; // segue a cor do header (navy no mobile; branco/navy no desktop)
+  line-height: 0;
+}
+
+// Links de menu inline (só desktop; escondidos no mobile).
+.nav {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+// Botão de contato mobile (compacto).
+.contact {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 3px;
+  background-color: var(--norden-color-brand);
+  color: var(--norden-color-on-brand);
+  font-size: 12px;
+  line-height: 1.1;
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(25px);
+}
+
+// Botão de contato desktop (escondido no mobile).
+.contactDesktop {
+  display: none;
+}
+
+.lang {
+  position: relative; // âncora do dropdown
+  display: flex;
+  align-items: center;
+  // Tamanho/cor/gap parametrizáveis (o menu mobile sobrescreve via --lang-*).
+  font-size: var(--lang-size, 12px);
+  color: var(--lang-color, inherit); // segue a cor do header por padrão
+}
+
+.langButton {
+  display: flex;
+  align-items: center;
+  gap: var(--lang-gap, 3px);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  line-height: 1.1;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.langIcon {
+  flex-shrink: 0;
+  width: 1em; // escala com o font-size do seletor
+  height: 1em;
+}
+
+.langMenu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin: 0;
+  padding: 20px;
+  list-style: none;
+  background: var(--norden-color-white);
+  border: 1px solid var(--norden-color-gray-light);
+  border-radius: 6px;
+  // Estado fechado + transição elegante (abre/fecha).
+  opacity: 0;
+  transform: translateY(-6px);
+  visibility: hidden;
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out,
+    visibility 0s linear 0.25s;
+}
+
+.langMenuOpen {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+
+// Variante horizontal (menu mobile): opções em linha, abrindo à DIREITA do gatilho.
+.langMenuHorizontal {
+  top: 50%;
+  right: auto;
+  left: calc(100% + 12px);
+  flex-direction: row;
+  gap: 20px;
+  transform: translateY(-50%); // centraliza verticalmente com o gatilho
+}
+
+.langMenuHorizontal.langMenuOpen {
+  transform: translateY(-50%);
+}
+
+.langOption {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--norden-color-text);
+  font-size: 12px;
+  line-height: 1.1;
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-color: transparent; // underline invisível por padrão
+  cursor: pointer;
+  transition: text-decoration-color 0.2s ease-in-out;
+}
+
+// Hover: underline aparece (animado).
+.langOption:hover {
+  text-decoration-color: currentColor;
+}
+
+// Idioma ativo destacado com underline permanente.
+.langOptionActive {
+  text-decoration-color: currentColor;
+}
+
+.menu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+// ===== Desktop =====
+@media (min-width: 769px) {
+  .header {
+    height: auto;
+    padding: 16px 80px; // 16px no topo (estado branco); 80px laterais
+    color: var(--norden-color-white); // transparente sobre o hero → texto branco
+  }
+
+  .header.scrolled {
+    background-color: var(--norden-color-white);
+    box-shadow: none;
+    color: var(--norden-color-brand); // fundo branco → texto navy
+  }
+
+  .logo svg {
+    width: auto;
+    height: 28px; // logo maior no desktop
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .navLink {
+    position: relative;
+    color: inherit;
+    font-size: 18px;
+    line-height: 1.1;
+    text-decoration: none;
+  }
+
+  // Underline via pseudo-elemento (o texto fica em um <span> inline-block do
+  // AnimatedText, então text-decoration do <a> não o alcançaria).
+  .navLink::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    left: 0;
+    height: 1px;
+    background-color: currentColor;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .navLink:hover::after {
+    opacity: 1;
+  }
+
+  .actions {
+    gap: 32px;
+  }
+
+  .lang {
+    font-size: 18px;
+  }
+
+  // Esconde os elementos exclusivos do mobile.
+  .contact,
+  .menu {
+    display: none;
+  }
+
+  // Botão de contato desktop.
+  .contactDesktop {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 178px;
+    height: 38px;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 1.1;
+    text-decoration: none;
+    background-color: var(--norden-color-white);
+    color: var(--norden-color-brand-deep);
+    transition: background-color 0.5s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
+  }
+
+  // Hover do botão claro: fundo cinza-médio.
+  .contactDesktop:hover {
+    background-color: var(--norden-color-gray-medium);
+  }
+
+  // Ao rolar (fundo branco): botão navy com texto claro.
+  .header.scrolled .contactDesktop {
+    background-color: var(--norden-color-brand);
+    color: #d9d9d9;
+  }
+
+  // Hover do botão escuro: fundo azul-profundo.
+  .header.scrolled .contactDesktop:hover {
+    background-color: var(--norden-color-brand-deep);
+  }
+}

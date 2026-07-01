@@ -1,0 +1,13 @@
+/node_modules
+/.next/
+/build
+/out
+
+# Variáveis de ambiente locais (nunca versionar)
+.env*.local
+
+.vscode/
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+yarn-error.log

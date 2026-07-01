@@ -1,0 +1,91 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200; // acima do header (100)
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 8px 16px 48px;
+  background-color: var(--norden-color-brand);
+  overflow-y: auto;
+  // Animação de abre/fecha (ease-in-out; elemento sempre montado).
+  opacity: 0;
+  transform: translateY(-8px);
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out,
+    visibility 0s linear 0.3s;
+}
+
+.open {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  color: var(--norden-color-white); // currentColor da logo
+  line-height: 0;
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 1000px;
+  background: none;
+  color: var(--norden-color-white);
+  cursor: pointer;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.link {
+  // A família Rethink Sans é aplicada via className do next/font, direto no elemento.
+  font-weight: 500; // Medium
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--norden-color-white);
+  text-decoration: none;
+}
+
+// Variáveis consumidas pelo LanguageSelector (tamanho/cor/gap do gatilho).
+.drawerLang {
+  --lang-size: 18px;
+  --lang-color: var(--norden-color-white);
+  --lang-gap: 12px;
+}
+
+.contact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: 35px;
+  padding: 10px 24px;
+  border: 0;
+  border-radius: 4px;
+  background-color: var(--norden-color-white);
+  color: var(--norden-color-brand);
+  font-size: 14px;
+  line-height: 1.1;
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -1,0 +1,16 @@
+/**
+ * Tema da Norden — design tokens (CSS custom properties).
+ * Cores de marca e de texto extraídas do Figma (variáveis Norden/Azul e neutral/white).
+ */
+:root {
+  // Marca
+  --norden-color-brand: #000050; // Norden/Azul
+  --norden-color-brand-deep: #010028; // Norden/Azul profundo (hover de botão escuro)
+  --norden-color-white: #ffffff; // neutral/white
+  --norden-color-gray-light: #f5f5f5; // Norden/Cinza claro (bordas de menus)
+  --norden-color-gray-medium: #e6e7ea; // Norden/Cinza médio (hover de botão claro)
+
+  // Texto
+  --norden-color-text: #000050; // texto padrão (sobre fundo claro/transparente)
+  --norden-color-on-brand: #ffffff; // texto sobre a cor de marca (ex.: botão Contato)
+}

@@ -1,0 +1,31 @@
+{
+  "name": "site-norden",
+  "version": "0.1.0",
+  "description": "Site institucional Norden — Next.js + VTEX Headless CMS",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "cms:sync": "vtex cms sync faststore"
+  },
+  "dependencies": {
+    "@vtex/client-cms": "^0.2.16",
+    "next": "^16.2.9",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "sass": "^1.83.0",
+    "typescript": "^5.7.0"
+  },
+  "volta": {
+    "node": "22.19.0",
+    "yarn": "1.22.19"
+  },
+  "author": "Wecode"
+}
