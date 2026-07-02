@@ -106,5 +106,394 @@
                 }
             }
         }
+    },
+    {
+        "name": "Footer",
+        "schema": {
+            "title": "[Norden] Footer",
+            "description": "Rodapé: frase (marquee), formulário, colunas (ícones/links/markdown) e copyright. Textos em PT/EN/ES.",
+            "type": "object",
+            "properties": {
+                "marqueePhrase": {
+                    "title": "Frase do marquee (loop)",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "default": "Pronto para evoluir?" },
+                        "en": { "title": "English", "type": "string", "default": "Ready to evolve?" },
+                        "es": { "title": "Español", "type": "string", "default": "¿Listo para evolucionar?" }
+                    }
+                },
+                "form": {
+                    "title": "Formulário",
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "title": "Título do formulário",
+                            "type": "object",
+                            "properties": {
+                                "pt": { "title": "Português", "type": "string", "default": "Contato" },
+                                "en": { "title": "English", "type": "string", "default": "Contact" },
+                                "es": { "title": "Español", "type": "string", "default": "Contacto" }
+                            }
+                        },
+                        "heading": {
+                            "title": "Chamada",
+                            "type": "object",
+                            "properties": {
+                                "pt": { "title": "Português", "type": "string" },
+                                "en": { "title": "English", "type": "string" },
+                                "es": { "title": "Español", "type": "string" }
+                            }
+                        },
+                        "namePlaceholder": {
+                            "title": "Placeholder — Nome",
+                            "type": "object",
+                            "properties": {
+                                "pt": { "title": "Português", "type": "string", "default": "Nome" },
+                                "en": { "title": "English", "type": "string", "default": "Name" },
+                                "es": { "title": "Español", "type": "string", "default": "Nombre" }
+                            }
+                        },
+                        "companyPlaceholder": {
+                            "title": "Placeholder — Empresa",
+                            "type": "object",
+                            "properties": {
+                                "pt": { "title": "Português", "type": "string", "default": "Empresa" },
+                                "en": { "title": "English", "type": "string", "default": "Company" },
+                                "es": { "title": "Español", "type": "string", "default": "Empresa" }
+                            }
+                        },
+                        "emailPlaceholder": {
+                            "title": "Placeholder — E-mail",
+                            "type": "object",
+                            "properties": {
+                                "pt": { "title": "Português", "type": "string", "default": "E-mail" },
+                                "en": { "title": "English", "type": "string", "default": "E-mail" },
+                                "es": { "title": "Español", "type": "string", "default": "Correo electrónico" }
+                            }
+                        },
+                        "phonePlaceholder": {
+                            "title": "Placeholder — Telefone",
+                            "type": "object",
+                            "properties": {
+                                "pt": { "title": "Português", "type": "string", "default": "Telefone" },
+                                "en": { "title": "English", "type": "string", "default": "Phone" },
+                                "es": { "title": "Español", "type": "string", "default": "Teléfono" }
+                            }
+                        },
+                        "submitLabel": {
+                            "title": "Texto do botão",
+                            "type": "object",
+                            "properties": {
+                                "pt": { "title": "Português", "type": "string", "default": "Enviar" },
+                                "en": { "title": "English", "type": "string", "default": "Send" },
+                                "es": { "title": "Español", "type": "string", "default": "Enviar" }
+                            }
+                        }
+                    }
+                },
+                "columns": {
+                    "title": "Colunas",
+                    "type": "array",
+                    "items": {
+                        "title": "Coluna",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "title": "Tipo de coluna",
+                                "type": "string",
+                                "enum": ["social", "links", "richtext", "email", "phone"],
+                                "default": "links"
+                            },
+                            "title": {
+                                "title": "Título da coluna",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            }
+                        },
+                        "dependencies": {
+                            "type": {
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "type": { "enum": ["social"] },
+                                            "socialItems": {
+                                                "title": "Redes sociais",
+                                                "type": "array",
+                                                "items": {
+                                                    "title": "Rede social",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "icon": { "title": "Ícone", "type": "string", "widget": { "ui:widget": "media-gallery" } },
+                                                        "url": { "title": "Link", "type": "string" }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "type": { "enum": ["links"] },
+                                            "links": {
+                                                "title": "Links",
+                                                "type": "array",
+                                                "items": {
+                                                    "title": "Link",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "label": {
+                                                            "title": "Rótulo",
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "pt": { "title": "Português", "type": "string" },
+                                                                "en": { "title": "English", "type": "string" },
+                                                                "es": { "title": "Español", "type": "string" }
+                                                            }
+                                                        },
+                                                        "url": { "title": "Link", "type": "string" }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "type": { "enum": ["richtext"] },
+                                            "body": {
+                                                "title": "Texto (rich text)",
+                                                "type": "object",
+                                                "properties": {
+                                                    "pt": { "title": "Português", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
+                                                    "en": { "title": "English", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
+                                                    "es": { "title": "Español", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "type": { "enum": ["email"] },
+                                            "email": { "title": "E-mail", "type": "string" }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "type": { "enum": ["phone"] },
+                                            "phone": { "title": "Telefone", "type": "string" }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "copyrightName": {
+                    "title": "Nome no copyright",
+                    "type": "string",
+                    "default": "Norden"
+                },
+                "policyLinks": {
+                    "title": "Links de políticas",
+                    "type": "array",
+                    "items": {
+                        "title": "Link",
+                        "type": "object",
+                        "properties": {
+                            "label": {
+                                "title": "Rótulo",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            },
+                            "url": { "title": "Link", "type": "string" }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Clients",
+        "schema": {
+            "title": "[Norden] Clientes",
+            "description": "Bloco de clientes (cadastrar no content-type Clientes): título, logos, quantidade (mobile/desktop) e botão 'ver mais'.",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "default": "Fazemos parte do sucesso de grandes marcas" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "logos": {
+                    "title": "Logos dos clientes",
+                    "type": "array",
+                    "items": {
+                        "title": "Logo",
+                        "type": "object",
+                        "properties": {
+                            "logo": { "title": "Logo (imagem)", "type": "string", "widget": { "ui:widget": "media-gallery" } },
+                            "name": { "title": "Nome (opcional — usado no alt da imagem)", "type": "string" }
+                        }
+                    }
+                },
+                "countMobile": { "title": "Qtd. de logos (mobile)", "type": "integer", "default": 9 },
+                "countDesktop": { "title": "Qtd. de logos (desktop)", "type": "integer", "default": 18 },
+                "moreLabel": {
+                    "title": "Botão 'ver mais' — texto",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "default": "Ver mais" },
+                        "en": { "title": "English", "type": "string", "default": "See more" },
+                        "es": { "title": "Español", "type": "string", "default": "Ver más" }
+                    }
+                },
+                "moreUrl": { "title": "Botão 'ver mais' — link", "type": "string", "default": "/clientes" }
+            }
+        }
+    },
+    {
+        "name": "Ecosystem",
+        "schema": {
+            "title": "[Norden] Nosso ecossistema",
+            "description": "Bloco de serviços/soluções (só na Home): título, descrição, categorias numeradas com tags e botão.",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "default": "Nosso ecossistema" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "description": {
+                    "title": "Descrição",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "categories": {
+                    "title": "Categorias",
+                    "type": "array",
+                    "items": {
+                        "title": "Categoria",
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "title": "Nome da categoria",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            },
+                            "tags": {
+                                "title": "Tags",
+                                "type": "array",
+                                "items": {
+                                    "title": "Tag",
+                                    "type": "object",
+                                    "properties": {
+                                        "label": {
+                                            "title": "Texto",
+                                            "type": "object",
+                                            "properties": {
+                                                "pt": { "title": "Português", "type": "string" },
+                                                "en": { "title": "English", "type": "string" },
+                                                "es": { "title": "Español", "type": "string" }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "ctaLabel": {
+                    "title": "Botão — texto",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "default": "Explorar todas as soluções" },
+                        "en": { "title": "English", "type": "string", "default": "Explore all solutions" },
+                        "es": { "title": "Español", "type": "string", "default": "Explorar todas las soluciones" }
+                    }
+                },
+                "ctaUrl": { "title": "Botão — link", "type": "string", "default": "/solucoes" }
+            }
+        }
+    },
+    {
+        "name": "Methodology",
+        "schema": {
+            "title": "[Norden] Metodologia",
+            "description": "Só na Home: citação (texto rico) + lista 'Nossa metodologia' com destaque conforme o scroll.",
+            "type": "object",
+            "properties": {
+                "quote": {
+                    "title": "Citação (texto rico)",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
+                        "en": { "title": "English", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
+                        "es": { "title": "Español", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } }
+                    }
+                },
+                "listTitle": {
+                    "title": "Título da lista",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "default": "Nossa metodologia" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "items": {
+                    "title": "Itens da metodologia",
+                    "type": "array",
+                    "items": {
+                        "title": "Item",
+                        "type": "object",
+                        "properties": {
+                            "label": {
+                                "title": "Texto",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "ClientsList",
+        "schema": {
+            "title": "[Norden] Clientes — exibir lista",
+            "description": "Exibe o grid de logos (cadastrados no content-type Clientes) nesta página. Marque para exibir o botão 'ver mais' (limita à quantidade); desmarque para mostrar todos os logos, sem botão.",
+            "type": "object",
+            "properties": {
+                "showMore": { "title": "Exibir botão 'ver mais'?", "type": "boolean", "default": true }
+            }
+        }
     }
 ]

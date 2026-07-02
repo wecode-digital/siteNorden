@@ -13,6 +13,8 @@
 import ClientCMS from "@vtex/client-cms";
 import type { ContentData, ContentPage } from "@vtex/client-cms";
 import type { HeaderData } from "@/components/Header/types";
+import type { FooterData } from "@/components/Footer/types";
+import type { ClientsConfig } from "@/sections/Clients/types";
 
 // --- Configuração (env-driven) ---
 const TENANT = process.env.VTEX_TENANT ?? "cubomedia";
@@ -109,6 +111,23 @@ export async function getContentBySlug(
 }
 
 /**
+ * Documento completo de uma landing page pelo slug (`settings.seo.slug`).
+ * Retorna sections + settings (SEO) — usado pela rota dinâmica.
+ */
+export async function getLandingPage(slug: string): Promise<CmsDocument | null> {
+  try {
+    const res = await client.getCMSPagesByContentType("landingPage", {
+      filters: { "settings.seo.slug": slug },
+      perPage: 1,
+    });
+    return (res?.data?.[0] as CmsDocument) ?? null;
+  } catch (error) {
+    logCmsError(`getLandingPage("${slug}")`, error);
+    return null;
+  }
+}
+
+/**
  * Sections da Home (content type `home`, singleton no CMS).
  * Retorna `[]` se não houver conteúdo publicado ou em caso de falha do CMS,
  * para a página nunca quebrar.
@@ -139,6 +158,40 @@ export async function getHeaderData(): Promise<HeaderData | null> {
     return (section?.data as HeaderData) ?? null;
   } catch (error) {
     logCmsError("getHeaderData()", error);
+    return null;
+  }
+}
+
+/**
+ * Dados do footer (section "Footer" dentro de `globalSections`).
+ */
+export async function getFooterData(): Promise<FooterData | null> {
+  try {
+    const res = await client.getCMSPagesByContentType("globalSections", {
+      perPage: 1,
+    });
+    const doc = res?.data?.[0] as CmsDocument | undefined;
+    const section = doc?.sections?.find((s) => s.name === "Footer");
+    return (section?.data as FooterData) ?? null;
+  } catch (error) {
+    logCmsError("getFooterData()", error);
+    return null;
+  }
+}
+
+/**
+ * Config do bloco de clientes — content-type `clients` (singleton), section
+ * "Clients": título, lista de logos, quantidade (mobile/desktop) e botão "ver mais".
+ * Fonte única, reutilizada na Home e na futura página /clientes.
+ */
+export async function getClientsConfig(): Promise<ClientsConfig | null> {
+  try {
+    const res = await client.getCMSPagesByContentType("clients", { perPage: 1 });
+    const doc = res?.data?.[0] as CmsDocument | undefined;
+    const section = doc?.sections?.find((s) => s.name === "Clients");
+    return (section?.data as ClientsConfig) ?? null;
+  } catch (error) {
+    logCmsError("getClientsConfig()", error);
     return null;
   }
 }

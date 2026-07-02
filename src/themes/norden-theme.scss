@@ -13,4 +13,15 @@
   // Texto
   --norden-color-text: #000050; // texto padrão (sobre fundo claro/transparente)
   --norden-color-on-brand: #ffffff; // texto sobre a cor de marca (ex.: botão Contato)
+  --norden-color-black: #141414; // Norden/Preto (texto do formulário)
+  --norden-color-muted: #8080a7; // texto atenuado (copyright do footer)
+
+  // Layout
+  --norden-header-height: 56px; // altura do header (mobile)
+}
+
+@media (min-width: 769px) {
+  :root {
+    --norden-header-height: 86px; // altura do header (desktop) — fallback; ajustada via JS
+  }
 }

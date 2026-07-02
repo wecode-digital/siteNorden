@@ -5,6 +5,7 @@
 
 # Variáveis de ambiente locais (nunca versionar)
 .env*.local
+.env*.exemple
 
 .vscode/
 .DS_Store

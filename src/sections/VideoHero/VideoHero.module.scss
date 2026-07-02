@@ -29,7 +29,7 @@
 
   // Desktop (mobile-first: media query sempre com min-width)
   @media (min-width: 769px) {
-    margin: 0 16px;
+    margin: 16px 16px 0;
 
     .media {
       aspect-ratio: 1920/639;

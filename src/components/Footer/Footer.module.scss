@@ -1,0 +1,448 @@
+.footer {
+  overflow: hidden;
+  color: var(--norden-color-white);
+  background-color: var(--norden-color-brand); // #000050 (mobile: fundo único)
+}
+
+.top,
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+.top {
+  padding: 32px 0 48px; // 48 embaixo = espaço até o .main
+}
+
+.main {
+  position: relative;
+  padding: 0 0 32px;
+}
+
+// Conteúdo acima da decoração de fundo.
+.main > * {
+  position: relative;
+  z-index: 1;
+}
+
+// Montanhas decorativas (SVG) no fundo do bloco inferior.
+.main::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 160px;
+  left: 0;
+  height: 215px;
+  width: 150%;
+  // aspect-ratio: 2 / 1;
+  background: url("/footer-mountains.svg") left 50% / 100% no-repeat;
+  inset: 55% 0 18% 0%;
+  background-size: contain;
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+// ===== Marquee =====
+.marquee {
+  width: 100%;
+  overflow: hidden;
+}
+
+.marqueeTrack {
+  display: inline-flex;
+  gap: 24px;
+  padding-left: 24px; // mantém o espaçamento na emenda do loop
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 22s linear infinite; // velocidade moderada
+}
+
+.marqueeItem {
+  font-size: 50px;
+  font-weight: 500; // Rethink Sans Medium
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--norden-color-white);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
+  }
+}
+
+// ===== Formulário =====
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: calc(100% - 48px);
+  padding: 32px;
+  border-radius: 8px;
+  background-color: var(--norden-color-white);
+}
+
+.formIntro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--norden-color-black);
+}
+
+.formTitle {
+  display: none; // exibido só no desktop
+  margin: 0;
+  line-height: 1.1;
+  color: inherit;
+}
+
+.formHeading {
+  margin: 0;
+  font-weight: 300; // Light
+  font-size: 14px;
+  line-height: 1.2;
+  color: inherit;
+}
+
+.fieldsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+// Mensagem de erro por campo.
+.error {
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 300;
+  color: #bf0000;
+}
+
+// Mensagem de sucesso (abaixo do botão).
+.success {
+  font-size: 12px;
+  line-height: 1.2;
+  color: #096800;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 20px;
+  border: 1px solid #ececec;
+  border-radius: 4px;
+  background-color: var(--norden-color-white);
+  color: var(--norden-color-black);
+  font-size: 14px;
+  line-height: 1.2;
+
+  &::placeholder {
+    color: #6e6e6e;
+    font-weight: 300;
+  }
+
+  &[aria-invalid="true"] {
+    border-color: #d64545;
+  }
+}
+
+.submit {
+  width: 100%;
+  height: 42px;
+  padding: 12px 40px;
+  border: 0;
+  border-radius: 4px;
+  background-color: var(--norden-color-brand-deep); // #010028
+  color: var(--norden-color-white);
+  font-size: 16px;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: background-color 0.25s ease-in-out;
+
+  &:hover {
+    background-color: #000;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+}
+
+// ===== Colunas =====
+.columns {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 100%;
+  padding: 0 20px; // espaçamento lateral fixo
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.columnTitle {
+  margin: 0;
+  font-weight: 300; // Light
+  font-size: 14px;
+  line-height: 1.1;
+  color: var(--norden-color-white);
+}
+
+.social {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.socialLink {
+  display: inline-flex;
+  transition: opacity 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.75;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  font-size: 14px;
+  line-height: 1.1;
+  color: var(--norden-color-white);
+  text-decoration: none;
+  transition: opacity 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+.richtext {
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--norden-color-white);
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+// ===== Rodapé (logo + copyright + políticas) =====
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 0 20px;
+  margin-top: 200px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  color: var(--norden-color-white);
+  line-height: 0;
+
+  svg {
+    width: auto;
+    height: 26px;
+  }
+}
+
+.divider {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.legal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 12px;
+  line-height: 1.1;
+  color: var(--norden-color-muted);
+}
+
+.copyright {
+  margin: 0;
+}
+
+.policies {
+  display: flex;
+  gap: 16px;
+}
+
+.policyLink {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+// ===== Desktop =====
+@media (min-width: 769px) {
+  .top {
+    gap: 80px;
+    padding: 80px 0;
+    background-color: var(--norden-color-brand-deep); // #010028
+  }
+
+  .main {
+    gap: 80px;
+    padding: 80px 0;
+  }
+
+  // Montanhas na lateral direita (extrapolam a borda, recortadas pelo overflow).
+  .main::after {
+    top: 12%;
+    right: -12%;
+    bottom: 18%;
+    left: 50%;
+    height: auto;
+    background-position: center right;
+  }
+
+  .marqueeItem {
+    font-size: 64px;
+  }
+
+  .marqueeTrack {
+    gap: 32px;
+    padding-left: 32px;
+  }
+
+  .form {
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
+    width: calc(100% - 96px);
+    max-width: 1200px;
+    min-height: 374px;
+    padding: 48px;
+  }
+
+  .formIntro {
+    flex: 1 1 auto;
+    max-width: 523px;
+    color: var(--norden-color-brand-deep); // azul-profundo
+  }
+
+  .formTitle {
+    display: block;
+    font-size: 32px;
+  }
+
+  .formHeading {
+    font-size: 18px;
+  }
+
+  .fieldsWrapper {
+    flex: 0 0 543px;
+    width: 543px;
+    gap: 16px;
+  }
+
+  .fields {
+    gap: 16px;
+  }
+
+  .columns {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 32px;
+    width: calc(100% - 96px);
+    max-width: 1420px;
+    padding: 0;
+  }
+
+  .columnTitle {
+    font-size: 16px;
+  }
+
+  .link,
+  .richtext {
+    font-size: 16px;
+  }
+
+  .bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    width: calc(100% - 96px);
+    max-width: 1420px;
+    padding: 0;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .logo svg {
+    height: 26.647px;
+  }
+
+  // Políticas antes do copyright (DOM: copyright, políticas).
+  .legal {
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .policies {
+    gap: 32px;
+  }
+}

@@ -11,7 +11,7 @@
   background-color: transparent;
   // Transição elegante entre transparente e branco (e cor do texto no desktop).
   transition: background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out,
-    color 0.4s ease-in-out;
+    color 0.4s ease-in-out, padding-top 0.4s ease-in-out;
 }
 
 // Estado rolado: fundo branco.
@@ -71,7 +71,7 @@
 .langButton {
   display: flex;
   align-items: center;
-  gap: var(--lang-gap, 3px);
+  gap: var(--lang-gap, 8px);
   padding: 0;
   border: 0;
   background: none;
@@ -174,6 +174,7 @@
   .header {
     height: auto;
     padding: 16px 80px; // 16px no topo (estado branco); 80px laterais
+    padding-top: 32px;
     color: var(--norden-color-white); // transparente sobre o hero → texto branco
   }
 
@@ -181,6 +182,7 @@
     background-color: var(--norden-color-white);
     box-shadow: none;
     color: var(--norden-color-brand); // fundo branco → texto navy
+    padding-top: 16px;
   }
 
   .logo svg {

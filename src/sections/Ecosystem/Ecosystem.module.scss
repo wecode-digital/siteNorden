@@ -1,0 +1,144 @@
+.ecosystem {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 64px 20px;
+  background-color: var(--norden-color-white);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+  font-weight: 400; // Rethink Sans Regular
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep); // #010028
+}
+
+.description {
+  margin: 0;
+  font-weight: 300; // Inter Light
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--norden-color-black); // #141414
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.categoryHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.number {
+  font-size: 12px;
+  line-height: 1.1;
+  color: var(--norden-color-brand); // #000050
+}
+
+.categoryName {
+  font-size: 18px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep); // #010028
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: var(--norden-color-gray-light); // #f5f5f5
+  color: #6e6e6e; // neutral/500
+  font-size: 12px;
+  line-height: 1.1;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  height: 35px;
+  padding: 10px 24px;
+  border-radius: 4px;
+  background-color: var(--norden-color-brand); // #000050
+  color: var(--norden-color-white);
+  font-size: 14px;
+  line-height: 1.1;
+  text-decoration: none;
+  transition: background-color 0.25s ease-in-out;
+
+  &:hover {
+    background-color: var(--norden-color-brand-deep); // #010028
+  }
+}
+
+// ===== Desktop =====
+@media (min-width: 769px) {
+  .ecosystem {
+    gap: 64px;
+    padding: 100px 140px;
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  .head {
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .category {
+    gap: 24px;
+  }
+
+  .number {
+    font-size: 16px;
+  }
+
+  .categoryName {
+    font-size: 32px;
+  }
+
+  .tags {
+    gap: 16px;
+  }
+
+  .tag {
+    padding: 12px 24px;
+    font-size: 18px;
+  }
+
+  .cta {
+    height: 42px;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+}

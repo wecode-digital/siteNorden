@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Header.module.scss";
@@ -28,6 +28,7 @@ export function Header({ data }: { data?: HeaderData | null }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const headerRef = useRef<HTMLElement>(null);
 
   // Só a Home tem o hero atrás do header (estado transparente no topo).
   // Nas demais páginas o header já vem branco.
@@ -40,13 +41,32 @@ export function Header({ data }: { data?: HeaderData | null }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Mede a altura real do header e expõe em `--norden-header-height`, usada como
+  // espaçador no topo das páginas que não são a home (o header é fixed).
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const update = () =>
+      document.documentElement.style.setProperty(
+        "--norden-header-height",
+        `${el.offsetHeight}px`
+      );
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const contactUrl = data?.contactUrl || "/contato";
   const menuItems = data?.menuItems ?? [];
   const solidHeader = scrolled || !isHome;
 
   return (
     <>
-      <header className={`${styles.header} ${solidHeader ? styles.scrolled : ""}`}>
+      <header
+        ref={headerRef}
+        className={`${styles.header} ${solidHeader ? styles.scrolled : ""}`}
+      >
         <Link href="/" className={styles.logo} aria-label="Norden — página inicial">
           <NordenLogo />
         </Link>

@@ -1,4 +1,7 @@
 import type { ComponentType } from "react";
+import Clients from "./Clients/Clients";
+import Ecosystem from "./Ecosystem/Ecosystem";
+import Methodology from "./Methodology/Methodology";
 import VideoHero from "./VideoHero/VideoHero";
 
 /**
@@ -11,4 +14,9 @@ import VideoHero from "./VideoHero/VideoHero";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const sectionRegistry: Record<string, ComponentType<any>> = {
   VideoHero,
+  Ecosystem,
+  Methodology,
+  // "ClientsList" = section de EXIBIÇÃO (posiciona o grid); os dados ficam no
+  // content-type "clients" (section "Clients"), injetados no SSR.
+  ClientsList: Clients,
 };

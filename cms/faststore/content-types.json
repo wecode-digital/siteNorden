@@ -254,5 +254,14 @@
     "name": "Error 404",
     "configurationSchemaSets": [],
     "isSingleton": true
+  },
+  {
+    "id": "clients",
+    "name": "Clientes",
+    "scopes": [
+      "clients"
+    ],
+    "isSingleton": true,
+    "configurationSchemaSets": []
   }
 ]
