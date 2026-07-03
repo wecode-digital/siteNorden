@@ -1,0 +1,125 @@
+.cases {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 64px 16px;
+  background-color: var(--norden-color-white);
+}
+
+.title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep); // #010028
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  background-color: var(--norden-color-gray-light); // #f5f5f5
+}
+
+.cardLogo {
+  width: auto;
+  max-width: 120px;
+  max-height: 20px;
+  object-fit: contain;
+}
+
+.cardTitle {
+  margin: 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.21;
+  color: var(--norden-color-brand-deep);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: var(--norden-color-white);
+  color: var(--norden-color-brand-deep);
+  font-size: 12px;
+  line-height: 1.1;
+}
+
+.cardImage {
+  height: 250px;
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+}
+
+.moreButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  padding: 10px 24px;
+  border-radius: 4px;
+  background-color: var(--norden-color-brand); // #000050
+  color: var(--norden-color-white);
+  font-size: 14px;
+  line-height: 1.1;
+  text-decoration: none;
+  transition: background-color 0.25s ease-in-out;
+
+  &:hover {
+    background-color: var(--norden-color-brand-deep);
+  }
+}
+
+// ===== Desktop (aproximado — ajustar quando houver design desktop) =====
+@media (min-width: 769px) {
+  .cases {
+    gap: 48px;
+    padding: 100px 80px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}

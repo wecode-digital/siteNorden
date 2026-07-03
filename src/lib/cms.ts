@@ -15,6 +15,8 @@ import type { ContentData, ContentPage } from "@vtex/client-cms";
 import type { HeaderData } from "@/components/Header/types";
 import type { FooterData } from "@/components/Footer/types";
 import type { ClientsConfig } from "@/sections/Clients/types";
+import type { CaseSummary } from "@/sections/Cases/types";
+import type { LocalizedText } from "@/i18n/text";
 
 // --- Configuração (env-driven) ---
 const TENANT = process.env.VTEX_TENANT ?? "cubomedia";
@@ -194,4 +196,57 @@ export async function getClientsConfig(): Promise<ClientsConfig | null> {
     logCmsError("getClientsConfig()", error);
     return null;
   }
+}
+
+/**
+ * Resumo de um case: busca a LP do case pelo id (documento) e lê a section
+ * "CaseCard" (logo, título, tags, imagem) + o slug da LP (link do card).
+ */
+export async function getCaseCard(id: string): Promise<CaseSummary | null> {
+  try {
+    // Sem versionId/releaseId → retorna a versão publicada (o tipo do client
+    // exige um deles, mas em runtime o endpoint por id devolve a publicada).
+    const doc = (await client.getCMSPage({
+      contentType: "landingPage",
+      documentId: id,
+    } as unknown as Parameters<typeof client.getCMSPage>[0])) as CmsDocument | undefined;
+    const card = doc?.sections?.find((s) => s.name === "CaseCard")?.data as
+      | { logo?: string; title?: LocalizedText; tags?: { label?: LocalizedText }[]; image?: string }
+      | undefined;
+    if (!card) return null;
+    const url = (doc?.settings as { seo?: { slug?: string } } | undefined)?.seo?.slug;
+    return { ...card, url };
+  } catch (error) {
+    logCmsError(`getCaseCard("${id}")`, error);
+    return null;
+  }
+}
+
+/** Resolve vários cases por id (ordem preservada; ignora os que falharem). */
+export async function resolveCases(ids: string[]): Promise<CaseSummary[]> {
+  const results = await Promise.all(ids.map((id) => getCaseCard(id)));
+  return results.filter((c): c is CaseSummary => Boolean(c));
+}
+
+/**
+ * Enriquece as sections de uma página com dados buscados no servidor:
+ * - `ClientsList` recebe a config do content-type Clientes.
+ * - `CasesShowcase` recebe os cases resolvidos a partir dos IDs cadastrados.
+ * Usada pela Home e pela rota de landing pages.
+ */
+export async function enrichSections(sections: CmsSection[]): Promise<CmsSection[]> {
+  return Promise.all(
+    sections.map(async (section) => {
+      if (section.name === "ClientsList") {
+        return { ...section, data: { ...section.data, config: await getClientsConfig() } };
+      }
+      if (section.name === "CasesShowcase") {
+        const ids = ((section.data?.caseIds as { id?: string }[] | undefined) ?? [])
+          .map((c) => c?.id)
+          .filter((id): id is string => Boolean(id));
+        return { ...section, data: { ...section.data, cases: await resolveCases(ids) } };
+      }
+      return section;
+    })
+  );
 }

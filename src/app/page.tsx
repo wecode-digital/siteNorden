@@ -1,4 +1,4 @@
-import { getClientsConfig, getHomeSections } from "@/lib/cms";
+import { enrichSections, getHomeSections } from "@/lib/cms";
 import { SectionsRenderer } from "@/sections/SectionsRenderer";
 
 /**
@@ -9,19 +9,9 @@ import { SectionsRenderer } from "@/sections/SectionsRenderer";
 export const revalidate = false;
 
 export default async function HomePage() {
-  const [sections, clientsConfig] = await Promise.all([
-    getHomeSections(),
-    getClientsConfig(),
-  ]);
-
-  // A section de exibição "ClientsList" recebe a config (título, logos, contagem,
-  // ver mais) do content-type Clientes injetada no servidor, preservando seu
-  // próprio `showMore`.
-  const enriched = sections.map((section) =>
-    section.name === "ClientsList"
-      ? { ...section, data: { ...section.data, config: clientsConfig } }
-      : section
-  );
+  // enrichSections injeta, no servidor, os dados de ClientsList (config) e
+  // CasesShowcase (cases resolvidos por id).
+  const enriched = await enrichSections(await getHomeSections());
 
   return (
     <main>

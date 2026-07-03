@@ -495,5 +495,86 @@
                 "showMore": { "title": "Exibir botão 'ver mais'?", "type": "boolean", "default": true }
             }
         }
+    },
+    {
+        "name": "CaseCard",
+        "schema": {
+            "title": "[Norden] Case — card",
+            "description": "Resumo do case (adicionar na LP de cada case): logo do cliente, título, tags e imagem. É o que aparece no card de listagem.",
+            "type": "object",
+            "properties": {
+                "logo": { "title": "Logo do cliente", "type": "string", "widget": { "ui:widget": "media-gallery" } },
+                "title": {
+                    "title": "Título do case",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "tags": {
+                    "title": "Tags",
+                    "type": "array",
+                    "items": {
+                        "title": "Tag",
+                        "type": "object",
+                        "properties": {
+                            "label": {
+                                "title": "Texto",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            }
+                        }
+                    }
+                },
+                "image": { "title": "Imagem do case", "type": "string", "widget": { "ui:widget": "media-gallery" } }
+            }
+        }
+    },
+    {
+        "name": "CasesShowcase",
+        "schema": {
+            "title": "[Norden] Cases — exibir lista",
+            "description": "Exibe cards de cases nesta página. Informe os IDs das LPs de cases (na ordem desejada). Marque 'ver mais' na home; desmarque na página /cases.",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "default": "Nossos Cases" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "caseIds": {
+                    "title": "Cases (por ID da LP)",
+                    "type": "array",
+                    "items": {
+                        "title": "Case",
+                        "type": "object",
+                        "properties": {
+                            "id": { "title": "ID da LP do case", "type": "string" }
+                        }
+                    }
+                },
+                "showMore": { "title": "Exibir botão 'ver mais'?", "type": "boolean", "default": true },
+                "moreLabel": {
+                    "title": "Botão 'ver mais' — texto",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "default": "Ver mais cases" },
+                        "en": { "title": "English", "type": "string", "default": "See more cases" },
+                        "es": { "title": "Español", "type": "string", "default": "Ver más casos" }
+                    }
+                },
+                "moreUrl": { "title": "Botão 'ver mais' — link", "type": "string", "default": "/cases" }
+            }
+        }
     }
 ]

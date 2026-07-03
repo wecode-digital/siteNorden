@@ -26,9 +26,32 @@
   em {
     font-style: italic;
   }
+
+  // O sublinhado nativo é substituído por um traço animado (::after) que é
+  // "desenhado" da esquerda para a direita quando a citação entra na tela.
   u {
-    text-decoration: underline;
+    position: relative;
+    text-decoration: none;
+    white-space: nowrap; // mantém a palavra (e seu traço) numa única linha
   }
+  u::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.02em;
+    height: 0.06em;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    // O atraso (--u-delay) é definido por palavra no JS → desenha uma por vez.
+    transition: transform 0.5s ease-in-out var(--u-delay, 0s);
+  }
+}
+
+// Estado revelado: os traços dos destaques se desenham.
+.quoteVisible u::after {
+  transform: scaleX(1);
 }
 
 // ===== Lista "Nossa metodologia" =====
@@ -98,35 +121,60 @@
   .item {
     transition: none;
   }
+
+  // Sem animação: sublinhado estático (volta ao nativo).
+  .quote u {
+    text-decoration: underline;
+  }
+  .quote u::after {
+    display: none;
+  }
 }
 
-// ===== Desktop (aproximado — ajustar quando houver design desktop) =====
+// ===== Desktop (duas colunas: citação | metodologia) =====
 @media (min-width: 769px) {
+  .methodology {
+    flex-direction: row;
+    align-items: stretch; // colunas com a mesma altura
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  // Coluna esquerda (azul) — citação centralizada.
   .quoteBlock {
-    padding: 120px 140px;
+    flex: 0 0 40%;
+    max-width: 753px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px clamp(32px, 7.3vw, 140px);
   }
 
   .quote {
-    max-width: 1200px;
-    font-size: 40px;
+    width: 100%;
+    font-size: 36px;
   }
 
+  // Coluna direita (cinza) — título + lista, centralizados verticalmente.
   .listBlock {
+    flex: 1;
+    justify-content: center;
     gap: 48px;
-    padding: 120px 140px;
+    padding: 80px clamp(32px, 7.3vw, 140px);
   }
 
   .listTitle {
-    font-size: 32px;
+    font-size: 36px;
   }
 
   .listTitleEngaged {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .list,
   .listItem {
-    gap: 32px;
+    gap: 56px;
   }
 
   .item {
@@ -134,6 +182,6 @@
   }
 
   .itemActive {
-    font-size: 40px;
+    font-size: 36px;
   }
 }

@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import {
-  getAllContent,
-  getClientsConfig,
-  getLandingPage,
-  type CmsSection,
-} from "@/lib/cms";
+import { enrichSections, getAllContent, getLandingPage } from "@/lib/cms";
 import { SectionsRenderer } from "@/sections/SectionsRenderer";
 
 /**
@@ -46,13 +41,7 @@ export default async function LandingPageRoute({ params }: Params) {
   const doc = await getLandingPage(toPath(slug));
   if (!doc) notFound();
 
-  const clientsConfig = await getClientsConfig();
-  const sections: CmsSection[] = doc.sections ?? [];
-  const enriched = sections.map((section) =>
-    section.name === "ClientsList"
-      ? { ...section, data: { ...section.data, config: clientsConfig } }
-      : section
-  );
+  const enriched = await enrichSections(doc.sections ?? []);
 
   return (
     // Espaço no topo = altura do header (fixed). Só nas páginas que não são a home.

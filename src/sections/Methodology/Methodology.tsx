@@ -1,33 +1,40 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { draftToHtml } from "@/lib/draftToHtml";
 import styles from "./Methodology.module.scss";
 import type { MethodologyProps } from "./types";
 
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export function Methodology({ quote, listTitle, items = [] }: MethodologyProps) {
   const { t } = useLocale();
   const [active, setActive] = useState(0);
-  // "engaged" = a lista está sendo percorrida pelo scroll (dentro da zona de foco).
   const [engaged, setEngaged] = useState(false);
+  const [quoteVisible, setQuoteVisible] = useState(false);
   const listRef = useRef<HTMLUListElement>(null);
   const itemRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const quoteRef = useRef<HTMLDivElement>(null);
+  const inViewRef = useRef(false);
 
+  // Metodologia: destaque no item do CENTRO da tela; o ÚLTIMO permanece em
+  // evidência quando o usuário rola para baixo do bloco.
   useEffect(() => {
     if (items.length === 0) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
     let raf = 0;
     const compute = () => {
       raf = 0;
-      const focus = window.innerHeight * 0.4;
+      const focus = window.innerHeight * 0.5; // centro da tela
 
       const listEl = listRef.current;
       if (listEl) {
         const rect = listEl.getBoundingClientRect();
-        setEngaged(rect.top <= focus && rect.bottom >= focus);
+        // engaged assim que a lista alcança o centro — e continua ao passar dela.
+        setEngaged(rect.top <= focus);
       }
 
       let best = 0;
@@ -57,13 +64,61 @@ export function Methodology({ quote, listTitle, items = [] }: MethodologyProps) 
     };
   }, [items.length]);
 
+  // Reexecuta o desenho do underline (off → on em 2 frames, para reiniciar a transição).
+  const replay = useCallback(() => {
+    setQuoteVisible(false);
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => setQuoteVisible(true))
+    );
+  }, []);
+
+  // Dispara quando a citação entra na tela (e reinicia a cada nova entrada).
+  useEffect(() => {
+    const el = quoteRef.current;
+    if (!el) return;
+    if (prefersReducedMotion()) {
+      inViewRef.current = true;
+      setQuoteVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !inViewRef.current) {
+          inViewRef.current = true;
+          replay();
+        } else if (!entry.isIntersecting && inViewRef.current) {
+          inViewRef.current = false;
+          setQuoteVisible(false);
+        }
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [replay]);
+
   const quoteHtml = draftToHtml(t(quote));
+
+  // Atraso por palavra (underline desenha uma de cada vez) + reexecuta ao TROCAR
+  // de idioma (o HTML muda e as palavras são recriadas).
+  useEffect(() => {
+    const el = quoteRef.current;
+    if (!el) return;
+    el.querySelectorAll("u").forEach((word, i) => {
+      (word as HTMLElement).style.setProperty("--u-delay", `${i * 0.35}s`);
+    });
+    if (inViewRef.current && !prefersReducedMotion()) replay();
+  }, [quoteHtml, replay]);
 
   return (
     <section className={styles.methodology}>
       {quoteHtml && (
         <div className={styles.quoteBlock}>
-          <div className={styles.quote} dangerouslySetInnerHTML={{ __html: quoteHtml }} />
+          <div
+            ref={quoteRef}
+            className={`${styles.quote} ${quoteVisible ? styles.quoteVisible : ""}`}
+            dangerouslySetInnerHTML={{ __html: quoteHtml }}
+          />
         </div>
       )}
 

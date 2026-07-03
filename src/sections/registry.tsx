@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import CasesShowcase from "./Cases/CasesShowcase";
 import Clients from "./Clients/Clients";
 import Ecosystem from "./Ecosystem/Ecosystem";
 import Methodology from "./Methodology/Methodology";
@@ -16,6 +17,8 @@ export const sectionRegistry: Record<string, ComponentType<any>> = {
   VideoHero,
   Ecosystem,
   Methodology,
+  // Exibição de cases (recebe a lista resolvida por id, injetada no SSR).
+  CasesShowcase,
   // "ClientsList" = section de EXIBIÇÃO (posiciona o grid); os dados ficam no
   // content-type "clients" (section "Clients"), injetados no SSR.
   ClientsList: Clients,
