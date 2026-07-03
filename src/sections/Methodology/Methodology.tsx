@@ -16,8 +16,10 @@ export function Methodology({ quote, listTitle, items = [] }: MethodologyProps) 
   const [active, setActive] = useState(0);
   const [engaged, setEngaged] = useState(false);
   const [quoteVisible, setQuoteVisible] = useState(false);
+  const [quoteAppeared, setQuoteAppeared] = useState(false);
   const listRef = useRef<HTMLUListElement>(null);
   const itemRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const quoteBlockRef = useRef<HTMLDivElement>(null);
   const quoteRef = useRef<HTMLDivElement>(null);
   const inViewRef = useRef(false);
 
@@ -72,12 +74,15 @@ export function Methodology({ quote, listTitle, items = [] }: MethodologyProps) 
     );
   }, []);
 
-  // Dispara quando a citação entra na tela (e reinicia a cada nova entrada).
+  // Dispara quando ~40% do bloco da citação aparece (faixa 30-50%): a citação
+  // "surge" (fade + subida, uma vez) e os sublinhados se desenham (reinicia a
+  // cada nova entrada).
   useEffect(() => {
-    const el = quoteRef.current;
+    const el = quoteBlockRef.current;
     if (!el) return;
     if (prefersReducedMotion()) {
       inViewRef.current = true;
+      setQuoteAppeared(true);
       setQuoteVisible(true);
       return;
     }
@@ -85,13 +90,14 @@ export function Methodology({ quote, listTitle, items = [] }: MethodologyProps) 
       ([entry]) => {
         if (entry.isIntersecting && !inViewRef.current) {
           inViewRef.current = true;
+          setQuoteAppeared(true);
           replay();
         } else if (!entry.isIntersecting && inViewRef.current) {
           inViewRef.current = false;
           setQuoteVisible(false);
         }
       },
-      { threshold: 0.35 }
+      { threshold: 0.4 }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -104,8 +110,10 @@ export function Methodology({ quote, listTitle, items = [] }: MethodologyProps) 
   useEffect(() => {
     const el = quoteRef.current;
     if (!el) return;
+    // Base 0.3s: o traço começa depois de a citação surgir; passo 0.22s (mais
+    // curto → o desenho flui, uma palavra "puxando" a outra, sem parecer duro).
     el.querySelectorAll("u").forEach((word, i) => {
-      (word as HTMLElement).style.setProperty("--u-delay", `${i * 0.35}s`);
+      (word as HTMLElement).style.setProperty("--u-delay", `${0.3 + i * 0.22}s`);
     });
     if (inViewRef.current && !prefersReducedMotion()) replay();
   }, [quoteHtml, replay]);
@@ -113,10 +121,12 @@ export function Methodology({ quote, listTitle, items = [] }: MethodologyProps) 
   return (
     <section className={styles.methodology}>
       {quoteHtml && (
-        <div className={styles.quoteBlock}>
+        <div ref={quoteBlockRef} className={styles.quoteBlock}>
           <div
             ref={quoteRef}
-            className={`${styles.quote} ${quoteVisible ? styles.quoteVisible : ""}`}
+            className={`${styles.quote} ${quoteAppeared ? styles.quoteAppeared : ""} ${
+              quoteVisible ? styles.quoteVisible : ""
+            }`}
             dangerouslySetInnerHTML={{ __html: quoteHtml }}
           />
         </div>

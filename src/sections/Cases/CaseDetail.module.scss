@@ -1,0 +1,217 @@
+.case {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 24px 20px 64px;
+  background-color: var(--norden-color-gray-light); // #f5f5f5
+}
+
+// ===== Breadcrumb =====
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.1;
+  color: var(--norden-color-brand);
+}
+
+.crumbLink {
+  color: var(--norden-color-muted);
+  text-decoration: none;
+  transition: color 0.25s ease-in-out;
+
+  &:hover {
+    color: var(--norden-color-brand);
+  }
+}
+
+.crumbSep {
+  color: var(--norden-color-muted);
+}
+
+.crumbCurrent {
+  color: var(--norden-color-brand-deep);
+}
+
+// ===== Cabeçalho =====
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--norden-color-brand-deep); // #010028
+}
+
+.summary {
+  margin: 0;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--norden-color-brand);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: var(--norden-color-white);
+  color: var(--norden-color-brand-deep);
+  font-size: 12px;
+  line-height: 1.1;
+}
+
+// ===== Galeria =====
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.galleryImage {
+  display: block;
+  width: 100%;
+  height: 174px;
+  object-fit: cover;
+  border-radius: 6px;
+
+  // A 1ª imagem ocupa a largura toda (destaque).
+  &:first-child {
+    grid-column: 1 / -1;
+    height: 200px;
+  }
+}
+
+// ===== Blocos de texto rico (Desafio / Solução / Resultados) =====
+// O bloco contém o HTML do texto rico do CMS. A 1ª linha (em negrito) é o
+// título da seção; as demais são o corpo.
+.block {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--norden-color-brand);
+
+  p {
+    margin: 0 0 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    // Título da seção (Desafio / Solução / Resultados).
+    &:first-child {
+      margin-bottom: 16px;
+      font-size: 22px;
+      line-height: 1.15;
+      color: var(--norden-color-brand-deep);
+    }
+  }
+
+  strong {
+    font-weight: 500;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  a {
+    color: var(--norden-color-brand);
+    text-decoration: underline;
+  }
+
+  ul,
+  ol {
+    margin: 0 0 12px;
+    padding-left: 20px;
+  }
+}
+
+// ===== Depoimento (só mídia, full-width) =====
+.testimonial {
+  margin: 0;
+  padding: 0;
+}
+
+.testimonialImage {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+// Mídia full-width (mesmo tratamento do VideoHero): largura 100% + aspect-ratio.
+.testimonialMedia {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border: 0;
+  object-fit: cover; // aplica-se a <video>/<img>; o <iframe> do Vimeo já cobre a área
+}
+
+// ===== Desktop =====
+@media (min-width: 769px) {
+  .case {
+    gap: 64px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 40px 120px;
+  }
+
+  .breadcrumb {
+    font-size: 14px;
+  }
+
+  .header {
+    gap: 20px;
+  }
+
+  .title {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+
+  .summary {
+    font-size: 18px;
+  }
+
+  // Galeria: 1 imagem em destaque (full) + 2 abaixo (~1.7 : 1).
+  .gallery {
+    grid-template-columns: 1.7fr 1fr;
+    gap: 12px;
+  }
+
+  .galleryImage {
+    height: 324px;
+
+    &:first-child {
+      height: 450px;
+    }
+  }
+
+  .block {
+    max-width: 1220px;
+    font-size: 18px;
+
+    p:first-child {
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+  }
+
+  .testimonialMedia {
+    aspect-ratio: 16 / 9;
+  }
+}

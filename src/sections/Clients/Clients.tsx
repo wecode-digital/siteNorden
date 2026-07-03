@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Clients.module.scss";
@@ -9,6 +9,10 @@ import type { ClientsProps } from "./types";
 
 const FADE_MS = 450;
 const CYCLE_MS = 2200;
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 type Slot = { index: number; visible: boolean };
 
@@ -32,6 +36,31 @@ export function Clients({ config, showMore = true }: ClientsProps) {
     }))
   );
   const pointerRef = useRef(Math.min(initialCount, n) % (n || 1));
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  // Revela a seção quando ela aparece "pela metade" (topo cruza o meio da tela).
+  // Os logos surgem da esquerda para a direita, um por vez (delay por --reveal-delay).
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    if (prefersReducedMotion()) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0, rootMargin: "0px 0px -50% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   // Quantidade de logos conforme o breakpoint.
   useEffect(() => {
@@ -92,15 +121,19 @@ export function Clients({ config, showMore = true }: ClientsProps) {
   const moreUrl = config?.moreUrl || "/clientes";
 
   return (
-    <section className={styles.clients}>
+    <section
+      ref={sectionRef}
+      className={`${styles.clients} ${visible ? styles.visible : ""}`}
+    >
       {title && <h2 className={`${styles.title} ${rethinkSans.className}`}>{title}</h2>}
 
       <div className={styles.grid}>
         {slots.map((slot, i) => {
           const client = pool[slot.index];
           if (!client?.logo) return null;
+          const slotStyle = { "--reveal-delay": `${0.2 + i * 0.06}s` } as CSSProperties;
           return (
-            <div key={i} className={styles.slot}>
+            <div key={i} className={styles.slot} style={slotStyle}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={client.logo}

@@ -11,6 +11,11 @@
   font-size: 24px;
   line-height: 1.2;
   color: var(--norden-color-brand-deep); // #010028
+
+  // Surge (fade + subida) quando a seção aparece.
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .grid {
@@ -24,6 +29,13 @@
   align-items: center;
   justify-content: center;
   height: 100px;
+
+  // Surge da esquerda para a direita, um por vez (delay por --reveal-delay).
+  // O reveal fica no slot; o fade-cycle continua no <img> interno, sem conflito.
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 0.4s ease-in-out var(--reveal-delay, 0s),
+    transform 0.4s ease-in-out var(--reveal-delay, 0s);
 }
 
 .logo {
@@ -37,6 +49,28 @@
 .more {
   display: flex;
   justify-content: center;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+// Estado revelado (a seção apareceu ~pela metade): tudo entra na tela.
+.visible {
+  .title,
+  .slot,
+  .more {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .slot,
+  .more {
+    transition: none;
+  }
 }
 
 .moreButton {

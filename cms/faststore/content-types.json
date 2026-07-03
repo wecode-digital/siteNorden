@@ -263,5 +263,57 @@
     ],
     "isSingleton": true,
     "configurationSchemaSets": []
+  },
+  {
+    "id": "case",
+    "name": "Case",
+    "scopes": [
+      "case",
+      "custom"
+    ],
+    "configurationSchemaSets": [
+      {
+        "name": "Settings",
+        "configurations": [
+          {
+            "name": "seo",
+            "schema": {
+              "title": "SEO",
+              "description": "Search Engine Optimization options",
+              "type": "object",
+              "widget": {
+                "ui:ObjectFieldTemplate": "GoogleSeoPreview"
+              },
+              "required": [
+                "slug",
+                "title",
+                "description"
+              ],
+              "properties": {
+                "slug": {
+                  "title": "Path",
+                  "description": "Caminho público do case. Use o formato /cases/<nome>, ex.: /cases/luz-da-lua",
+                  "type": "string",
+                  "default": "/cases/"
+                },
+                "title": {
+                  "title": "Default page title",
+                  "description": "Display this title when no other tile is available.",
+                  "type": "string"
+                },
+                "description": {
+                  "title": "Meta tag description",
+                  "type": "string"
+                },
+                "canonical": {
+                  "title": "Canonical url for the page",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
   }
 ]

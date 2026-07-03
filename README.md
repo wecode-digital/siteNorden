@@ -14,7 +14,7 @@ Site **institucional** da Norden em **Next.js (App Router)**, com conteúdo gere
 
 ## Conta / projeto CMS (por ora)
 
-- Conta VTEX (tenant): **`cubomedia`** · workspace **`master`** · projeto CMS (builder): **`faststore`**
+- Conta VTEX (tenant): **`norden`** · workspace **`master`** · projeto CMS (builder): **`faststore`**
 - Tudo parametrizado por env (ver `.env.example`) — trocar de conta = editar o `.env`.
 
 ## Estrutura

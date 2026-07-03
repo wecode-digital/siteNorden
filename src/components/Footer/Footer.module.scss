@@ -341,16 +341,17 @@
 
   .main {
     gap: 80px;
-    padding: 80px 0;
+    padding: 80px 250px;
   }
 
   // Montanhas na lateral direita (extrapolam a borda, recortadas pelo overflow).
   .main::after {
-    top: 12%;
-    right: -12%;
-    bottom: 18%;
-    left: 50%;
+    top: 15%;
+    right: 5%;
+    bottom: 20%;
+    left: 35%;
     height: auto;
+    width: 100%;
     background-position: center right;
   }
 
@@ -403,8 +404,8 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 32px;
-    width: calc(100% - 96px);
-    max-width: 1420px;
+    width: 100%;
+    // max-width: 1420px;
     padding: 0;
   }
 
@@ -415,6 +416,7 @@
   .link,
   .richtext {
     font-size: 16px;
+    max-width: 350px;
   }
 
   .bottom {
@@ -422,8 +424,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 32px;
-    width: calc(100% - 96px);
-    max-width: 1420px;
+    width: 100%;
+    // max-width: 1420px;
     padding: 0;
   }
 

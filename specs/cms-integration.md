@@ -2,7 +2,7 @@
 
 > **Status:** Fase 1 implementada e validada (build + `yarn dev`).
 > **Stack:** Next.js 16 (App Router) · React 19 · TypeScript 5 · SCSS Modules · `@vtex/client-cms`.
-> **Conta VTEX:** `cubomedia` (por ora) · **workspace:** `master` · **projeto Headless CMS (builder):** `faststore`.
+> **Conta VTEX:** `norden` (por ora) · **workspace:** `master` · **projeto Headless CMS (builder):** `faststore`.
 
 ---
 
@@ -30,7 +30,7 @@ Duas vias, **independentes**:
 
 ```
 GET https://{workspace}--{tenant}.myvtex.com/_v/cms/api/{builder}/{contentType}
-    ex.: https://master--cubomedia.myvtex.com/_v/cms/api/faststore/home
+    ex.: https://master--norden.myvtex.com/_v/cms/api/faststore/home
 ```
 
 Helpers expostos (todos com try/catch → fallback seguro, para a página nunca quebrar):
@@ -75,9 +75,9 @@ src/
 `vtex cms sync faststore` lê a pasta `cms/faststore/` (`sections.json` + `content-types.json`) do repo e envia para o **workspace em uso**.
 
 **Cuidados obrigatórios:**
-- **Não faz merge com o core.** Diferente do antigo `faststore cms-sync`, o comando standalone empurra **apenas** o que está na pasta. Como `content-types.json` está **vazio (`[]`)** e `sections.json` tem só `VideoHero`, rodar agora **apagaria** os content types (home, landingPage, …) e as sections starter que existem no builder `faststore` da cubomedia — quebrando a Home publicada no editor.
+- **Não faz merge com o core.** Diferente do antigo `faststore cms-sync`, o comando standalone empurra **apenas** o que está na pasta. Como `content-types.json` está **vazio (`[]`)** e `sections.json` tem só `VideoHero`, rodar agora **apagaria** os content types (home, landingPage, …) e as sections starter que existem no builder `faststore` da norden — quebrando a Home publicada no editor.
 - **Antes de sincronizar:** (1) popular `content-types.json` com ao menos o `home` (copiar o shape de `GET /_v/cms/api/faststore/`); (2) decidir quais sections manter; (3) **usar um workspace de dev** (`vtex use <dev-ws>`), validar no Admin e só então promover — nunca a primeira execução em `master`/produção. Não há `--dry-run` no plugin.
-- `VideoHero` **já está registrada e publicada** na cubomedia (sync anterior), então não há sync pendente até adicionar uma section nova.
+- `VideoHero` **já está registrada e publicada** na norden (sync anterior), então não há sync pendente até adicionar uma section nova.
 
 ## 6. Revalidação (ISR on-demand)
 
@@ -95,3 +95,16 @@ yarn dev                        # http://localhost:3000  (leitura do CMS é púb
 ## 8. Troca de conta (futuro)
 
 Trocar de conta = editar o `.env.local` (`VTEX_TENANT` / `VTEX_WORKSPACE` / `VTEX_CMS_BUILDER`). Para enviar schema na nova conta: `vtex login <conta>` + `vtex use <ws>` + `yarn cms:sync` (respeitando §5).
+
+## 9. Cases (content-type `case`)
+
+Cada **case** é UM documento do content-type próprio **`case`** (não é `landingPage`). Toda a informação do case é cadastrada **uma única vez** e reaproveitada em todas as páginas.
+
+- **Content-type `case`** (`content-types.json`): não-singleton, com `Settings → SEO`. O `slug` é o **caminho público completo** — use `/cases/<nome>` (ex.: `/cases/luz-da-lua`).
+- **Section `Case`** (`sections.json`): concentra o conteúdo — card (`client`, `logo`, `title`, `summary`, `tags[]`, `image`) + corpo (`gallery[]`, `challenge`/`solution`/`results` em rich-text, `testimonial`). Não é registrada no `registry` (é dado; a página do case é montada pela rota, não pelo `SectionsRenderer`).
+- **Section `CasesShowcase`** (registrada): exibe cards. `allCases` (todos) **ou** `caseSlugs[]` (por slug, ordem preservada; aceita `luz-da-lua` ou `/cases/luz-da-lua`). Usada na Home e reaproveitada como "cases similares".
+- **Leitura** (`src/lib/cms.ts`): `getCase(slug)` (documento por `settings.seo.slug`), `getAllCases()` (todos os cards), `resolveCasesBySlug(slugs)`. `enrichSections` injeta `cases[]` no `CasesShowcase` no SSR.
+- **Rotas:** `/cases` (`app/cases/page.tsx`, lista todos) e `/cases/[slug]` (`app/cases/[slug]/page.tsx` → `CaseDetail`). Ambas mais específicas que `[...slug]`, que ignora `/cases*` no `generateStaticParams`.
+- **Cadastro (editor):** criar documento no content-type **Case**, preencher a section **Case**, definir o path em SEO como `/cases/<nome>` e publicar. Para listar na Home/`/cases`, adicionar `CasesShowcase` (por slug ou `allCases`).
+
+> ⚠️ Antes de aparecer no site, o schema precisa ir ao CMS via `yarn cms:sync` (ver §5 — em workspace de dev primeiro) e os cases precisam ser (re)cadastrados no content-type `case`.

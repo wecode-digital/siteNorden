@@ -19,6 +19,11 @@
   font-size: 24px;
   line-height: 1.1;
   color: var(--norden-color-brand-deep); // #010028
+
+  // Surge (fade + subida) quando a seção aparece.
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .description {
@@ -27,6 +32,10 @@
   font-size: 14px;
   line-height: 1.2;
   color: var(--norden-color-black); // #141414
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out 0.08s, transform 0.5s ease-in-out 0.08s;
 }
 
 .category {
@@ -40,6 +49,12 @@
   display: flex;
   align-items: center;
   gap: 8px;
+
+  // Surge (fade + subida) — leve escalonamento por categoria (--cat-delay).
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out var(--cat-delay, 0s),
+    transform 0.5s ease-in-out var(--cat-delay, 0s);
 }
 
 .number {
@@ -71,6 +86,12 @@
   color: #6e6e6e; // neutral/500
   font-size: 12px;
   line-height: 1.1;
+
+  // Surge da esquerda para a direita, uma por vez (delay por --tag-delay).
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 0.4s ease-in-out var(--tag-delay, 0s),
+    transform 0.4s ease-in-out var(--tag-delay, 0s);
 }
 
 .cta {
@@ -86,10 +107,36 @@
   font-size: 14px;
   line-height: 1.1;
   text-decoration: none;
-  transition: background-color 0.25s ease-in-out;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out,
+    background-color 0.25s ease-in-out;
 
   &:hover {
     background-color: var(--norden-color-brand-deep); // #010028
+  }
+}
+
+// Estado revelado (a seção apareceu ~pela metade): tudo entra na tela.
+.visible {
+  .title,
+  .description,
+  .categoryHead,
+  .tag,
+  .cta {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .description,
+  .categoryHead,
+  .tag,
+  .cta {
+    transition: none;
   }
 }
 

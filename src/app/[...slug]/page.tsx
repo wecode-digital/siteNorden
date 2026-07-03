@@ -25,6 +25,8 @@ export async function generateStaticParams() {
   return docs
     .map((doc) => (doc.settings as { seo?: { slug?: string } } | undefined)?.seo?.slug)
     .filter((slug): slug is string => Boolean(slug && slug.startsWith("/") && slug !== "/"))
+    // /cases e /cases/* têm rotas dedicadas (app/cases/**) — evita duplicar.
+    .filter((slug) => slug !== "/cases" && !slug.startsWith("/cases/"))
     .map((slug) => ({ slug: slug.replace(/^\//, "").split("/") }));
 }
 

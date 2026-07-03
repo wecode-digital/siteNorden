@@ -497,15 +497,25 @@
         }
     },
     {
-        "name": "CaseCard",
+        "name": "Case",
         "schema": {
-            "title": "[Norden] Case — card",
-            "description": "Resumo do case (adicionar na LP de cada case): logo do cliente, título, tags e imagem. É o que aparece no card de listagem.",
+            "title": "[Norden] Case — conteúdo",
+            "description": "Cadastre AQUI todo o conteúdo de um case (uma vez só). Use no content-type 'Case'. O card (logo, título, tags, imagem) aparece nas listagens; os demais campos montam a página /cases/<slug>. O caminho (slug) fica em Configurações → SEO (ex.: /cases/luz-da-lua).",
             "type": "object",
             "properties": {
-                "logo": { "title": "Logo do cliente", "type": "string", "widget": { "ui:widget": "media-gallery" } },
+                "client": { "title": "Cliente (nome — usado no breadcrumb e no alt)", "type": "string" },
+                "logo": { "title": "Logo do cliente (card)", "type": "string", "widget": { "ui:widget": "media-gallery" } },
                 "title": {
-                    "title": "Título do case",
+                    "title": "Título / headline",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "summary": {
+                    "title": "Resumo (subtítulo abaixo do título)",
                     "type": "object",
                     "properties": {
                         "pt": { "title": "Português", "type": "string" },
@@ -532,7 +542,60 @@
                         }
                     }
                 },
-                "image": { "title": "Imagem do case", "type": "string", "widget": { "ui:widget": "media-gallery" } }
+                "gallery": {
+                    "title": "Galeria / mosaico (topo da página; a 1ª imagem também é usada como foto do card na listagem)",
+                    "type": "array",
+                    "items": {
+                        "title": "Imagem",
+                        "type": "object",
+                        "properties": {
+                            "image": { "title": "Imagem", "type": "string", "widget": { "ui:widget": "media-gallery" } },
+                            "alt": {
+                                "title": "Texto alternativo",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            }
+                        }
+                    }
+                },
+                "challenge": {
+                    "title": "Desafio (texto rico)",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
+                        "en": { "title": "English", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
+                        "es": { "title": "Español", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } }
+                    }
+                },
+                "solution": {
+                    "title": "Solução (texto rico)",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
+                        "en": { "title": "English", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
+                        "es": { "title": "Español", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } }
+                    }
+                },
+                "testimonial": {
+                    "title": "Depoimento",
+                    "type": "object",
+                    "properties": {
+                        "image": { "title": "Imagem ou vídeo do depoimento", "type": "string", "widget": { "ui:widget": "media-gallery" } }
+                    }
+                },
+                "results": {
+                    "title": "Resultados (texto rico)",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
+                        "en": { "title": "English", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
+                        "es": { "title": "Español", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } }
+                    }
+                }
             }
         }
     },
@@ -540,7 +603,7 @@
         "name": "CasesShowcase",
         "schema": {
             "title": "[Norden] Cases — exibir lista",
-            "description": "Exibe cards de cases nesta página. Informe os IDs das LPs de cases (na ordem desejada). Marque 'ver mais' na home; desmarque na página /cases.",
+            "description": "Exibe cards de cases nesta página. Informe os slugs dos cases (ex.: luz-da-lua) na ordem desejada, OU marque 'Exibir todos'. Marque 'ver mais' na home; desmarque na página /cases.",
             "type": "object",
             "properties": {
                 "title": {
@@ -552,14 +615,16 @@
                         "es": { "title": "Español", "type": "string" }
                     }
                 },
-                "caseIds": {
-                    "title": "Cases (por ID da LP)",
+                "allCases": { "title": "Exibir todos os cases?", "description": "Se marcado, ignora a lista de slugs e mostra todos os cases publicados.", "type": "boolean", "default": false },
+                "featured": { "title": "1º card em destaque (desktop)?", "description": "No desktop, o primeiro card ocupa o dobro da largura (layout da home). Desmarque para grid de colunas iguais.", "type": "boolean", "default": true },
+                "caseSlugs": {
+                    "title": "Cases (por slug)",
                     "type": "array",
                     "items": {
                         "title": "Case",
                         "type": "object",
                         "properties": {
-                            "id": { "title": "ID da LP do case", "type": "string" }
+                            "slug": { "title": "Slug do case (ex.: luz-da-lua ou /cases/luz-da-lua)", "type": "string" }
                         }
                     }
                 },

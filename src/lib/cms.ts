@@ -15,11 +15,10 @@ import type { ContentData, ContentPage } from "@vtex/client-cms";
 import type { HeaderData } from "@/components/Header/types";
 import type { FooterData } from "@/components/Footer/types";
 import type { ClientsConfig } from "@/sections/Clients/types";
-import type { CaseSummary } from "@/sections/Cases/types";
-import type { LocalizedText } from "@/i18n/text";
+import type { CaseContent, CaseSummary } from "@/sections/Cases/types";
 
 // --- Configuração (env-driven) ---
-const TENANT = process.env.VTEX_TENANT ?? "cubomedia";
+const TENANT = process.env.VTEX_TENANT ?? "norden";
 const WORKSPACE = process.env.VTEX_WORKSPACE ?? "master";
 const BUILDER = process.env.VTEX_CMS_BUILDER ?? "faststore";
 
@@ -198,40 +197,95 @@ export async function getClientsConfig(): Promise<ClientsConfig | null> {
   }
 }
 
+// --- Cases (content-type `case`) ---
+// Cada case é UM documento do content-type `case`, com uma section "Case" que
+// concentra todo o conteúdo (card + corpo da página) e o slug em settings.seo.
+
+/** Slug (settings.seo.slug) de um documento do CMS. */
+function docSlug(doc: CmsDocument | undefined): string | undefined {
+  return (doc?.settings as { seo?: { slug?: string } } | undefined)?.seo?.slug;
+}
+
+/** Dados da section "Case" de um documento. */
+function caseSectionData(doc: CmsDocument | undefined): Record<string, unknown> {
+  return (doc?.sections?.find((s) => s.name === "Case")?.data ?? {}) as Record<string, unknown>;
+}
+
+/** Normaliza um slug informado pelo editor para o caminho público /cases/<handle>. */
+export function normalizeCasePath(input: string): string {
+  const handle = input.trim().replace(/^\/+/, "").replace(/^cases\//, "");
+  return `/cases/${handle}`;
+}
+
+/** Extrai o resumo (card) de um documento de case. */
+function caseSummaryFromDoc(doc: CmsDocument): CaseSummary {
+  const d = caseSectionData(doc);
+  const slug = docSlug(doc);
+  // A foto do card é a 1ª imagem da galeria (mosaico) — não há mais campo próprio.
+  const gallery = (d.gallery as { image?: string }[] | undefined) ?? [];
+  const cardImage = gallery.find((g) => g?.image)?.image;
+  return {
+    slug,
+    url: slug,
+    logo: d.logo as string | undefined,
+    title: d.title as CaseSummary["title"],
+    tags: d.tags as CaseSummary["tags"],
+    image: cardImage,
+  };
+}
+
+/** Extrai o conteúdo completo de um documento de case. */
+function caseContentFromDoc(doc: CmsDocument): CaseContent {
+  return { ...(caseSectionData(doc) as CaseContent), slug: docSlug(doc) };
+}
+
 /**
- * Resumo de um case: busca a LP do case pelo id (documento) e lê a section
- * "CaseCard" (logo, título, tags, imagem) + o slug da LP (link do card).
+ * Documento completo de um case pelo slug (`settings.seo.slug`, ex.:
+ * "/cases/luz-da-lua"). Retorna o conteúdo (section "Case") + SEO — usado pela
+ * rota /cases/[slug]. `null` se não encontrar ou em caso de falha.
  */
-export async function getCaseCard(id: string): Promise<CaseSummary | null> {
+export async function getCase(
+  slug: string
+): Promise<{ content: CaseContent; seo?: { title?: string; description?: string; canonical?: string } } | null> {
   try {
-    // Sem versionId/releaseId → retorna a versão publicada (o tipo do client
-    // exige um deles, mas em runtime o endpoint por id devolve a publicada).
-    const doc = (await client.getCMSPage({
-      contentType: "landingPage",
-      documentId: id,
-    } as unknown as Parameters<typeof client.getCMSPage>[0])) as CmsDocument | undefined;
-    const card = doc?.sections?.find((s) => s.name === "CaseCard")?.data as
-      | { logo?: string; title?: LocalizedText; tags?: { label?: LocalizedText }[]; image?: string }
-      | undefined;
-    if (!card) return null;
-    const url = (doc?.settings as { seo?: { slug?: string } } | undefined)?.seo?.slug;
-    return { ...card, url };
+    const res = await client.getCMSPagesByContentType("case", {
+      filters: { "settings.seo.slug": slug },
+      perPage: 1,
+    });
+    const doc = res?.data?.[0] as CmsDocument | undefined;
+    if (!doc) return null;
+    const seo = (doc.settings as { seo?: { title?: string; description?: string; canonical?: string } } | undefined)
+      ?.seo;
+    return { content: caseContentFromDoc(doc), seo };
   } catch (error) {
-    logCmsError(`getCaseCard("${id}")`, error);
+    logCmsError(`getCase("${slug}")`, error);
     return null;
   }
 }
 
-/** Resolve vários cases por id (ordem preservada; ignora os que falharem). */
-export async function resolveCases(ids: string[]): Promise<CaseSummary[]> {
-  const results = await Promise.all(ids.map((id) => getCaseCard(id)));
-  return results.filter((c): c is CaseSummary => Boolean(c));
+/** Resumo (card) de TODOS os cases publicados (ordem do CMS). */
+export async function getAllCases(): Promise<CaseSummary[]> {
+  const docs = await getAllContent("case");
+  return docs.map(caseSummaryFromDoc).filter((c) => Boolean(c.slug));
+}
+
+/**
+ * Resolve cases por slug informado pelo editor (ordem preservada; ignora os que
+ * não existirem). Faz uma única leitura de todos os cases e casa por caminho.
+ */
+export async function resolveCasesBySlug(slugs: string[]): Promise<CaseSummary[]> {
+  if (slugs.length === 0) return [];
+  const all = await getAllCases();
+  const byPath = new Map(all.map((c) => [c.slug, c]));
+  return slugs
+    .map((s) => byPath.get(normalizeCasePath(s)))
+    .filter((c): c is CaseSummary => Boolean(c));
 }
 
 /**
  * Enriquece as sections de uma página com dados buscados no servidor:
  * - `ClientsList` recebe a config do content-type Clientes.
- * - `CasesShowcase` recebe os cases resolvidos a partir dos IDs cadastrados.
+ * - `CasesShowcase` recebe os cases resolvidos (todos, ou pela lista de slugs).
  * Usada pela Home e pela rota de landing pages.
  */
 export async function enrichSections(sections: CmsSection[]): Promise<CmsSection[]> {
@@ -241,10 +295,12 @@ export async function enrichSections(sections: CmsSection[]): Promise<CmsSection
         return { ...section, data: { ...section.data, config: await getClientsConfig() } };
       }
       if (section.name === "CasesShowcase") {
-        const ids = ((section.data?.caseIds as { id?: string }[] | undefined) ?? [])
-          .map((c) => c?.id)
-          .filter((id): id is string => Boolean(id));
-        return { ...section, data: { ...section.data, cases: await resolveCases(ids) } };
+        const allCases = Boolean(section.data?.allCases);
+        const slugs = ((section.data?.caseSlugs as { slug?: string }[] | undefined) ?? [])
+          .map((c) => c?.slug)
+          .filter((s): s is string => Boolean(s));
+        const cases = allCases ? await getAllCases() : await resolveCasesBySlug(slugs);
+        return { ...section, data: { ...section.data, cases } };
       }
       return section;
     })
