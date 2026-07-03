@@ -156,7 +156,7 @@ export function NewsletterForm({ form }: { form?: FooterFormData }) {
   );
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} noValidate>
+    <form id="contato" className={styles.form} onSubmit={handleSubmit} noValidate>
       <div className={styles.formIntro}>
         <AnimatedText
           as="h3"

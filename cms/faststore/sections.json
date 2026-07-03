@@ -58,6 +58,12 @@
             "description": "Cabeçalho do site: itens de menu (links) e botão de contato. Textos em PT/EN/ES.",
             "type": "object",
             "properties": {
+                "showMenuItems": {
+                    "title": "Exibir os links do menu?",
+                    "description": "Se desmarcado, o header/menu mostra apenas o botão de contato (sem os links abaixo).",
+                    "type": "boolean",
+                    "default": false
+                },
                 "menuItems": {
                     "title": "Itens do menu",
                     "type": "array",
@@ -101,8 +107,9 @@
                 },
                 "contactUrl": {
                     "title": "Botão de contato — link (URL)",
+                    "description": "Padrão: #contato (rola até o formulário no rodapé).",
                     "type": "string",
-                    "default": "/contato"
+                    "default": "#contato"
                 }
             }
         }

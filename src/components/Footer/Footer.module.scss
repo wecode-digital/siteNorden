@@ -93,6 +93,8 @@
   padding: 32px;
   border-radius: 8px;
   background-color: var(--norden-color-white);
+  // Compensa o header fixo ao chegar via âncora (#contato).
+  scroll-margin-top: calc(var(--norden-header-height, 0px) + 24px);
 }
 
 .formIntro {

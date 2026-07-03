@@ -9,7 +9,7 @@ import styles from "./Header.module.scss";
 import { LanguageSelector } from "./LanguageSelector";
 import { MobileMenu } from "./MobileMenu";
 import { MenuIcon, NordenLogo } from "./icons";
-import type { HeaderData } from "./types";
+import { resolveContactUrl, type HeaderData } from "./types";
 
 // Fallbacks até o CMS estar preenchido.
 const DEFAULT_CONTACT = { pt: "Contato", en: "Contact", es: "Contacto" };
@@ -57,8 +57,8 @@ export function Header({ data }: { data?: HeaderData | null }) {
     return () => observer.disconnect();
   }, []);
 
-  const contactUrl = data?.contactUrl || "/contato";
-  const menuItems = data?.menuItems ?? [];
+  const contactUrl = resolveContactUrl(data?.contactUrl);
+  const menuItems = data?.showMenuItems ? data?.menuItems ?? [] : [];
   const solidHeader = scrolled || !isHome;
 
   return (

@@ -7,7 +7,7 @@ import { rethinkSans } from "@/lib/fonts";
 import { LanguageSelector } from "./LanguageSelector";
 import styles from "./MobileMenu.module.scss";
 import { CloseIcon, NordenLogo } from "./icons";
-import type { HeaderData } from "./types";
+import { resolveContactUrl, type HeaderData } from "./types";
 
 const DEFAULT_MENU_CONTACT = {
   pt: "Entre em contato",
@@ -49,7 +49,7 @@ export function MobileMenu({
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  const menuItems = data?.menuItems ?? [];
+  const menuItems = data?.showMenuItems ? data?.menuItems ?? [] : [];
 
   return (
     <div
@@ -87,7 +87,7 @@ export function MobileMenu({
         <LanguageSelector orientation="horizontal" className={styles.drawerLang} />
 
         <Link
-          href={data?.contactUrl || "/contato"}
+          href={resolveContactUrl(data?.contactUrl)}
           className={styles.contact}
           onClick={onClose}
         >
