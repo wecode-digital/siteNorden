@@ -38,7 +38,6 @@ src/
   themes/norden-theme.scss
 ```
 
-
 ## Desenvolvimento
 
 ```bash
