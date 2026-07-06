@@ -115,7 +115,7 @@ const VideoHero = ({
   return (
     <section
       className={styles.videoHero}
-      style={showPoster ? { backgroundImage: `url(${poster})` } : undefined}
+      //style={showPoster ? { backgroundImage: `url(${poster})` } : undefined}
     >
       {desktopUrl && (
         <HeroMedia
