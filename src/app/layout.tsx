@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     template: "%s | Norden",
   },
   description: "Norden",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default async function RootLayout({
