@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
+import {
+  GoogleTagManagerNoScript,
+  GoogleTagManagerScript,
+} from "@/components/GoogleTagManager/GoogleTagManager";
 import { inter } from "@/lib/fonts";
 import { LocaleProvider } from "@/i18n/LocaleProvider";
 import { getFooterData, getHeaderData } from "@/lib/cms";
@@ -23,8 +27,12 @@ export default async function RootLayout({
 
   return (
     <html lang="pt-BR">
+      <head>
+        <GoogleTagManagerScript />
+      </head>
       {/* Inter aplicada diretamente no body; os filhos herdam. */}
       <body className={inter.className}>
+        <GoogleTagManagerNoScript />
         <LocaleProvider>
           <Header data={header} />
           {children}
