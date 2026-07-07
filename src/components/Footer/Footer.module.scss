@@ -58,7 +58,7 @@
   padding-left: 24px; // mantém o espaçamento na emenda do loop
   white-space: nowrap;
   will-change: transform;
-  animation: marquee 22s linear infinite; // velocidade moderada
+  animation: marquee 50s linear infinite; // velocidade moderada
 }
 
 .marqueeItem {

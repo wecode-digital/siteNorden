@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Clients.module.scss";
 import type { ClientsProps } from "./types";
@@ -38,10 +37,6 @@ export function Clients({ config, showMore = true }: ClientsProps) {
     }))
   );
   const pointerRef = useRef(Math.min(initialCount, n) % (n || 1));
-
-  // Revela a seção quando ela aparece "pela metade" (topo cruza o meio da tela).
-  // Os logos surgem da esquerda para a direita, um por vez (delay por --reveal-delay).
-  const { ref: sectionRef, visible } = useRevealOnScroll<HTMLElement>();
 
   // Quantidade de logos conforme o breakpoint.
   useEffect(() => {
@@ -112,19 +107,15 @@ export function Clients({ config, showMore = true }: ClientsProps) {
   const moreUrl = config?.moreUrl || "/clientes";
 
   return (
-    <section
-      ref={sectionRef}
-      className={`${styles.clients} ${visible ? styles.visible : ""}`}
-    >
+    <section className={styles.clients}>
       {title && <h2 className={`${styles.title} ${rethinkSans.className}`}>{title}</h2>}
 
       <div className={styles.grid}>
         {slots.map((slot, i) => {
           const client = pool[slot.index];
           if (!client?.logo) return null;
-          const slotStyle = { "--reveal-delay": `${0.2 + i * 0.06}s` } as CSSProperties;
           return (
-            <div key={i} className={styles.slot} style={slotStyle}>
+            <div key={i} className={styles.slot}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={client.logo}
