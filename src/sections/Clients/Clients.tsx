@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useLocale } from "@/i18n/LocaleProvider";
+import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Clients.module.scss";
 import type { ClientsProps } from "./types";
 
 const FADE_MS = 600;
 const CYCLE_MS = 2200;
-const SLOTS_PER_TICK = 2;
+const SLOTS_PER_TICK = 1;
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
@@ -38,30 +39,9 @@ export function Clients({ config, showMore = true }: ClientsProps) {
   );
   const pointerRef = useRef(Math.min(initialCount, n) % (n || 1));
 
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
   // Revela a seção quando ela aparece "pela metade" (topo cruza o meio da tela).
   // Os logos surgem da esquerda para a direita, um por vez (delay por --reveal-delay).
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    if (prefersReducedMotion()) {
-      setVisible(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0, rootMargin: "0px 0px -50% 0px" }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+  const { ref: sectionRef, visible } = useRevealOnScroll<HTMLElement>();
 
   // Quantidade de logos conforme o breakpoint.
   useEffect(() => {
@@ -84,7 +64,7 @@ export function Clients({ config, showMore = true }: ClientsProps) {
   // Alterna os logos com fade (só se houver mais logos do que slots).
   useEffect(() => {
     if (n <= count) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
 
     const timeouts: ReturnType<typeof setTimeout>[] = [];
     const tick = () => {

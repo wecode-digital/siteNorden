@@ -1,18 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { type CSSProperties } from "react";
 import Link from "next/link";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
+import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Ecosystem.module.scss";
 import type { EcosystemProps } from "./types";
 
 /** Número da categoria, ex.: [01], [02] — automático pela posição. */
 const badge = (n: number) => `[${String(n).padStart(2, "0")}]`;
-
-const prefersReducedMotion = () =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function Ecosystem({
   title,
@@ -21,31 +18,10 @@ export function Ecosystem({
   ctaLabel,
   ctaUrl,
 }: EcosystemProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
   // Revela a seção quando ela aparece "pela metade" (o topo cruza o meio da
-  // tela — rootMargin -50% na base). One-shot. As tags surgem da esquerda para
-  // a direita, uma por vez (delay por --tag-delay).
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    if (prefersReducedMotion()) {
-      setVisible(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0, rootMargin: "0px 0px -50% 0px" }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+  // tela). One-shot. As tags surgem da esquerda para a direita, uma por vez
+  // (delay por --tag-delay).
+  const { ref: sectionRef, visible } = useRevealOnScroll<HTMLElement>();
 
   if (!title && categories.length === 0) return null;
 
