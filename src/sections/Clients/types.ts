@@ -21,8 +21,8 @@ export interface ClientsConfig {
 export interface ClientsProps {
   config?: ClientsConfig | null;
   /**
-   * Exibir o botão "ver mais" (e limitar à contagem mobile/desktop).
-   * `false` → mostra todos os logos, sem botão (ex.: página /clientes).
+   * Exibir o botão "ver mais". A contagem (mobile/desktop) e a alternância
+   * dos logos sempre se aplicam, independente deste valor.
    */
   showMore?: boolean;
 }

@@ -19,7 +19,10 @@ export function FooterColumns({ columns }: { columns?: FooterColumn[] }) {
 
   return (
     <div className={styles.columns}>
-      {columns.map((column, index) => (
+      {columns.map((column, index) => {
+        if (!column.active) return null
+
+        return(
         <section key={index} className={styles.column}>
           {column.title && (
             <AnimatedText as="h3" className={styles.columnTitle} value={column.title} />
@@ -79,7 +82,7 @@ export function FooterColumns({ columns }: { columns?: FooterColumn[] }) {
             </a>
           )}
         </section>
-      ))}
+      )})}
     </div>
   );
 }

@@ -206,6 +206,11 @@
                         "title": "Coluna",
                         "type": "object",
                         "properties": {
+                            "active": {
+                                "title": "Ativo?",
+                                "type": "boolean",
+                                "default": true
+                            },
                             "type": {
                                 "title": "Tipo de coluna",
                                 "type": "string",
@@ -496,7 +501,7 @@
         "name": "ClientsList",
         "schema": {
             "title": "[Norden] Clientes — exibir lista",
-            "description": "Exibe o grid de logos (cadastrados no content-type Clientes) nesta página. Marque para exibir o botão 'ver mais' (limita à quantidade); desmarque para mostrar todos os logos, sem botão.",
+            "description": "Exibe o grid de logos (cadastrados no content-type Clientes) nesta página, sempre limitado à quantidade mobile/desktop com alternância. Marque para exibir o botão 'ver mais'; desmarque para ocultar o botão.",
             "type": "object",
             "properties": {
                 "showMore": { "title": "Exibir botão 'ver mais'?", "type": "boolean", "default": true }

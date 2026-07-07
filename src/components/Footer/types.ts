@@ -2,6 +2,7 @@ import type { LocalizedText } from "@/i18n/text";
 
 /** Coluna de ícones sociais (ícone = imagem do CMS + link). */
 export interface SocialColumn {
+  active: boolean;
   type: "social";
   title?: LocalizedText;
   socialItems?: { icon?: string; url?: string }[];
@@ -9,6 +10,7 @@ export interface SocialColumn {
 
 /** Coluna de links (rótulo trilíngue + URL). */
 export interface LinksColumn {
+  active: boolean;
   type: "links";
   title?: LocalizedText;
   links?: { label?: LocalizedText; url?: string }[];
@@ -16,6 +18,7 @@ export interface LinksColumn {
 
 /** Coluna de texto rico/markdown (trilíngue). */
 export interface RichTextColumn {
+  active: boolean;
   type: "richtext";
   title?: LocalizedText;
   body?: LocalizedText;
@@ -23,6 +26,7 @@ export interface RichTextColumn {
 
 /** Coluna de e-mail (link mailto). */
 export interface EmailColumn {
+  active: boolean;
   type: "email";
   title?: LocalizedText;
   email?: string;
@@ -30,6 +34,7 @@ export interface EmailColumn {
 
 /** Coluna de telefone (link tel). */
 export interface PhoneColumn {
+  active: boolean;
   type: "phone";
   title?: LocalizedText;
   phone?: string;

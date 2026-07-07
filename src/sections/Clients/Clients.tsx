@@ -7,7 +7,7 @@ import { rethinkSans } from "@/lib/fonts";
 import styles from "./Clients.module.scss";
 import type { ClientsProps } from "./types";
 
-const FADE_MS = 450;
+const FADE_MS = 600;
 const CYCLE_MS = 2200;
 
 const prefersReducedMotion = () =>
@@ -26,8 +26,8 @@ export function Clients({ config, showMore = true }: ClientsProps) {
   const pool = (config?.logos ?? []).filter((c) => c?.logo);
   const n = pool.length;
 
-  // Com "ver mais" → limita à contagem; sem → mostra todos os logos.
-  const initialCount = showMore ? config?.countDesktop ?? 18 : n;
+  // `showMore` só controla a exibição do botão — a contagem (mobile/desktop) sempre se aplica.
+  const initialCount = config?.countDesktop ?? 18;
   const [count, setCount] = useState(initialCount);
   const [slots, setSlots] = useState<Slot[]>(() =>
     Array.from({ length: Math.min(initialCount, n) }, (_, i) => ({
@@ -66,13 +66,11 @@ export function Clients({ config, showMore = true }: ClientsProps) {
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 769px)");
     const apply = () =>
-      setCount(
-        showMore ? (mq.matches ? config?.countDesktop ?? 18 : config?.countMobile ?? 9) : n
-      );
+      setCount(mq.matches ? config?.countDesktop ?? 18 : config?.countMobile ?? 9);
     apply();
     mq.addEventListener("change", apply);
     return () => mq.removeEventListener("change", apply);
-  }, [showMore, n, config?.countMobile, config?.countDesktop]);
+  }, [config?.countMobile, config?.countDesktop]);
 
   // (Re)inicializa os slots quando muda a contagem ou a coleção.
   useEffect(() => {
