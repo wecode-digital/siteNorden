@@ -37,7 +37,7 @@ src/
     VideoHero/                   # 1ª section
   themes/norden-theme.scss
 ```
-
+ 
 ## Desenvolvimento
 
 ```bash
