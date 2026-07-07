@@ -134,8 +134,8 @@ export function Methodology({ quote, listTitle, items = [] }: MethodologyProps) 
       {(listTitle || items.length > 0) && (
         <div className={styles.listBlock}>
           {listTitle && (
-            <h2 className={`${styles.listTitle} ${engaged ? styles.listTitleEngaged : ""}`}>
-              <AnimatedText value={listTitle} />
+            <h2 className={`${styles.listTitle} `}>
+              {t(listTitle)}
             </h2>
           )}
           <ul className={styles.list} ref={listRef}>
