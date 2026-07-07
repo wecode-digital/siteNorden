@@ -5,7 +5,7 @@ Site **institucional** da Norden em **Next.js (App Router)**, com conteúdo gere
 > Este projeto **não é** um storefront VTEX FastStore. Usamos o ambiente Headless CMS da VTEX apenas como **fonte de conteúdo** (leitura via `@vtex/client-cms`) e o CLI da VTEX para **enviar os schemas** das sections.
 
 ## Stack
-
+ 
 - **Next.js 16** (App Router) · **React 19** · **TypeScript 5**
 - **SCSS Modules** (tokens de marca em `src/themes/norden-theme.scss`)
 - **`@vtex/client-cms`** — leitura do Headless CMS
