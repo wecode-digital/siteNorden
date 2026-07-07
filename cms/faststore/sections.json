@@ -11,8 +11,30 @@
                     "type": "string",
                     "widget": { "ui:widget": "media-gallery" }
                 },
+                "videoDesktopEnglish" : {
+                    "title": "Vídeo Desktop Inglês",
+                    "type": "string",
+                    "widget": { "ui:widget": "media-gallery" }
+                },
+                "videoDesktopEspanhol" : {
+                    "title": "Vídeo Desktop Espanhol",
+                    "type": "string",
+                    "widget": { "ui:widget": "media-gallery" }
+                },
                 "videoMobile": {
                     "title": "Vídeo Mobile",
+                    "description": "Se vazio, usa o vídeo de desktop.",
+                    "type": "string",
+                    "widget": { "ui:widget": "media-gallery" }
+                },
+                "videoMobileEnglish": {
+                    "title": "Vídeo Mobile Inglês",
+                    "description": "Se vazio, usa o vídeo de desktop.",
+                    "type": "string",
+                    "widget": { "ui:widget": "media-gallery" }
+                },
+                "videoMobileEspanhol": {
+                    "title": "Vídeo Mobile Espanhol",
                     "description": "Se vazio, usa o vídeo de desktop.",
                     "type": "string",
                     "widget": { "ui:widget": "media-gallery" }

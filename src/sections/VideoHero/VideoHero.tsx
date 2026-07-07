@@ -2,13 +2,20 @@
 
 import { useState } from "react";
 import { useLocale } from "@/i18n/LocaleProvider";
+import type { Locale } from "@/i18n/config";
 import type { LocalizedText } from "@/i18n/text";
 import styles from "./VideoHero.module.scss";
 
 // Props recebidas do Headless CMS (cms/faststore/sections.json → "VideoHero").
+// Vídeo por idioma: campos separados (não LocalizedText) — casam com o widget
+// de media-gallery do CMS. "Inglês"/"Espanhol" vazios caem no campo base (PT).
 export interface VideoHeroProps {
   videoDesktop?: string;
+  videoDesktopEnglish?: string;
+  videoDesktopEspanhol?: string;
   videoMobile?: string;
+  videoMobileEnglish?: string;
+  videoMobileEspanhol?: string;
   poster?: string;
   alt?: LocalizedText;
   autoplay?: boolean;
@@ -16,9 +23,20 @@ export interface VideoHeroProps {
   muted?: boolean;
 }
 
+/** Vídeo do idioma atual; sem cadastro em EN/ES, cai no campo base (PT). */
+function pickByLocale(locale: Locale, base?: string, english?: string, spanish?: string): string | undefined {
+  if (locale === "en") return english || base;
+  if (locale === "es") return spanish || base;
+  return base;
+}
+
 // Aceita tanto o link de compartilhamento (vimeo.com/ID) quanto o de embed
 // (player.vimeo.com/video/ID) — em ambos os casos extrai só o ID numérico.
 const VIMEO_RE = /(?:player\.)?vimeo\.com\/(?:video\/)?(\d+)/;
+
+// O widget de media-gallery do CMS aceita tanto vídeo quanto imagem — detecta
+// pela extensão do arquivo para decidir entre <img> e <video>.
+const IMAGE_RE = /\.(jpe?g|png|gif|webp|avif|svg)(\?|#|$)/i;
 
 interface MediaOpts {
   autoplay: boolean;
@@ -74,6 +92,19 @@ function HeroMedia({
     );
   }
 
+  if (IMAGE_RE.test(url)) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        className={className}
+        src={url}
+        alt={alt || ""}
+        onLoad={onReady}
+        onError={onFail}
+      />
+    );
+  }
+
   return (
     <video
       className={className}
@@ -92,7 +123,11 @@ function HeroMedia({
 
 const VideoHero = ({
   videoDesktop,
+  videoDesktopEnglish,
+  videoDesktopEspanhol,
   videoMobile,
+  videoMobileEnglish,
+  videoMobileEspanhol,
   poster,
   alt,
   autoplay = true,
@@ -100,16 +135,19 @@ const VideoHero = ({
   muted = true,
 }: VideoHeroProps) => {
   const [mediaReady, setMediaReady] = useState(false);
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
+
+  const desktopUrl = pickByLocale(locale, videoDesktop, videoDesktopEnglish, videoDesktopEspanhol);
+  const mobileUrl = pickByLocale(locale, videoMobile, videoMobileEnglish, videoMobileEspanhol);
 
   // Sem nenhuma mídia cadastrada, não renderiza nada (convenção: campos não-obrigatórios).
-  if (!videoDesktop && !videoMobile && !poster) return null;
+  if (!desktopUrl && !mobileUrl && !poster) return null;
 
   const altText = t(alt);
   const mediaOpts: MediaOpts = { autoplay, loop, muted };
-  const desktopUrl = videoDesktop || videoMobile;
-  const hasMobile = Boolean(videoMobile);
-  const hasVideo = Boolean(desktopUrl);
+  const resolvedDesktopUrl = desktopUrl || mobileUrl;
+  const hasMobile = Boolean(mobileUrl);
+  const hasVideo = Boolean(resolvedDesktopUrl);
 
   // Poster (fallback) só aparece enquanto o vídeo não carregou ou se não houver vídeo.
   const showPoster = Boolean(poster) && (!hasVideo || !mediaReady);
@@ -119,9 +157,9 @@ const VideoHero = ({
       className={styles.videoHero}
       //style={showPoster ? { backgroundImage: `url(${poster})` } : undefined}
     >
-      {desktopUrl && (
+      {resolvedDesktopUrl && (
         <HeroMedia
-          url={desktopUrl}
+          url={resolvedDesktopUrl}
           className={`${styles.media} ${hasMobile ? styles.desktopOnly : ""}`}
           alt={altText}
           onReady={() => setMediaReady(true)}
@@ -132,7 +170,7 @@ const VideoHero = ({
 
       {hasMobile && (
         <HeroMedia
-          url={videoMobile as string}
+          url={mobileUrl as string}
           className={`${styles.media} ${styles.mobileOnly}`}
           alt={altText}
           onReady={() => setMediaReady(true)}
