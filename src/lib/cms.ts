@@ -266,6 +266,7 @@ export async function getCase(
 /** Resumo (card) de TODOS os cases publicados (ordem do CMS). */
 export async function getAllCases(): Promise<CaseSummary[]> {
   const docs = await getAllContent("case");
+  console.log("casese ", docs)
   return docs.map(caseSummaryFromDoc).filter((c) => Boolean(c.slug));
 }
 

@@ -4,7 +4,9 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import styles from "./CasesShowcase.module.scss";
+import { usePathname } from "next/navigation";
 import type { CaseSummary, CasesShowcaseProps } from "./types";
+import path from "path";
 
 const DEFAULT_MORE = { pt: "Ver mais cases", en: "See more cases", es: "Ver más casos" };
 
@@ -92,6 +94,9 @@ export function CasesShowcase({
 
   const rows = chunk(cases, 3);
 
+  const MAX_ITEMS = 3
+  const pathname = usePathname()
+
   return (
     <section
       ref={sectionRef}
@@ -110,6 +115,7 @@ export function CasesShowcase({
           <div className={styles.row} key={r}>
             {row.map((item, c) => {
               const idx = r * 3 + c;
+              if ( pathname === "/" && idx > MAX_ITEMS - 1 ) return null;
               const style = { "--reveal-delay": `${idx * 0.08}s` } as CSSProperties;
               return item.url ? (
                 <Link key={c} href={item.url} className={styles.card} style={style}>

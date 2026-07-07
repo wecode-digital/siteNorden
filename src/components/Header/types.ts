@@ -1,3 +1,4 @@
+import type { MouseEvent } from "react";
 import type { LocalizedText } from "@/i18n/text";
 
 /** Um item de menu cadastrado no CMS. */
@@ -26,4 +27,18 @@ export interface HeaderData {
 export function resolveContactUrl(url?: string): string {
   if (!url || url === "/contato") return "#contato";
   return url;
+}
+
+/**
+ * Clique no botão de contato: quando aponta pro âncora do formulário
+ * (`#contato`), rola manualmente até ele em vez de depender do hash da URL.
+ * Necessário porque, se a URL já termina em `#contato` (clique anterior), o
+ * hash não muda de novo e o navegador não dispara o scroll nativo.
+ */
+export function handleContactClick(url: string, event: MouseEvent): void {
+  if (url !== "#contato") return;
+  const target = document.getElementById("contato");
+  if (!target) return;
+  event.preventDefault();
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
 }

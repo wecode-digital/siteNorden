@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, type MouseEvent } from "react";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { rethinkSans } from "@/lib/fonts";
 import { LanguageSelector } from "./LanguageSelector";
@@ -50,6 +50,22 @@ export function MobileMenu({
   }, [open, onClose]);
 
   const menuItems = data?.showMenuItems ? data?.menuItems ?? [] : [];
+  const contactUrl = resolveContactUrl(data?.contactUrl);
+
+  // Fecha o drawer e, se for o âncora do formulário (#contato), rola até ele
+  // manualmente — clique repetido não muda o hash, então o navegador não
+  // dispara o scroll nativo sozinho. Espera 2 frames: o drawer libera o
+  // `overflow: hidden` do body só depois do fechamento ser commitado.
+  const handleContactSelect = (event: MouseEvent<HTMLAnchorElement>) => {
+    onClose();
+    if (contactUrl !== "#contato") return;
+    event.preventDefault();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.getElementById("contato")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  };
 
   return (
     <div
@@ -86,11 +102,7 @@ export function MobileMenu({
 
         <LanguageSelector orientation="horizontal" className={styles.drawerLang} />
 
-        <Link
-          href={resolveContactUrl(data?.contactUrl)}
-          className={styles.contact}
-          onClick={onClose}
-        >
+        <Link href={contactUrl} className={styles.contact} onClick={handleContactSelect}>
           <AnimatedText value={data?.menuContactLabel ?? DEFAULT_MENU_CONTACT} />
         </Link>
       </nav>

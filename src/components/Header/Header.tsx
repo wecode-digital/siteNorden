@@ -9,7 +9,7 @@ import styles from "./Header.module.scss";
 import { LanguageSelector } from "./LanguageSelector";
 import { MobileMenu } from "./MobileMenu";
 import { MenuIcon, NordenLogo } from "./icons";
-import { resolveContactUrl, type HeaderData } from "./types";
+import { handleContactClick, resolveContactUrl, type HeaderData } from "./types";
 
 // Fallbacks até o CMS estar preenchido.
 const DEFAULT_CONTACT = { pt: "Contato", en: "Contact", es: "Contacto" };
@@ -86,12 +86,20 @@ export function Header({ data }: { data?: HeaderData | null }) {
 
         <div className={styles.actions}>
           {/* Contato desktop (copy expandida) */}
-          <Link href={contactUrl} className={styles.contactDesktop}>
+          <Link
+            href={contactUrl}
+            className={styles.contactDesktop}
+            onClick={(event) => handleContactClick(contactUrl, event)}
+          >
             <AnimatedText value={data?.menuContactLabel ?? DEFAULT_MENU_CONTACT} />
           </Link>
 
           {/* Contato mobile (copy compacta) */}
-          <Link href={contactUrl} className={styles.contact}>
+          <Link
+            href={contactUrl}
+            className={styles.contact}
+            onClick={(event) => handleContactClick(contactUrl, event)}
+          >
             <AnimatedText value={data?.contactLabel ?? DEFAULT_CONTACT} />
           </Link>
 
