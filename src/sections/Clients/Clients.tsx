@@ -9,6 +9,7 @@ import type { ClientsProps } from "./types";
 
 const FADE_MS = 600;
 const CYCLE_MS = 2200;
+const SLOTS_PER_TICK = 2;
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
@@ -87,19 +88,31 @@ export function Clients({ config, showMore = true }: ClientsProps) {
 
     const timeouts: ReturnType<typeof setTimeout>[] = [];
     const tick = () => {
-      const slot = Math.floor(Math.random() * count);
-      setSlots((prev) => prev.map((s, i) => (i === slot ? { ...s, visible: false } : s)));
+      // Sorteia até SLOTS_PER_TICK posições distintas para trocar juntas.
+      const available = Array.from({ length: count }, (_, i) => i);
+      const chosen: number[] = [];
+      while (chosen.length < Math.min(SLOTS_PER_TICK, available.length)) {
+        const idx = Math.floor(Math.random() * available.length);
+        chosen.push(available.splice(idx, 1)[0]);
+      }
+
+      setSlots((prev) => prev.map((s, i) => (chosen.includes(i) ? { ...s, visible: false } : s)));
       const to = setTimeout(() => {
         setSlots((cur) => {
           const shown = new Set(cur.map((s) => s.index));
-          let p = pointerRef.current % n;
-          let tries = 0;
-          while (shown.has(p) && tries < n) {
-            p = (p + 1) % n;
-            tries++;
+          const next = [...cur];
+          for (const slot of chosen) {
+            let p = pointerRef.current % n;
+            let tries = 0;
+            while (shown.has(p) && tries < n) {
+              p = (p + 1) % n;
+              tries++;
+            }
+            shown.add(p);
+            pointerRef.current = (p + 1) % n;
+            next[slot] = { index: p, visible: true };
           }
-          pointerRef.current = (p + 1) % n;
-          return cur.map((s, i) => (i === slot ? { index: p, visible: true } : s));
+          return next;
         });
       }, FADE_MS);
       timeouts.push(to);

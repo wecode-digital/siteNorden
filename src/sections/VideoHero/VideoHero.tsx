@@ -16,7 +16,9 @@ export interface VideoHeroProps {
   muted?: boolean;
 }
 
-const VIMEO_RE = /player\.vimeo\.com\/video\/(\d+)/;
+// Aceita tanto o link de compartilhamento (vimeo.com/ID) quanto o de embed
+// (player.vimeo.com/video/ID) — em ambos os casos extrai só o ID numérico.
+const VIMEO_RE = /(?:player\.)?vimeo\.com\/(?:video\/)?(\d+)/;
 
 interface MediaOpts {
   autoplay: boolean;

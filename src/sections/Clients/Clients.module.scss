@@ -21,6 +21,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  justify-items: center; // .slot tem largura fixa; centraliza na coluna (1fr)
   width: 100%;
 }
 
@@ -28,14 +29,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 1024px) {
+    width: 100px;
+  }
+
   height: 100px;
+
 
   // Surge da esquerda para a direita, um por vez (delay por --reveal-delay).
   // O reveal fica no slot; o fade-cycle continua no <img> interno, sem conflito.
   opacity: 0;
   transform: translateX(-16px);
   transition: opacity 0.4s ease-in-out var(--reveal-delay, 0s),
-    transform 0.4s ease-in-out var(--reveal-delay, 0s);
+  transform 0.4s ease-in-out var(--reveal-delay, 0s);
 }
 
 .logo {
@@ -57,6 +64,7 @@
 
 // Estado revelado (a seção apareceu ~pela metade): tudo entra na tela.
 .visible {
+
   .title,
   .slot,
   .more {
@@ -66,6 +74,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .title,
   .slot,
   .more {

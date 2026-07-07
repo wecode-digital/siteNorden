@@ -124,9 +124,8 @@ export function Methodology({ quote, listTitle, items = [] }: MethodologyProps) 
         <div ref={quoteBlockRef} className={styles.quoteBlock}>
           <div
             ref={quoteRef}
-            className={`${styles.quote} ${quoteAppeared ? styles.quoteAppeared : ""} ${
-              quoteVisible ? styles.quoteVisible : ""
-            }`}
+            className={`${styles.quote} ${quoteAppeared ? styles.quoteAppeared : ""} ${quoteVisible ? styles.quoteVisible : ""
+              }`}
             dangerouslySetInnerHTML={{ __html: quoteHtml }}
           />
         </div>
