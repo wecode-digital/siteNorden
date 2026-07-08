@@ -12,6 +12,9 @@ export const SITE_NAME = "Norden";
 export const ORGANIZATION = {
   name: "Norden",
   legalName: "Norden",
+  // Marcas que se uniram/foram consolidadas na Norden — ajuda o Google a
+  // associar buscas pelo nome antigo à entidade atual (Knowledge Graph).
+  alternateName: ["Centric", "Brava", "Wecode"] as string[],
   url: SITE_URL,
   logo: `${SITE_URL}/favicon.svg`,
   email: "ola@norden.ec",
@@ -79,6 +82,7 @@ export function organizationJsonLd(): Record<string, unknown> {
   };
 
   if (ORGANIZATION.legalName) org.legalName = ORGANIZATION.legalName;
+  if (ORGANIZATION.alternateName.length > 0) org.alternateName = ORGANIZATION.alternateName;
   if (ORGANIZATION.logo) org.logo = ORGANIZATION.logo;
   if (ORGANIZATION.email) org.email = ORGANIZATION.email;
   if (ORGANIZATION.telephone) org.telephone = ORGANIZATION.telephone;

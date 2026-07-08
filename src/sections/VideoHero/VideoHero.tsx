@@ -101,6 +101,7 @@ function HeroMedia({
         alt={alt || ""}
         onLoad={onReady}
         onError={onFail}
+        style={{aspectRatio: "unset !important"}}
       />
     );
   }
@@ -160,7 +161,7 @@ const VideoHero = ({
       {resolvedDesktopUrl && (
         <HeroMedia
           url={resolvedDesktopUrl}
-          className={`${styles.media} ${hasMobile ? styles.desktopOnly : ""}`}
+          className={`${styles.media} ${hasMobile ? styles.desktopOnly : ""} `}
           alt={altText}
           onReady={() => setMediaReady(true)}
           onFail={() => setMediaReady(false)}
