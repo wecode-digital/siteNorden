@@ -8,9 +8,11 @@ import {
 import { inter } from "@/lib/fonts";
 import { LocaleProvider } from "@/i18n/LocaleProvider";
 import { getFooterData, getHeaderData } from "@/lib/cms";
+import { organizationJsonLd, SITE_URL } from "@/lib/seo";
 import "./globals.scss";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Norden",
     template: "%s | Norden",
@@ -32,6 +34,11 @@ export default async function RootLayout({
     <html lang="pt-BR">
       <head>
         <GoogleTagManagerScript />
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
+        />
       </head>
       {/* Inter aplicada diretamente no body; os filhos herdam. */}
       <body className={inter.className}>

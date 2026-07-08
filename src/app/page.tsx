@@ -1,4 +1,6 @@
-import { enrichSections, getHomeSections } from "@/lib/cms";
+import type { Metadata } from "next";
+import { enrichSections, getHomeSections, getHomeSeo } from "@/lib/cms";
+import { buildMetadata } from "@/lib/seo";
 import { SectionsRenderer } from "@/sections/SectionsRenderer";
 
 /**
@@ -7,6 +9,16 @@ import { SectionsRenderer } from "@/sections/SectionsRenderer";
  * por tempo (puramente sob demanda).
  */
 export const revalidate = false;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getHomeSeo();
+  return buildMetadata({
+    title: seo?.title || "Norden",
+    description: seo?.description,
+    path: "/",
+    canonical: seo?.canonical,
+  });
+}
 
 export default async function HomePage() {
   // enrichSections injeta, no servidor, os dados de ClientsList (config) e

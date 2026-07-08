@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllCases, getCase } from "@/lib/cms";
+import { buildMetadata } from "@/lib/seo";
 import CaseDetail from "@/sections/Cases/CaseDetail";
 import CasesShowcase from "@/sections/Cases/CasesShowcase";
 
@@ -25,9 +26,16 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const found = await getCase(`/cases/${slug}`);
+  const path = `/cases/${slug}`;
+  const found = await getCase(path);
   if (!found?.seo) return {};
-  return { title: found.seo.title, description: found.seo.description };
+  return buildMetadata({
+    title: found.seo.title,
+    description: found.seo.description,
+    path,
+    canonical: found.seo.canonical,
+    image: found.content.gallery?.find((g) => g?.image)?.image,
+  });
 }
 
 export default async function CasePage({ params }: Params) {

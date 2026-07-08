@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { enrichSections, getAllContent, getLandingPage } from "@/lib/cms";
+import { buildMetadata } from "@/lib/seo";
 import { SectionsRenderer } from "@/sections/SectionsRenderer";
 
 /**
@@ -17,6 +18,7 @@ const toPath = (slug: string[]) => `/${slug.join("/")}`;
 interface LandingSeo {
   title?: string;
   description?: string;
+  canonical?: string;
 }
 
 /** Pré-renderiza (SSG) todas as landing pages publicadas com slug válido. */
@@ -35,7 +37,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const doc = await getLandingPage(toPath(slug));
   const seo = (doc?.settings as { seo?: LandingSeo } | undefined)?.seo;
   if (!seo) return {};
-  return { title: seo.title, description: seo.description };
+  return buildMetadata({
+    title: seo.title,
+    description: seo.description,
+    path: toPath(slug),
+    canonical: seo.canonical,
+  });
 }
 
 export default async function LandingPageRoute({ params }: Params) {

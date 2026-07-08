@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
-import { getAllCases, getAllContent } from "@/lib/cms";
+import { getAllKnownPaths } from "@/lib/cms";
 
 /**
  * Revalidação on-demand (ISR). Configurar o webhook de releases do VTEX
@@ -17,21 +17,6 @@ import { getAllCases, getAllContent } from "@/lib/cms";
  */
 export const dynamic = "force-dynamic";
 
-/** Home + listagem de cases + cada case + cada landing page publicada. */
-async function getAllKnownPaths(): Promise<string[]> {
-  const [cases, landingPages] = await Promise.all([
-    getAllCases(),
-    getAllContent("landingPage"),
-  ]);
-
-  const casePaths = cases.map((c) => c.slug).filter((slug): slug is string => Boolean(slug));
-  const landingPaths = landingPages
-    .map((doc) => (doc.settings as { seo?: { slug?: string } } | undefined)?.seo?.slug)
-    .filter((slug): slug is string => Boolean(slug));
-
-  return [...new Set(["/", "/cases", ...casePaths, ...landingPaths])];
-}
-
 async function handleRevalidate(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get("secret");
 
@@ -45,7 +30,10 @@ async function handleRevalidate(request: NextRequest) {
   const path = request.nextUrl.searchParams.get("path") || "/";
 
   if (path === "all") {
-    const paths = await getAllKnownPaths();
+    // "/sitemap.xml" não é uma página de conteúdo (não entra na própria listagem
+    // do sitemap), mas segue o mesmo cache estático — sem isso, ficaria
+    // desatualizado do mesmo jeito que as páginas ficavam antes.
+    const paths = [...(await getAllKnownPaths()), "/sitemap.xml"];
     paths.forEach((p) => revalidatePath(p));
     return NextResponse.json({ revalidated: true, paths, now: Date.now() });
   }

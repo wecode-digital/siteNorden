@@ -144,6 +144,44 @@ export async function getHomeSections(): Promise<CmsSection[]> {
   }
 }
 
+/** SEO (`settings.seo`) do content type `home`: title/description/canonical. */
+export interface PageSeo {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+export async function getHomeSeo(): Promise<PageSeo | null> {
+  try {
+    const res = await client.getCMSPagesByContentType("home", { perPage: 1 });
+    const doc = res?.data?.[0] as CmsDocument | undefined;
+    return (doc?.settings as { seo?: PageSeo } | undefined)?.seo ?? null;
+  } catch (error) {
+    logCmsError("getHomeSeo()", error);
+    return null;
+  }
+}
+
+/**
+ * Todos os caminhos públicos conhecidos do site: Home, listagem de cases,
+ * cada case e cada landing page publicados. Usado pelo sitemap e pela
+ * revalidação on-demand (`?path=all`, já que o webhook do CMS é uma única URL
+ * fixa e não distingue content type).
+ */
+export async function getAllKnownPaths(): Promise<string[]> {
+  const [cases, landingPages] = await Promise.all([
+    getAllCases(),
+    getAllContent("landingPage"),
+  ]);
+
+  const casePaths = cases.map((c) => c.slug).filter((slug): slug is string => Boolean(slug));
+  const landingPaths = landingPages
+    .map((doc) => (doc.settings as { seo?: { slug?: string } } | undefined)?.seo?.slug)
+    .filter((slug): slug is string => Boolean(slug));
+
+  return [...new Set(["/", "/cases", ...casePaths, ...landingPaths])];
+}
+
 /**
  * Dados do header (section "Header" dentro do content type global `globalSections`).
  * Retorna `null` se ainda não houver conteúdo publicado ou em caso de falha —
