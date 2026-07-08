@@ -30,6 +30,7 @@ export function Clients({ config, showMore = true }: ClientsProps) {
   // `showMore` só controla a exibição do botão — a contagem (mobile/desktop) sempre se aplica.
   const initialCount = config?.countDesktop ?? 18;
   const [count, setCount] = useState(initialCount);
+  const [isDesktop, setIsDesktop] = useState(true);
   const [slots, setSlots] = useState<Slot[]>(() =>
     Array.from({ length: Math.min(initialCount, n) }, (_, i) => ({
       index: i % (n || 1),
@@ -38,11 +39,13 @@ export function Clients({ config, showMore = true }: ClientsProps) {
   );
   const pointerRef = useRef(Math.min(initialCount, n) % (n || 1));
 
-  // Quantidade de logos conforme o breakpoint.
+  // Quantidade de logos e qual imagem usar (logo/logoMobile) conforme o breakpoint.
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 769px)");
-    const apply = () =>
+    const apply = () => {
+      setIsDesktop(mq.matches);
       setCount(mq.matches ? config?.countDesktop ?? 18 : config?.countMobile ?? 9);
+    };
     apply();
     mq.addEventListener("change", apply);
     return () => mq.removeEventListener("change", apply);
@@ -114,11 +117,12 @@ export function Clients({ config, showMore = true }: ClientsProps) {
         {slots.map((slot, i) => {
           const client = pool[slot.index];
           if (!client?.logo) return null;
+          const logoSrc = (!isDesktop && client.logoMobile) || client.logo;
           return (
             <div key={i} className={styles.slot}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={client.logo}
+                src={logoSrc}
                 alt={client.name || ""}
                 className={styles.logo}
                 style={{ opacity: slot.visible ? 1 : 0 }}

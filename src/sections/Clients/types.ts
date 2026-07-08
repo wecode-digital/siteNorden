@@ -3,6 +3,8 @@ import type { LocalizedText } from "@/i18n/text";
 /** Um logo de cliente (item do array `logos` da section Clients). */
 export interface ClientLogo {
   logo?: string;
+  /** Opcional — se vazio, usa `logo` (a mesma imagem) no mobile também. */
+  logoMobile?: string;
   /** Opcional — usado apenas no alt da imagem. */
   name?: string;
 }

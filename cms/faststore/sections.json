@@ -628,7 +628,14 @@
                         "type": "object",
                         "properties": {
                             "logo": {
-                                "title": "Logo (imagem)",
+                                "title": "Logo (imagem) — desktop",
+                                "type": "string",
+                                "widget": {
+                                    "ui:widget": "media-gallery"
+                                }
+                            },
+                            "logoMobile": {
+                                "title": "Logo (imagem) — mobile (opcional, se vazio usa a de desktop)",
                                 "type": "string",
                                 "widget": {
                                     "ui:widget": "media-gallery"
