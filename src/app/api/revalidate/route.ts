@@ -5,12 +5,15 @@ import { getAllCases, getAllContent } from "@/lib/cms";
 /**
  * Revalidação on-demand (ISR). Configurar o webhook de releases do VTEX
  * Headless CMS para chamar:
- *   POST https://<dominio>/api/revalidate?secret=<CMS_REVALIDATE_SECRET>&path=all
+ *   https://<dominio>/api/revalidate?secret=<CMS_REVALIDATE_SECRET>&path=all
  *
- * O webhook do CMS é uma única URL fixa (não distingue content type), então
+ * Aceita GET e POST: o campo de webhook do CMS é uma URL única (sem opção de
+ * escolher método) e costuma disparar GET, então não dá pra depender de POST.
+ *
  * `path=all` revalida TODAS as páginas conhecidas de uma vez — é o valor
- * recomendado para o campo do CMS. `?path=/rota` revalida só um caminho
- * específico (útil para testar manualmente uma página isolada).
+ * recomendado para o campo do CMS, já que essa URL única não distingue content
+ * type. `?path=/rota` revalida só um caminho específico (útil para testar
+ * manualmente uma página isolada).
  */
 export const dynamic = "force-dynamic";
 
@@ -29,7 +32,7 @@ async function getAllKnownPaths(): Promise<string[]> {
   return [...new Set(["/", "/cases", ...casePaths, ...landingPaths])];
 }
 
-export async function POST(request: NextRequest) {
+async function handleRevalidate(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get("secret");
 
   if (!process.env.CMS_REVALIDATE_SECRET || secret !== process.env.CMS_REVALIDATE_SECRET) {
@@ -50,4 +53,12 @@ export async function POST(request: NextRequest) {
   revalidatePath(path);
 
   return NextResponse.json({ revalidated: true, path, now: Date.now() });
+}
+
+export async function POST(request: NextRequest) {
+  return handleRevalidate(request);
+}
+
+export async function GET(request: NextRequest) {
+  return handleRevalidate(request);
 }

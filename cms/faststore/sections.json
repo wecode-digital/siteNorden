@@ -9,49 +9,72 @@
                 "videoDesktop": {
                     "title": "Vídeo Desktop",
                     "type": "string",
-                    "widget": { "ui:widget": "media-gallery" }
+                    "widget": {
+                        "ui:widget": "media-gallery"
+                    }
                 },
-                "videoDesktopEnglish" : {
+                "videoDesktopEnglish": {
                     "title": "Vídeo Desktop Inglês",
                     "type": "string",
-                    "widget": { "ui:widget": "media-gallery" }
+                    "widget": {
+                        "ui:widget": "media-gallery"
+                    }
                 },
-                "videoDesktopEspanhol" : {
+                "videoDesktopEspanhol": {
                     "title": "Vídeo Desktop Espanhol",
                     "type": "string",
-                    "widget": { "ui:widget": "media-gallery" }
+                    "widget": {
+                        "ui:widget": "media-gallery"
+                    }
                 },
                 "videoMobile": {
                     "title": "Vídeo Mobile",
                     "description": "Se vazio, usa o vídeo de desktop.",
                     "type": "string",
-                    "widget": { "ui:widget": "media-gallery" }
+                    "widget": {
+                        "ui:widget": "media-gallery"
+                    }
                 },
                 "videoMobileEnglish": {
                     "title": "Vídeo Mobile Inglês",
                     "description": "Se vazio, usa o vídeo de desktop.",
                     "type": "string",
-                    "widget": { "ui:widget": "media-gallery" }
+                    "widget": {
+                        "ui:widget": "media-gallery"
+                    }
                 },
                 "videoMobileEspanhol": {
                     "title": "Vídeo Mobile Espanhol",
                     "description": "Se vazio, usa o vídeo de desktop.",
                     "type": "string",
-                    "widget": { "ui:widget": "media-gallery" }
+                    "widget": {
+                        "ui:widget": "media-gallery"
+                    }
                 },
                 "poster": {
                     "title": "Imagem de fallback (poster)",
                     "description": "Exibida antes do vídeo carregar e como fallback.",
                     "type": "string",
-                    "widget": { "ui:widget": "media-gallery" }
+                    "widget": {
+                        "ui:widget": "media-gallery"
+                    }
                 },
                 "alt": {
                     "title": "Texto alternativo / descrição (SEO e acessibilidade)",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string" },
-                        "en": { "title": "English", "type": "string" },
-                        "es": { "title": "Español", "type": "string" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
                     }
                 },
                 "autoplay": {
@@ -97,9 +120,18 @@
                                 "title": "Rótulo do link",
                                 "type": "object",
                                 "properties": {
-                                    "pt": { "title": "Português", "type": "string" },
-                                    "en": { "title": "English", "type": "string" },
-                                    "es": { "title": "Español", "type": "string" }
+                                    "pt": {
+                                        "title": "Português",
+                                        "type": "string"
+                                    },
+                                    "en": {
+                                        "title": "English",
+                                        "type": "string"
+                                    },
+                                    "es": {
+                                        "title": "Español",
+                                        "type": "string"
+                                    }
                                 }
                             },
                             "url": {
@@ -113,18 +145,42 @@
                     "title": "Botão de contato (header) — texto",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "default": "Contato" },
-                        "en": { "title": "English", "type": "string", "default": "Contact" },
-                        "es": { "title": "Español", "type": "string", "default": "Contacto" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Contato"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "default": "Contact"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "default": "Contacto"
+                        }
                     }
                 },
                 "menuContactLabel": {
                     "title": "Botão de contato (menu mobile) — texto",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "default": "Entre em contato" },
-                        "en": { "title": "English", "type": "string", "default": "Contact Us" },
-                        "es": { "title": "Español", "type": "string", "default": "Contáctanos" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Entre em contato"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "default": "Contact Us"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "default": "Contáctanos"
+                        }
                     }
                 },
                 "contactUrl": {
@@ -147,9 +203,21 @@
                     "title": "Frase do marquee (loop)",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "default": "Pronto para evoluir?" },
-                        "en": { "title": "English", "type": "string", "default": "Ready to evolve?" },
-                        "es": { "title": "Español", "type": "string", "default": "¿Listo para evolucionar?" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Pronto para evoluir?"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "default": "Ready to evolve?"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "default": "¿Listo para evolucionar?"
+                        }
                     }
                 },
                 "form": {
@@ -160,63 +228,144 @@
                             "title": "Título do formulário",
                             "type": "object",
                             "properties": {
-                                "pt": { "title": "Português", "type": "string", "default": "Contato" },
-                                "en": { "title": "English", "type": "string", "default": "Contact" },
-                                "es": { "title": "Español", "type": "string", "default": "Contacto" }
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Contato"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Contact"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Contacto"
+                                }
                             }
                         },
                         "heading": {
                             "title": "Chamada",
                             "type": "object",
                             "properties": {
-                                "pt": { "title": "Português", "type": "string" },
-                                "en": { "title": "English", "type": "string" },
-                                "es": { "title": "Español", "type": "string" }
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string"
+                                }
                             }
                         },
                         "namePlaceholder": {
                             "title": "Placeholder — Nome",
                             "type": "object",
                             "properties": {
-                                "pt": { "title": "Português", "type": "string", "default": "Nome" },
-                                "en": { "title": "English", "type": "string", "default": "Name" },
-                                "es": { "title": "Español", "type": "string", "default": "Nombre" }
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Nome"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Name"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Nombre"
+                                }
                             }
                         },
                         "companyPlaceholder": {
                             "title": "Placeholder — Empresa",
                             "type": "object",
                             "properties": {
-                                "pt": { "title": "Português", "type": "string", "default": "Empresa" },
-                                "en": { "title": "English", "type": "string", "default": "Company" },
-                                "es": { "title": "Español", "type": "string", "default": "Empresa" }
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Empresa"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Company"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Empresa"
+                                }
                             }
                         },
                         "emailPlaceholder": {
                             "title": "Placeholder — E-mail",
                             "type": "object",
                             "properties": {
-                                "pt": { "title": "Português", "type": "string", "default": "E-mail" },
-                                "en": { "title": "English", "type": "string", "default": "E-mail" },
-                                "es": { "title": "Español", "type": "string", "default": "Correo electrónico" }
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "E-mail"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "E-mail"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Correo electrónico"
+                                }
                             }
                         },
                         "phonePlaceholder": {
                             "title": "Placeholder — Telefone",
                             "type": "object",
                             "properties": {
-                                "pt": { "title": "Português", "type": "string", "default": "Telefone" },
-                                "en": { "title": "English", "type": "string", "default": "Phone" },
-                                "es": { "title": "Español", "type": "string", "default": "Teléfono" }
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Telefone"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Phone"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Teléfono"
+                                }
                             }
                         },
                         "submitLabel": {
                             "title": "Texto do botão",
                             "type": "object",
                             "properties": {
-                                "pt": { "title": "Português", "type": "string", "default": "Enviar" },
-                                "en": { "title": "English", "type": "string", "default": "Send" },
-                                "es": { "title": "Español", "type": "string", "default": "Enviar" }
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Enviar"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Send"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Enviar"
+                                }
                             }
                         }
                     }
@@ -236,16 +385,31 @@
                             "type": {
                                 "title": "Tipo de coluna",
                                 "type": "string",
-                                "enum": ["social", "links", "richtext", "email", "phone"],
+                                "enum": [
+                                    "social",
+                                    "links",
+                                    "richtext",
+                                    "email",
+                                    "phone"
+                                ],
                                 "default": "links"
                             },
                             "title": {
                                 "title": "Título da coluna",
                                 "type": "object",
                                 "properties": {
-                                    "pt": { "title": "Português", "type": "string" },
-                                    "en": { "title": "English", "type": "string" },
-                                    "es": { "title": "Español", "type": "string" }
+                                    "pt": {
+                                        "title": "Português",
+                                        "type": "string"
+                                    },
+                                    "en": {
+                                        "title": "English",
+                                        "type": "string"
+                                    },
+                                    "es": {
+                                        "title": "Español",
+                                        "type": "string"
+                                    }
                                 }
                             }
                         },
@@ -254,7 +418,11 @@
                                 "oneOf": [
                                     {
                                         "properties": {
-                                            "type": { "enum": ["social"] },
+                                            "type": {
+                                                "enum": [
+                                                    "social"
+                                                ]
+                                            },
                                             "socialItems": {
                                                 "title": "Redes sociais",
                                                 "type": "array",
@@ -262,8 +430,17 @@
                                                     "title": "Rede social",
                                                     "type": "object",
                                                     "properties": {
-                                                        "icon": { "title": "Ícone", "type": "string", "widget": { "ui:widget": "media-gallery" } },
-                                                        "url": { "title": "Link", "type": "string" }
+                                                        "icon": {
+                                                            "title": "Ícone",
+                                                            "type": "string",
+                                                            "widget": {
+                                                                "ui:widget": "media-gallery"
+                                                            }
+                                                        },
+                                                        "url": {
+                                                            "title": "Link",
+                                                            "type": "string"
+                                                        }
                                                     }
                                                 }
                                             }
@@ -271,7 +448,11 @@
                                     },
                                     {
                                         "properties": {
-                                            "type": { "enum": ["links"] },
+                                            "type": {
+                                                "enum": [
+                                                    "links"
+                                                ]
+                                            },
                                             "links": {
                                                 "title": "Links",
                                                 "type": "array",
@@ -283,12 +464,24 @@
                                                             "title": "Rótulo",
                                                             "type": "object",
                                                             "properties": {
-                                                                "pt": { "title": "Português", "type": "string" },
-                                                                "en": { "title": "English", "type": "string" },
-                                                                "es": { "title": "Español", "type": "string" }
+                                                                "pt": {
+                                                                    "title": "Português",
+                                                                    "type": "string"
+                                                                },
+                                                                "en": {
+                                                                    "title": "English",
+                                                                    "type": "string"
+                                                                },
+                                                                "es": {
+                                                                    "title": "Español",
+                                                                    "type": "string"
+                                                                }
                                                             }
                                                         },
-                                                        "url": { "title": "Link", "type": "string" }
+                                                        "url": {
+                                                            "title": "Link",
+                                                            "type": "string"
+                                                        }
                                                     }
                                                 }
                                             }
@@ -296,28 +489,64 @@
                                     },
                                     {
                                         "properties": {
-                                            "type": { "enum": ["richtext"] },
+                                            "type": {
+                                                "enum": [
+                                                    "richtext"
+                                                ]
+                                            },
                                             "body": {
                                                 "title": "Texto (rich text)",
                                                 "type": "object",
                                                 "properties": {
-                                                    "pt": { "title": "Português", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
-                                                    "en": { "title": "English", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
-                                                    "es": { "title": "Español", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } }
+                                                    "pt": {
+                                                        "title": "Português",
+                                                        "type": "string",
+                                                        "widget": {
+                                                            "ui:widget": "draftjs-rich-text"
+                                                        }
+                                                    },
+                                                    "en": {
+                                                        "title": "English",
+                                                        "type": "string",
+                                                        "widget": {
+                                                            "ui:widget": "draftjs-rich-text"
+                                                        }
+                                                    },
+                                                    "es": {
+                                                        "title": "Español",
+                                                        "type": "string",
+                                                        "widget": {
+                                                            "ui:widget": "draftjs-rich-text"
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
                                     },
                                     {
                                         "properties": {
-                                            "type": { "enum": ["email"] },
-                                            "email": { "title": "E-mail", "type": "string" }
+                                            "type": {
+                                                "enum": [
+                                                    "email"
+                                                ]
+                                            },
+                                            "email": {
+                                                "title": "E-mail",
+                                                "type": "string"
+                                            }
                                         }
                                     },
                                     {
                                         "properties": {
-                                            "type": { "enum": ["phone"] },
-                                            "phone": { "title": "Telefone", "type": "string" }
+                                            "type": {
+                                                "enum": [
+                                                    "phone"
+                                                ]
+                                            },
+                                            "phone": {
+                                                "title": "Telefone",
+                                                "type": "string"
+                                            }
                                         }
                                     }
                                 ]
@@ -341,12 +570,24 @@
                                 "title": "Rótulo",
                                 "type": "object",
                                 "properties": {
-                                    "pt": { "title": "Português", "type": "string" },
-                                    "en": { "title": "English", "type": "string" },
-                                    "es": { "title": "Español", "type": "string" }
+                                    "pt": {
+                                        "title": "Português",
+                                        "type": "string"
+                                    },
+                                    "en": {
+                                        "title": "English",
+                                        "type": "string"
+                                    },
+                                    "es": {
+                                        "title": "Español",
+                                        "type": "string"
+                                    }
                                 }
                             },
-                            "url": { "title": "Link", "type": "string" }
+                            "url": {
+                                "title": "Link",
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -364,9 +605,19 @@
                     "title": "Título",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "default": "Fazemos parte do sucesso de grandes marcas" },
-                        "en": { "title": "English", "type": "string" },
-                        "es": { "title": "Español", "type": "string" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Fazemos parte do sucesso de grandes marcas"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
                     }
                 },
                 "logos": {
@@ -376,23 +627,56 @@
                         "title": "Logo",
                         "type": "object",
                         "properties": {
-                            "logo": { "title": "Logo (imagem)", "type": "string", "widget": { "ui:widget": "media-gallery" } },
-                            "name": { "title": "Nome (opcional — usado no alt da imagem)", "type": "string" }
+                            "logo": {
+                                "title": "Logo (imagem)",
+                                "type": "string",
+                                "widget": {
+                                    "ui:widget": "media-gallery"
+                                }
+                            },
+                            "name": {
+                                "title": "Nome (opcional — usado no alt da imagem)",
+                                "type": "string"
+                            }
                         }
                     }
                 },
-                "countMobile": { "title": "Qtd. de logos (mobile)", "type": "integer", "default": 9 },
-                "countDesktop": { "title": "Qtd. de logos (desktop)", "type": "integer", "default": 18 },
+                "countMobile": {
+                    "title": "Qtd. de logos (mobile)",
+                    "type": "integer",
+                    "default": 9
+                },
+                "countDesktop": {
+                    "title": "Qtd. de logos (desktop)",
+                    "type": "integer",
+                    "default": 18
+                },
                 "moreLabel": {
                     "title": "Botão 'ver mais' — texto",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "default": "Ver mais" },
-                        "en": { "title": "English", "type": "string", "default": "See more" },
-                        "es": { "title": "Español", "type": "string", "default": "Ver más" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Ver mais"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "default": "See more"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "default": "Ver más"
+                        }
                     }
                 },
-                "moreUrl": { "title": "Botão 'ver mais' — link", "type": "string", "default": "/clientes" }
+                "moreUrl": {
+                    "title": "Botão 'ver mais' — link",
+                    "type": "string",
+                    "default": "/clientes"
+                }
             }
         }
     },
@@ -407,18 +691,37 @@
                     "title": "Título",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "default": "Nosso ecossistema" },
-                        "en": { "title": "English", "type": "string" },
-                        "es": { "title": "Español", "type": "string" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Nosso ecossistema"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
                     }
                 },
                 "description": {
                     "title": "Descrição",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string" },
-                        "en": { "title": "English", "type": "string" },
-                        "es": { "title": "Español", "type": "string" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
                     }
                 },
                 "categories": {
@@ -432,9 +735,18 @@
                                 "title": "Nome da categoria",
                                 "type": "object",
                                 "properties": {
-                                    "pt": { "title": "Português", "type": "string" },
-                                    "en": { "title": "English", "type": "string" },
-                                    "es": { "title": "Español", "type": "string" }
+                                    "pt": {
+                                        "title": "Português",
+                                        "type": "string"
+                                    },
+                                    "en": {
+                                        "title": "English",
+                                        "type": "string"
+                                    },
+                                    "es": {
+                                        "title": "Español",
+                                        "type": "string"
+                                    }
                                 }
                             },
                             "tags": {
@@ -448,9 +760,18 @@
                                             "title": "Texto",
                                             "type": "object",
                                             "properties": {
-                                                "pt": { "title": "Português", "type": "string" },
-                                                "en": { "title": "English", "type": "string" },
-                                                "es": { "title": "Español", "type": "string" }
+                                                "pt": {
+                                                    "title": "Português",
+                                                    "type": "string"
+                                                },
+                                                "en": {
+                                                    "title": "English",
+                                                    "type": "string"
+                                                },
+                                                "es": {
+                                                    "title": "Español",
+                                                    "type": "string"
+                                                }
                                             }
                                         }
                                     }
@@ -463,12 +784,33 @@
                     "title": "Botão — texto",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "default": "Explorar todas as soluções" },
-                        "en": { "title": "English", "type": "string", "default": "Explore all solutions" },
-                        "es": { "title": "Español", "type": "string", "default": "Explorar todas las soluciones" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Explorar todas as soluções"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "default": "Explore all solutions"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "default": "Explorar todas las soluciones"
+                        }
                     }
                 },
-                "ctaUrl": { "title": "Botão — link", "type": "string", "default": "/solucoes" }
+                "ctaUrl": {
+                    "title": "Botão — link",
+                    "type": "string",
+                    "default": "/solucoes"
+                },
+                "active": {
+                    "title": "Ativo?",
+                    "type": "boolean",
+                    "default": false
+                }
             }
         }
     },
@@ -483,18 +825,46 @@
                     "title": "Citação (texto rico)",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
-                        "en": { "title": "English", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
-                        "es": { "title": "Español", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        }
                     }
                 },
                 "listTitle": {
                     "title": "Título da lista",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "default": "Nossa metodologia" },
-                        "en": { "title": "English", "type": "string" },
-                        "es": { "title": "Español", "type": "string" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Nossa metodologia"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
                     }
                 },
                 "items": {
@@ -508,9 +878,18 @@
                                 "title": "Texto",
                                 "type": "object",
                                 "properties": {
-                                    "pt": { "title": "Português", "type": "string" },
-                                    "en": { "title": "English", "type": "string" },
-                                    "es": { "title": "Español", "type": "string" }
+                                    "pt": {
+                                        "title": "Português",
+                                        "type": "string"
+                                    },
+                                    "en": {
+                                        "title": "English",
+                                        "type": "string"
+                                    },
+                                    "es": {
+                                        "title": "Español",
+                                        "type": "string"
+                                    }
                                 }
                             }
                         }
@@ -526,7 +905,11 @@
             "description": "Exibe o grid de logos (cadastrados no content-type Clientes) nesta página, sempre limitado à quantidade mobile/desktop com alternância. Marque para exibir o botão 'ver mais'; desmarque para ocultar o botão.",
             "type": "object",
             "properties": {
-                "showMore": { "title": "Exibir botão 'ver mais'?", "type": "boolean", "default": true }
+                "showMore": {
+                    "title": "Exibir botão 'ver mais'?",
+                    "type": "boolean",
+                    "default": true
+                }
             }
         }
     },
@@ -537,24 +920,51 @@
             "description": "Cadastre AQUI todo o conteúdo de um case (uma vez só). Use no content-type 'Case'. O card (logo, título, tags, imagem) aparece nas listagens; os demais campos montam a página /cases/<slug>. O caminho (slug) fica em Configurações → SEO (ex.: /cases/luz-da-lua).",
             "type": "object",
             "properties": {
-                "client": { "title": "Cliente (nome — usado no breadcrumb e no alt)", "type": "string" },
-                "logo": { "title": "Logo do cliente (card)", "type": "string", "widget": { "ui:widget": "media-gallery" } },
+                "client": {
+                    "title": "Cliente (nome — usado no breadcrumb e no alt)",
+                    "type": "string"
+                },
+                "logo": {
+                    "title": "Logo do cliente (card)",
+                    "type": "string",
+                    "widget": {
+                        "ui:widget": "media-gallery"
+                    }
+                },
                 "title": {
                     "title": "Título / headline",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string" },
-                        "en": { "title": "English", "type": "string" },
-                        "es": { "title": "Español", "type": "string" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
                     }
                 },
                 "summary": {
                     "title": "Resumo (subtítulo abaixo do título)",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string" },
-                        "en": { "title": "English", "type": "string" },
-                        "es": { "title": "Español", "type": "string" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
                     }
                 },
                 "tags": {
@@ -568,9 +978,18 @@
                                 "title": "Texto",
                                 "type": "object",
                                 "properties": {
-                                    "pt": { "title": "Português", "type": "string" },
-                                    "en": { "title": "English", "type": "string" },
-                                    "es": { "title": "Español", "type": "string" }
+                                    "pt": {
+                                        "title": "Português",
+                                        "type": "string"
+                                    },
+                                    "en": {
+                                        "title": "English",
+                                        "type": "string"
+                                    },
+                                    "es": {
+                                        "title": "Español",
+                                        "type": "string"
+                                    }
                                 }
                             }
                         }
@@ -583,14 +1002,29 @@
                         "title": "Imagem",
                         "type": "object",
                         "properties": {
-                            "image": { "title": "Imagem", "type": "string", "widget": { "ui:widget": "media-gallery" } },
+                            "image": {
+                                "title": "Imagem",
+                                "type": "string",
+                                "widget": {
+                                    "ui:widget": "media-gallery"
+                                }
+                            },
                             "alt": {
                                 "title": "Texto alternativo",
                                 "type": "object",
                                 "properties": {
-                                    "pt": { "title": "Português", "type": "string" },
-                                    "en": { "title": "English", "type": "string" },
-                                    "es": { "title": "Español", "type": "string" }
+                                    "pt": {
+                                        "title": "Português",
+                                        "type": "string"
+                                    },
+                                    "en": {
+                                        "title": "English",
+                                        "type": "string"
+                                    },
+                                    "es": {
+                                        "title": "Español",
+                                        "type": "string"
+                                    }
                                 }
                             }
                         }
@@ -600,34 +1034,94 @@
                     "title": "Desafio (texto rico)",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
-                        "en": { "title": "English", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
-                        "es": { "title": "Español", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        }
                     }
                 },
                 "solution": {
                     "title": "Solução (texto rico)",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
-                        "en": { "title": "English", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
-                        "es": { "title": "Español", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        }
                     }
                 },
                 "testimonial": {
                     "title": "Depoimento",
                     "type": "object",
                     "properties": {
-                        "image": { "title": "Imagem ou vídeo do depoimento", "type": "string", "widget": { "ui:widget": "media-gallery" } }
+                        "image": {
+                            "title": "Imagem ou vídeo do depoimento",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "media-gallery"
+                            }
+                        }
                     }
                 },
                 "results": {
                     "title": "Resultados (texto rico)",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
-                        "en": { "title": "English", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } },
-                        "es": { "title": "Español", "type": "string", "widget": { "ui:widget": "draftjs-rich-text" } }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "widget": {
+                                "ui:widget": "draftjs-rich-text"
+                            }
+                        }
                     }
                 }
             }
@@ -644,13 +1138,33 @@
                     "title": "Título",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "default": "Nossos Cases" },
-                        "en": { "title": "English", "type": "string" },
-                        "es": { "title": "Español", "type": "string" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Nossos Cases"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
                     }
                 },
-                "allCases": { "title": "Exibir todos os cases?", "description": "Se marcado, ignora a lista de slugs e mostra todos os cases publicados.", "type": "boolean", "default": false },
-                "featured": { "title": "1º card em destaque (desktop)?", "description": "No desktop, o primeiro card ocupa o dobro da largura (layout da home). Desmarque para grid de colunas iguais.", "type": "boolean", "default": true },
+                "allCases": {
+                    "title": "Exibir todos os cases?",
+                    "description": "Se marcado, ignora a lista de slugs e mostra todos os cases publicados.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "featured": {
+                    "title": "1º card em destaque (desktop)?",
+                    "description": "No desktop, o primeiro card ocupa o dobro da largura (layout da home). Desmarque para grid de colunas iguais.",
+                    "type": "boolean",
+                    "default": true
+                },
                 "caseSlugs": {
                     "title": "Cases (por slug)",
                     "type": "array",
@@ -658,21 +1172,44 @@
                         "title": "Case",
                         "type": "object",
                         "properties": {
-                            "slug": { "title": "Slug do case (ex.: luz-da-lua ou /cases/luz-da-lua)", "type": "string" }
+                            "slug": {
+                                "title": "Slug do case (ex.: luz-da-lua ou /cases/luz-da-lua)",
+                                "type": "string"
+                            }
                         }
                     }
                 },
-                "showMore": { "title": "Exibir botão 'ver mais'?", "type": "boolean", "default": true },
+                "showMore": {
+                    "title": "Exibir botão 'ver mais'?",
+                    "type": "boolean",
+                    "default": true
+                },
                 "moreLabel": {
                     "title": "Botão 'ver mais' — texto",
                     "type": "object",
                     "properties": {
-                        "pt": { "title": "Português", "type": "string", "default": "Ver mais cases" },
-                        "en": { "title": "English", "type": "string", "default": "See more cases" },
-                        "es": { "title": "Español", "type": "string", "default": "Ver más casos" }
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Ver mais cases"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "default": "See more cases"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "default": "Ver más casos"
+                        }
                     }
                 },
-                "moreUrl": { "title": "Botão 'ver mais' — link", "type": "string", "default": "/cases" }
+                "moreUrl": {
+                    "title": "Botão 'ver mais' — link",
+                    "type": "string",
+                    "default": "/cases"
+                }
             }
         }
     }

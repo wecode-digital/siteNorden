@@ -16,4 +16,5 @@ export interface EcosystemProps {
   categories?: EcosystemCategory[];
   ctaLabel?: LocalizedText;
   ctaUrl?: string;
+  active?:boolean
 }

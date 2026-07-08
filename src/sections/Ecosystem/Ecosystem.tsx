@@ -17,10 +17,13 @@ export function Ecosystem({
   categories = [],
   ctaLabel,
   ctaUrl,
+  active
 }: EcosystemProps) {
   // Revela a seção quando ela aparece "pela metade" (o topo cruza o meio da
   // tela). One-shot. As tags surgem da esquerda para a direita, uma por vez
   // (delay por --tag-delay).
+
+  console.log("props ", ctaUrl, active)
   const { ref: sectionRef, visible } = useRevealOnScroll<HTMLElement>();
 
   if (!title && categories.length === 0) return null;
@@ -78,7 +81,7 @@ export function Ecosystem({
         );
       })}
 
-      {ctaLabel && (
+      {active && ctaLabel && (
         <Link href={ctaUrl || "/solucoes"} className={styles.cta}>
           <AnimatedText value={ctaLabel} />
         </Link>
