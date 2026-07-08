@@ -1,15 +1,33 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
+import { getAllCases, getAllContent } from "@/lib/cms";
 
 /**
  * Revalidação on-demand (ISR). Configurar o webhook de releases do VTEX
  * Headless CMS para chamar:
- *   POST https://<dominio>/api/revalidate?secret=<CMS_REVALIDATE_SECRET>
+ *   POST https://<dominio>/api/revalidate?secret=<CMS_REVALIDATE_SECRET>&path=all
  *
- * Ao publicar conteúdo no CMS, o webhook dispara e a Home é regenerada.
- * Quando houver mais páginas, passar `?path=/rota` para revalidar caminhos específicos.
+ * O webhook do CMS é uma única URL fixa (não distingue content type), então
+ * `path=all` revalida TODAS as páginas conhecidas de uma vez — é o valor
+ * recomendado para o campo do CMS. `?path=/rota` revalida só um caminho
+ * específico (útil para testar manualmente uma página isolada).
  */
 export const dynamic = "force-dynamic";
+
+/** Home + listagem de cases + cada case + cada landing page publicada. */
+async function getAllKnownPaths(): Promise<string[]> {
+  const [cases, landingPages] = await Promise.all([
+    getAllCases(),
+    getAllContent("landingPage"),
+  ]);
+
+  const casePaths = cases.map((c) => c.slug).filter((slug): slug is string => Boolean(slug));
+  const landingPaths = landingPages
+    .map((doc) => (doc.settings as { seo?: { slug?: string } } | undefined)?.seo?.slug)
+    .filter((slug): slug is string => Boolean(slug));
+
+  return [...new Set(["/", "/cases", ...casePaths, ...landingPaths])];
+}
 
 export async function POST(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get("secret");
@@ -22,6 +40,13 @@ export async function POST(request: NextRequest) {
   }
 
   const path = request.nextUrl.searchParams.get("path") || "/";
+
+  if (path === "all") {
+    const paths = await getAllKnownPaths();
+    paths.forEach((p) => revalidatePath(p));
+    return NextResponse.json({ revalidated: true, paths, now: Date.now() });
+  }
+
   revalidatePath(path);
 
   return NextResponse.json({ revalidated: true, path, now: Date.now() });
