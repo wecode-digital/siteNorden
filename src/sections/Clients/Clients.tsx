@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/i18n/LocaleProvider";
+import { localizedHref } from "@/i18n/routing";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Clients.module.scss";
 import type { ClientsProps } from "./types";
@@ -23,7 +24,7 @@ type Slot = { index: number; visible: boolean };
  * Título, logos e config vêm da section global "Clients" (injetada no SSR).
  */
 export function Clients({ config, showMore = true }: ClientsProps) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const pool = (config?.logos ?? []).filter((c) => c?.logo);
   const n = pool.length;
 
@@ -135,7 +136,7 @@ export function Clients({ config, showMore = true }: ClientsProps) {
 
       {showMore && (
         <div className={styles.more}>
-          <Link href={moreUrl} className={styles.moreButton}>
+          <Link href={localizedHref(moreUrl, locale)} className={styles.moreButton}>
             {moreLabel}
           </Link>
         </div>

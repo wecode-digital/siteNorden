@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { localizedHref } from "@/i18n/routing";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Header.module.scss";
 import { LanguageSelector } from "./LanguageSelector";
@@ -29,10 +31,11 @@ export function Header({ data }: { data?: HeaderData | null }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
+  const { locale } = useLocale();
 
   // Só a Home tem o hero atrás do header (estado transparente no topo).
   // Nas demais páginas o header já vem branco.
-  const isHome = pathname === "/";
+  const isHome = pathname === localizedHref("/", locale);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -57,7 +60,7 @@ export function Header({ data }: { data?: HeaderData | null }) {
     return () => observer.disconnect();
   }, []);
 
-  const contactUrl = resolveContactUrl(data?.contactUrl);
+  const contactUrl = localizedHref(resolveContactUrl(data?.contactUrl), locale);
   const menuItems = data?.showMenuItems ? data?.menuItems ?? [] : [];
   const solidHeader = scrolled || !isHome;
 
@@ -67,7 +70,7 @@ export function Header({ data }: { data?: HeaderData | null }) {
         ref={headerRef}
         className={`${styles.header} ${solidHeader ? styles.scrolled : ""}`}
       >
-        <Link href="/" className={styles.logo} aria-label="Norden — página inicial">
+        <Link href={localizedHref("/", locale)} className={styles.logo} aria-label="Norden — página inicial">
           <NordenLogo />
         </Link>
 
@@ -76,7 +79,7 @@ export function Header({ data }: { data?: HeaderData | null }) {
           {menuItems.map((item, index) => (
             <Link
               key={index}
-              href={item.url || "#"}
+              href={localizedHref(item.url || "#", locale)}
               className={`${styles.navLink} ${rethinkSans.className}`}
             >
               <AnimatedText value={item.label} />

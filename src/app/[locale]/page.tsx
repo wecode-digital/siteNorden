@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { Locale } from "@/i18n/config";
 import { enrichSections, getHomeSections, getHomeSeo } from "@/lib/cms";
 import { buildMetadata } from "@/lib/seo";
 import { SectionsRenderer } from "@/sections/SectionsRenderer";
@@ -10,12 +11,15 @@ import { SectionsRenderer } from "@/sections/SectionsRenderer";
  */
 export const revalidate = false;
 
-export async function generateMetadata(): Promise<Metadata> {
+type Params = { params: Promise<{ locale: Locale }> };
+
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const { locale } = await params;
   const seo = await getHomeSeo();
   return buildMetadata({
     title: seo?.title || "Norden",
     description: seo?.description,
-    path: "/",
+    path: `/${locale}`,
     canonical: seo?.canonical,
   });
 }

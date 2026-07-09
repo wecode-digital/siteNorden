@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import type { Locale } from "@/i18n/config";
 import { enrichSections, getAllContent, getLandingPage } from "@/lib/cms";
 import { buildMetadata } from "@/lib/seo";
 import { SectionsRenderer } from "@/sections/SectionsRenderer";
@@ -7,11 +8,13 @@ import { SectionsRenderer } from "@/sections/SectionsRenderer";
 /**
  * Rota dinâmica para landing pages do CMS (content-type `landingPage`).
  * Ex.: /clientes → busca a landing page com `settings.seo.slug === "/clientes"`
- * e renderiza as sections. ISR on-demand (revalida via webhook do CMS).
+ * e renderiza as sections (slug sem prefixo de idioma — é a chave de busca no
+ * CMS; o prefixo é só de roteamento, ver `params.locale`). ISR on-demand
+ * (revalida via webhook do CMS).
  */
 export const revalidate = false;
 
-type Params = { params: Promise<{ slug: string[] }> };
+type Params = { params: Promise<{ locale: Locale; slug: string[] }> };
 
 const toPath = (slug: string[]) => `/${slug.join("/")}`;
 
@@ -33,14 +36,14 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const doc = await getLandingPage(toPath(slug));
   const seo = (doc?.settings as { seo?: LandingSeo } | undefined)?.seo;
   if (!seo) return {};
   return buildMetadata({
     title: seo.title,
     description: seo.description,
-    path: toPath(slug),
+    path: `/${locale}${toPath(slug)}`,
     canonical: seo.canonical,
   });
 }

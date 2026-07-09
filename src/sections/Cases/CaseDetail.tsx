@@ -3,6 +3,7 @@
 import Link from "next/link";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { useLocale } from "@/i18n/LocaleProvider";
+import { localizedHref } from "@/i18n/routing";
 import type { LocalizedText } from "@/i18n/text";
 import { draftToHtml } from "@/lib/draftToHtml";
 import styles from "./CaseDetail.module.scss";
@@ -54,14 +55,14 @@ function RichBlock({ value }: { value?: LocalizedText }) {
 }
 
 export function CaseDetail({ content }: CaseDetailProps) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const { client, title, summary, tags, gallery = [], testimonial } = content;
 
   return (
     <article className={styles.case}>
       {/* Breadcrumb */}
       <nav className={styles.breadcrumb} aria-label="breadcrumb">
-        <Link href="/cases" className={styles.crumbLink}>
+        <Link href={localizedHref("/cases", locale)} className={styles.crumbLink}>
           <AnimatedText value={CASES_LABEL} />
         </Link>
         <span className={styles.crumbSep}>/</span>

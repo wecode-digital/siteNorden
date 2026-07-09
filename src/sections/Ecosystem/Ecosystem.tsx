@@ -4,6 +4,8 @@ import { type CSSProperties } from "react";
 import Link from "next/link";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { localizedHref } from "@/i18n/routing";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Ecosystem.module.scss";
 import type { EcosystemProps } from "./types";
@@ -23,7 +25,7 @@ export function Ecosystem({
   // tela). One-shot. As tags surgem da esquerda para a direita, uma por vez
   // (delay por --tag-delay).
 
-  console.log("props ", ctaUrl, active)
+  const { locale } = useLocale();
   const { ref: sectionRef, visible } = useRevealOnScroll<HTMLElement>();
 
   if (!title && categories.length === 0) return null;
@@ -82,7 +84,7 @@ export function Ecosystem({
       })}
 
       {active && ctaLabel && (
-        <Link href={ctaUrl || "/solucoes"} className={styles.cta}>
+        <Link href={localizedHref(ctaUrl || "/solucoes", locale)} className={styles.cta}>
           <AnimatedText value={ctaLabel} />
         </Link>
       )}

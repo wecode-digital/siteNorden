@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, type MouseEvent } from "react";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { localizedHref } from "@/i18n/routing";
 import { rethinkSans } from "@/lib/fonts";
 import { LanguageSelector } from "./LanguageSelector";
 import styles from "./MobileMenu.module.scss";
@@ -49,8 +51,9 @@ export function MobileMenu({
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
+  const { locale } = useLocale();
   const menuItems = data?.showMenuItems ? data?.menuItems ?? [] : [];
-  const contactUrl = resolveContactUrl(data?.contactUrl);
+  const contactUrl = localizedHref(resolveContactUrl(data?.contactUrl), locale);
 
   // Fecha o drawer e, se for o âncora do formulário (#contato), rola até ele
   // manualmente — clique repetido não muda o hash, então o navegador não
@@ -92,7 +95,7 @@ export function MobileMenu({
         {menuItems.map((item, index) => (
           <Link
             key={index}
-            href={item.url || "#"}
+            href={localizedHref(item.url || "#", locale)}
             className={`${styles.link} ${rethinkSans.className}`}
             onClick={onClose}
           >

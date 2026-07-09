@@ -3,6 +3,7 @@
 import Link from "next/link";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { useLocale } from "@/i18n/LocaleProvider";
+import { localizedHref } from "@/i18n/routing";
 import { draftToHtml } from "@/lib/draftToHtml";
 import styles from "./Footer.module.scss";
 import type { FooterColumn } from "./types";
@@ -14,7 +15,7 @@ import type { FooterColumn } from "./types";
  * - richtext: texto em markdown (trilíngue)
  */
 export function FooterColumns({ columns }: { columns?: FooterColumn[] }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   if (!columns?.length) return null;
 
   return (
@@ -53,7 +54,7 @@ export function FooterColumns({ columns }: { columns?: FooterColumn[] }) {
             <ul className={styles.linkList}>
               {column.links?.map((item, i) => (
                 <li key={i}>
-                  <Link href={item.url || "#"} className={styles.link}>
+                  <Link href={localizedHref(item.url || "#", locale)} className={styles.link}>
                     <AnimatedText value={item.label} />
                   </Link>
                 </li>

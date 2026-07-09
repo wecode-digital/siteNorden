@@ -3,7 +3,11 @@ export const LOCALES = ["pt", "en", "es"] as const;
 
 export type Locale = (typeof LOCALES)[number];
 
-/** Idioma padrão (exibido antes de qualquer escolha do usuário). */
+/**
+ * Idioma padrão — usado só como fallback quando não dá pra detectar preferência
+ * (sem cookie salvo). Não roda "sem prefixo": todo idioma, incluindo este,
+ * sempre aparece na URL (`/pt/...`, `/en/...`, `/es/...`).
+ */
 export const DEFAULT_LOCALE: Locale = "pt";
 
 /** Cookie que persiste a preferência de idioma. */

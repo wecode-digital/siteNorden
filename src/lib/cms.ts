@@ -14,6 +14,8 @@ import ClientCMS from "@vtex/client-cms";
 import type { ContentData, ContentPage } from "@vtex/client-cms";
 import type { HeaderData } from "@/components/Header/types";
 import type { FooterData } from "@/components/Footer/types";
+import { LOCALES } from "@/i18n/config";
+import { localizedHref } from "@/i18n/routing";
 import type { ClientsConfig } from "@/sections/Clients/types";
 import type { CaseContent, CaseSummary } from "@/sections/Cases/types";
 
@@ -163,10 +165,10 @@ export async function getHomeSeo(): Promise<PageSeo | null> {
 }
 
 /**
- * Todos os caminhos públicos conhecidos do site: Home, listagem de cases,
- * cada case e cada landing page publicados. Usado pelo sitemap e pela
- * revalidação on-demand (`?path=all`, já que o webhook do CMS é uma única URL
- * fixa e não distingue content type).
+ * Todos os caminhos públicos conhecidos do site, já com prefixo de idioma
+ * (`/pt/...`, `/en/...`, `/es/...` — as 3 URLs são simétricas, nenhuma roda
+ * sem prefixo). Usado pelo sitemap e pela revalidação on-demand (`?path=all`,
+ * já que o webhook do CMS é uma única URL fixa e não distingue content type).
  */
 export async function getAllKnownPaths(): Promise<string[]> {
   const [cases, landingPages] = await Promise.all([
@@ -179,7 +181,9 @@ export async function getAllKnownPaths(): Promise<string[]> {
     .map((doc) => (doc.settings as { seo?: { slug?: string } } | undefined)?.seo?.slug)
     .filter((slug): slug is string => Boolean(slug));
 
-  return [...new Set(["/", "/cases", ...casePaths, ...landingPaths])];
+  const basePaths = [...new Set(["/", "/cases", ...casePaths, ...landingPaths])];
+
+  return LOCALES.flatMap((locale) => basePaths.map((path) => localizedHref(path, locale)));
 }
 
 /**

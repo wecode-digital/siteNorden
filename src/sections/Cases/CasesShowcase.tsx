@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
-import AnimatedText from "@/components/AnimatedText/AnimatedText";
-import styles from "./CasesShowcase.module.scss";
 import { usePathname } from "next/navigation";
+import AnimatedText from "@/components/AnimatedText/AnimatedText";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { localizedHref } from "@/i18n/routing";
+import styles from "./CasesShowcase.module.scss";
 import type { CaseSummary, CasesShowcaseProps } from "./types";
-import path from "path";
 
 const DEFAULT_MORE = { pt: "Ver mais cases", en: "See more cases", es: "Ver más casos" };
 
@@ -96,6 +97,8 @@ export function CasesShowcase({
 
   const MAX_ITEMS = 3
   const pathname = usePathname()
+  const { locale } = useLocale();
+  const isHome = pathname === localizedHref("/", locale);
 
   return (
     <section
@@ -115,10 +118,10 @@ export function CasesShowcase({
           <div className={styles.row} key={r}>
             {row.map((item, c) => {
               const idx = r * 3 + c;
-              if ( pathname === "/" && idx > MAX_ITEMS - 1 ) return null;
+              if ( isHome && idx > MAX_ITEMS - 1 ) return null;
               const style = { "--reveal-delay": `${idx * 0.08}s` } as CSSProperties;
               return item.url ? (
-                <Link key={c} href={item.url} className={styles.card} style={style}>
+                <Link key={c} href={localizedHref(item.url, locale)} className={styles.card} style={style}>
                   <Card item={item} />
                 </Link>
               ) : (
@@ -133,7 +136,7 @@ export function CasesShowcase({
 
       {showMore && (
         <div className={styles.more}>
-          <Link href={moreUrl || "/cases"} className={styles.moreButton}>
+          <Link href={localizedHref(moreUrl || "/cases", locale)} className={styles.moreButton}>
             <AnimatedText value={moreLabel ?? DEFAULT_MORE} />
           </Link>
         </div>

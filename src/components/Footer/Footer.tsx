@@ -4,6 +4,7 @@ import Link from "next/link";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { NordenLogo } from "@/components/Header/icons";
 import { useLocale } from "@/i18n/LocaleProvider";
+import { localizedHref } from "@/i18n/routing";
 import { FooterColumns } from "./FooterColumns";
 import { Marquee } from "./Marquee";
 import { NewsletterForm } from "./NewsletterForm";
@@ -23,7 +24,7 @@ const RIGHTS = {
 };
 
 export function Footer({ data }: { data?: FooterData | null }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const copyrightName = data?.copyrightName || "Norden";
   const policyLinks = data?.policyLinks ?? [];
 
@@ -50,7 +51,7 @@ export function Footer({ data }: { data?: FooterData | null }) {
             {policyLinks.length > 0 && (
               <div className={styles.policies}>
                 {policyLinks.map((policy, index) => (
-                  <Link key={index} href={policy.url || "#"} className={styles.policyLink}>
+                  <Link key={index} href={localizedHref(policy.url || "#", locale)} className={styles.policyLink}>
                     <AnimatedText value={policy.label} />
                   </Link>
                 ))}
