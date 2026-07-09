@@ -26,15 +26,28 @@ function readCookieLocale(): Locale | null {
   return isLocale(match?.[1]) ? (match![1] as Locale) : null;
 }
 
+/** `?lang=en`/`?lang=es` na URL — útil pra mandar um link já no idioma certo pra clientes de fora. */
+function readQueryLocale(): Locale | null {
+  if (typeof window === "undefined") return null;
+  const value = new URLSearchParams(window.location.search).get("lang");
+  return isLocale(value) ? value : null;
+}
+
 /**
  * Provider de idioma (client-side). Renderiza no idioma padrão (PT) no servidor
- * e, ao montar, aplica a preferência salva no cookie — evitando divergência de
- * hidratação. A troca persiste em cookie por 1 ano.
+ * e, ao montar, aplica `?lang=` na URL (se vier) ou a preferência salva no
+ * cookie — evitando divergência de hidratação. A troca persiste em cookie por
+ * 1 ano, então um link com `?lang=` só precisa "pegar" uma vez.
  */
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
 
   useEffect(() => {
+    const fromQuery = readQueryLocale();
+    if (fromQuery) {
+      setLocale(fromQuery);
+      return;
+    }
     const saved = readCookieLocale();
     if (saved && saved !== locale) setLocaleState(saved);
     // eslint-disable-next-line react-hooks/exhaustive-deps
