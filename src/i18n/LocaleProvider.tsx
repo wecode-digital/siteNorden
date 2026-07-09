@@ -57,6 +57,16 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     setLocaleState(next);
     document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
     document.documentElement.lang = next;
+
+    // Se a URL já veio com `?lang=`, mantém sincronizado com a troca manual —
+    // senão, um reload voltaria a aplicar o valor antigo da URL (ignorando a
+    // escolha feita no seletor). Sem `?lang=` na URL, não adiciona nada (a
+    // navegação normal continua limpa, só o cookie guarda a preferência).
+    const url = new URL(window.location.href);
+    if (url.searchParams.has("lang")) {
+      url.searchParams.set("lang", next);
+      window.history.replaceState(null, "", url.toString());
+    }
   }, []);
 
   const value = useMemo<LocaleContextValue>(
