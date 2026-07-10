@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { Locale } from "@/i18n/config";
 import { enrichSections, getHomeSections, getHomeSeo } from "@/lib/cms";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, SITE_URL } from "@/lib/seo";
 import { SectionsRenderer } from "@/sections/SectionsRenderer";
 
 /**
@@ -13,6 +13,10 @@ export const revalidate = false;
 
 type Params = { params: Promise<{ locale: Locale }> };
 
+// Imagem de compartilhamento (OG) da Home — hardcoded no repo (não vem do CMS).
+// Arquivo em public/og-home.png (ideal: 1200x630px).
+const HOME_OG_IMAGE = `${SITE_URL}/og-home.png`;
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { locale } = await params;
   const seo = await getHomeSeo();
@@ -21,6 +25,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     description: seo?.description,
     path: `/${locale}`,
     canonical: seo?.canonical,
+    image: HOME_OG_IMAGE,
   });
 }
 

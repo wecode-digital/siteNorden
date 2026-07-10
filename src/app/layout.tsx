@@ -15,7 +15,12 @@ export const metadata: Metadata = {
   },
   description: "Norden",
   icons: {
-    icon: "/favicon.svg",
+    // SVG pros navegadores (mais nítido na aba); PNG à parte porque o Google
+    // não lê favicon em SVG no resultado de busca — precisa de um raster.
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-192.png", type: "image/png", sizes: "192x192" },
+    ],
   },
 };
 
