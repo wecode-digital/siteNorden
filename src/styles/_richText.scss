@@ -1,0 +1,59 @@
+/**
+ * Estilos para texto rico vindo do CMS (draft-js → HTML via `draftToHtml`).
+ * Fonte única para qualquer bloco de conteúdo rico do site (Cases, Política de
+ * Privacidade etc.) — ajustar aqui reflete em todos os usos.
+ *
+ * `rich-text`: base (mobile-first). `rich-text-desktop`: overrides de desktop,
+ * incluído dentro do breakpoint de cada seção.
+ */
+@mixin rich-text {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--norden-color-brand);
+
+  p {
+    margin: 0 0 18px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    // Título do bloco (1ª linha, cadastrada em negrito no CMS).
+    &:first-child {
+      margin-bottom: 16px;
+      font-size: 22px;
+      line-height: 1.15;
+      color: var(--norden-color-brand-deep);
+    }
+  }
+
+  strong {
+    font-weight: 500;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  a {
+    color: var(--norden-color-brand);
+    text-decoration: underline;
+  }
+
+  ul,
+  ol {
+    margin: 0 0 12px;
+    padding-left: 20px;
+  }
+}
+
+@mixin rich-text-desktop {
+  max-width: 1220px;
+  font-size: 18px;
+
+  p:first-child {
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+}

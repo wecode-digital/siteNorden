@@ -1,3 +1,5 @@
+@use "../../styles/richText" as richText;
+
 .case {
   display: flex;
   flex-direction: column;
@@ -97,47 +99,10 @@
 
 // ===== Blocos de texto rico (Desafio / Solução / Resultados) =====
 // O bloco contém o HTML do texto rico do CMS. A 1ª linha (em negrito) é o
-// título da seção; as demais são o corpo.
+// título da seção; as demais são o corpo. Estilos em src/styles/_richText.scss
+// (fonte única, compartilhada com outras seções de texto rico do site).
 .block {
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--norden-color-brand);
-
-  p {
-    margin: 0 0 18px;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    // Título da seção (Desafio / Solução / Resultados).
-    &:first-child {
-      margin-bottom: 16px;
-      font-size: 22px;
-      line-height: 1.15;
-      color: var(--norden-color-brand-deep);
-    }
-  }
-
-  strong {
-    font-weight: 500;
-  }
-
-  em {
-    font-style: italic;
-  }
-
-  a {
-    color: var(--norden-color-brand);
-    text-decoration: underline;
-  }
-
-  ul,
-  ol {
-    margin: 0 0 12px;
-    padding-left: 20px;
-  }
+  @include richText.rich-text;
 }
 
 // ===== Depoimento (só mídia, full-width) =====
@@ -202,13 +167,7 @@
   }
 
   .block {
-    max-width: 1220px;
-    font-size: 18px;
-
-    p:first-child {
-      margin-bottom: 20px;
-      font-size: 28px;
-    }
+    @include richText.rich-text-desktop;
   }
 
   .testimonialMedia {

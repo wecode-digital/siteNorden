@@ -1,0 +1,48 @@
+@use "../../styles/richText" as richText;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 20px 64px;
+  background-color: #FFF;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--norden-color-brand-deep);
+}
+
+// ===== Texto rico =====
+// Estilos em src/styles/_richText.scss (fonte única, compartilhada com /cases/<slug>).
+.block {
+  @include richText.rich-text;
+}
+
+// ===== Desktop =====
+@media (min-width: 769px) {
+  .page {
+    gap: 32px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 40px 120px;
+  }
+
+  .title {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+
+  .block {
+    @include richText.rich-text-desktop;
+  }
+}

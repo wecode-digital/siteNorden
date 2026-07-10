@@ -18,6 +18,7 @@ import { LOCALES } from "@/i18n/config";
 import { localizedHref } from "@/i18n/routing";
 import type { ClientsConfig } from "@/sections/Clients/types";
 import type { CaseContent, CaseSummary } from "@/sections/Cases/types";
+import type { PrivacyPolicyContent } from "@/sections/PrivacyPolicy/types";
 
 // --- Configuração (env-driven) ---
 const TENANT = process.env.VTEX_TENANT ?? "norden";
@@ -235,6 +236,26 @@ export async function getClientsConfig(): Promise<ClientsConfig | null> {
     return (section?.data as ClientsConfig) ?? null;
   } catch (error) {
     logCmsError("getClientsConfig()", error);
+    return null;
+  }
+}
+
+/**
+ * Conteúdo da página de Política de Privacidade (content-type `privacyPolicy`,
+ * singleton). Retorna a section "PrivacyPolicy" (título + texto rico) e o SEO
+ * (`settings.seo`). `null` se ainda não houver conteúdo publicado ou em caso
+ * de falha do CMS.
+ */
+export async function getPrivacyPolicy(): Promise<{ content: PrivacyPolicyContent; seo?: PageSeo } | null> {
+  try {
+    const res = await client.getCMSPagesByContentType("privacyPolicy", { perPage: 1 });
+    const doc = res?.data?.[0] as CmsDocument | undefined;
+    if (!doc) return null;
+    const section = doc.sections?.find((s) => s.name === "PrivacyPolicy");
+    const seo = (doc.settings as { seo?: PageSeo } | undefined)?.seo;
+    return { content: (section?.data as PrivacyPolicyContent) ?? {}, seo };
+  } catch (error) {
+    logCmsError("getPrivacyPolicy()", error);
     return null;
   }
 }
