@@ -1,0 +1,108 @@
+.atuacao {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 64px 20px 0 20px;
+  background-color: var(--norden-color-white);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.title {
+  margin: 0;
+  font-weight: 400; // Rethink Sans Regular
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep);
+}
+
+.description {
+  margin: 0;
+  font-weight: 300; // Inter Light
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--norden-color-black);
+}
+
+.imageWrap {
+  width: 100%;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out 0.08s, transform 0.5s ease-in-out 0.08s;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.mobileOnly {
+  display: block;
+}
+
+.desktopOnly {
+  display: none;
+}
+
+.visible {
+  .text,
+  .imageWrap {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text,
+  .imageWrap {
+    transition: none;
+  }
+}
+
+// ===== Desktop: texto | imagem, lado a lado =====
+@media (min-width: 769px) {
+  .atuacao {
+    flex-direction: row;
+    align-items: center;
+    gap: 64px;
+    padding: 100px 140px;
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  .text {
+    flex: 0 0 40%;
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .imageWrap {
+    flex: 1;
+  }
+
+  .mobileOnly {
+    display: none;
+  }
+
+  .desktopOnly {
+    display: block;
+  }
+}

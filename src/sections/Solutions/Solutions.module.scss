@@ -1,0 +1,261 @@
+.solutions {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 64px 20px 0 20px;
+  background-color: var(--norden-color-white);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+  font-weight: 400; // Rethink Sans Regular
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep);
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.description {
+  margin: 0;
+  font-weight: 300; // Inter Light
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--norden-color-black);
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out 0.08s, transform 0.5s ease-in-out 0.08s;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.categoryHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out var(--cat-delay, 0s),
+    transform 0.5s ease-in-out var(--cat-delay, 0s);
+}
+
+.number {
+  font-size: 12px;
+  line-height: 1.1;
+  color: var(--norden-color-brand);
+}
+
+.categoryName {
+  font-size: 18px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep);
+}
+
+// ===== Carrossel =====
+.carouselWrap {
+  position: relative;
+  width: 100%;
+}
+
+.track {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.card {
+  flex: 0 0 76.9%; // ~1.3 cards visíveis no mobile
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 6px;
+  background-color: var(--norden-color-gray-light);
+  align-items: start;
+}
+
+.cardIcon {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+}
+
+.cardTitle {
+  margin: 0;
+  font-weight: 400; // Inter Regular
+  font-size: 16px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep);
+}
+
+.cardLabel {
+  margin: 0;
+  font-weight: 300; // Inter Light
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--norden-color-brand-deep);
+}
+
+// Controles (setas + dots) — só desktop.
+.controls {
+  display: none;
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--norden-color-brand-deep);
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--norden-color-gray-medium);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dotActive {
+  background-color: var(--norden-color-brand);
+}
+
+.visible {
+  .title,
+  .description,
+  .categoryHead {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .description,
+  .categoryHead {
+    transition: none;
+  }
+}
+
+// ===== Desktop =====
+@media (min-width: 769px) {
+  .solutions {
+    gap: 80px;
+    padding: 100px 140px;
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  .head {
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .category {
+    gap: 24px;
+  }
+
+  .categoryHead {
+    gap: 12px;
+  }
+
+  .number {
+    font-size: 16px;
+  }
+
+  .categoryName {
+    font-size: 26px;
+  }
+
+  .track {
+    gap: 24px;
+  }
+
+  .card {
+    flex: 0 0 calc((100% - 3 * 24px) / 4); // 4 cards por vez
+    padding: 32px;
+  }
+
+  .cardIcon {
+    height: 32px;
+  }
+
+  .cardTitle {
+    font-size: 20px;
+  }
+
+  .cardLabel {
+    font-size: 14px;
+    color: #6e6e6e; // neutral/500
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 8px;
+  }
+}

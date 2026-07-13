@@ -1,0 +1,135 @@
+.certifications {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 64px 20px;
+  background-color: var(--norden-color-white);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.title {
+  margin: 0;
+  font-weight: 400; // Rethink Sans Regular
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep);
+}
+
+.description {
+  margin: 0;
+  font-weight: 300; // Inter Light
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--norden-color-black);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // mobile: 2 cards por linha
+  gap: 16px;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 12px;
+  border-radius: 6px;
+  background-color: var(--norden-color-gray-light);
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out var(--card-delay, 0s),
+    transform 0.5s ease-in-out var(--card-delay, 0s);
+}
+
+.cardIcon {
+  flex: 0 0 24px;
+  height: 24px;
+  width: 24px;
+  object-fit: contain;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.cardTitle {
+  margin: 0;
+  font-weight: 400; // Inter Regular
+  font-size: 14px;
+  line-height: 1.1;
+  color: var(--norden-color-black);
+}
+
+.cardDescription {
+  margin: 0;
+  font-weight: 300; // Inter Light
+  font-size: 12px;
+  line-height: 1.1;
+  color: var(--norden-color-black);
+}
+
+.visible {
+  .head,
+  .card {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .head,
+  .card {
+    transition: none;
+  }
+}
+
+// ===== Desktop =====
+@media (min-width: 769px) {
+  .certifications {
+    gap: 48px;
+    padding: 100px 140px;
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(4, 1fr); // desktop: 4 cards por linha
+    gap: 24px;
+  }
+
+  .card {
+    padding: 20px 16px;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+  }
+
+  .cardDescription {
+    font-size: 13px;
+  }
+}

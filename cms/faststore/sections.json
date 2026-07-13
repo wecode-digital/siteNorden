@@ -1274,5 +1274,333 @@
                 }
             }
         }
+    },
+    {
+        "name": "Solutions",
+        "schema": {
+            "title": "[Norden] Nossas soluções",
+            "description": "Bloco de serviços/soluções: título, descrição, categorias numeradas com tags.",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título",
+                    "type": "object",
+                    "properties": {
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Nossas soluções"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
+                    }
+                },
+                "description": {
+                    "title": "Descrição",
+                    "type": "object",
+                    "properties": {
+                        "pt": {
+                            "title": "Português",
+                            "type": "string"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
+                    }
+                },
+                "categories": {
+                    "title": "Categorias",
+                    "type": "array",
+                    "items": {
+                        "title": "Categoria",
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "title": "Nome da categoria",
+                                "type": "object",
+                                "properties": {
+                                    "pt": {
+                                        "title": "Português",
+                                        "type": "string"
+                                    },
+                                    "en": {
+                                        "title": "English",
+                                        "type": "string"
+                                    },
+                                    "es": {
+                                        "title": "Español",
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "tags": {
+                                "title": "Soluções",
+                                "type": "array",
+                                "items": {
+                                    "title": "Solução",
+                                    "type": "object",
+                                    "properties": {
+                                        "icon": {
+                                            "type": "string",
+                                            "title": "Icone",
+                                            "widget": {
+                                                "ui:widget": "media-gallery"
+                                            }
+                                        },
+                                        "title": {
+                                            "type": "object",
+                                            "title": "Título",
+                                            "properties": {
+                                                "pt": {
+                                                    "title": "Português",
+                                                    "type": "string"
+                                                },
+                                                "en": {
+                                                    "title": "English",
+                                                    "type": "string"
+                                                },
+                                                "es": {
+                                                    "title": "Español",
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "label": {
+                                            "title": "Texto",
+                                            "type": "object",
+                                            "properties": {
+                                                "pt": {
+                                                    "title": "Português",
+                                                    "type": "string"
+                                                },
+                                                "en": {
+                                                    "title": "English",
+                                                    "type": "string"
+                                                },
+                                                "es": {
+                                                    "title": "Español",
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Atuacao",
+        "schema": {
+            "title": "[Norden] Atuação 360",
+            "description": "Bloco com banner + texto ",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "object",
+                    "title": "Título",
+                    "properties": {
+                        "pt": {
+                            "title": "Português",
+                            "type": "string"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
+                    }
+                },
+                "description": {
+                    "type": "object",
+                    "title": "Descriçaõ",
+                    "properties": {
+                        "pt": {
+                            "title": "Português",
+                            "type": "string"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
+                    }
+                },
+                "image": {
+                    "type": "object",
+                    "title": "Imagem Mobile",
+                    "properties": {
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "widget" : {
+                                "ui:widget": "media-gallery"
+                            }
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "widget" : {
+                                "ui:widget": "media-gallery"
+                            }
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "widget" : {
+                                "ui:widget": "media-gallery"
+                            }
+                        }
+                    }
+                },
+                "imageDesktop": {
+                    "type": "object",
+                    "title": "Imagem Desktop",
+                    "properties": {
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "widget" : {
+                                "ui:widget": "media-gallery"
+                            }
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "widget" : {
+                                "ui:widget": "media-gallery"
+                            }
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "widget" : {
+                                "ui:widget": "media-gallery"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Certifications",
+        "schema": {
+            "title": "[Norden] Tecnologia e certificações",
+            "description": "Bloco título + descrição, seguido de cards de tecnologias e certificações (grid).",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título",
+                    "type": "object",
+                    "properties": {
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Tecnologias & Certificações"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
+                    }
+                },
+                "description": {
+                    "title": "Descrição",
+                    "type": "object",
+                    "properties": {
+                        "pt": {
+                            "title": "Português",
+                            "type": "string"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string"
+                        }
+                    }
+                },
+                "cards": {
+                    "title": "Cards",
+                    "type": "array",
+                    "items": {
+                        "title": "Card",
+                        "type": "object",
+                        "properties": {
+                            "icon": {
+                                "title": "Ícone",
+                                "type": "string",
+                                "widget": {
+                                    "ui:widget": "media-gallery"
+                                }
+                            },
+                            "title": {
+                                "title": "Título",
+                                "type": "object",
+                                "properties": {
+                                    "pt": {
+                                        "title": "Português",
+                                        "type": "string"
+                                    },
+                                    "en": {
+                                        "title": "English",
+                                        "type": "string"
+                                    },
+                                    "es": {
+                                        "title": "Español",
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "description": {
+                                "title": "Descrição",
+                                "type": "object",
+                                "properties": {
+                                    "pt": {
+                                        "title": "Português",
+                                        "type": "string"
+                                    },
+                                    "en": {
+                                        "title": "English",
+                                        "type": "string"
+                                    },
+                                    "es": {
+                                        "title": "Español",
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 ]
