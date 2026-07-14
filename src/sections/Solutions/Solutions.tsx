@@ -25,9 +25,17 @@ function ArrowIcon({ direction }: { direction: "left" | "right" }) {
 /** Carrossel de cards de uma categoria: swipe livre no mobile, setas + dots no desktop. */
 function SolutionsCarousel({ cards }: { cards: SolutionCard[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [page, setPage] = useState(0);
   const pages = Math.max(1, Math.ceil(cards.length / CARDS_PER_PAGE_DESKTOP));
 
+  // Página ativa = posição do scroll como fração do percurso total (0 → 1),
+  // mapeada pra página mais próxima. Não dá pra usar "qual card está no início":
+  // quando o total de cards não é múltiplo de 4, a última página não tem como
+  // deixar seu 1º card exatamente no início (o navegador trava o scroll no fim
+  // do conteúdo, sobrando cards "pra trás" visíveis) — a conta por card errava
+  // a última página nesse caso. Por fração do scroll, o fim sempre bate com a
+  // última página, não importa quantos cards sobraram nela.
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
@@ -36,25 +44,43 @@ function SolutionsCarousel({ cards }: { cards: SolutionCard[] }) {
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = 0;
-        const width = el.clientWidth || 1;
-        setPage(Math.round(el.scrollLeft / width));
+        const maxScroll = el.scrollWidth - el.clientWidth;
+        const progress = maxScroll > 0 ? el.scrollLeft / maxScroll : 0;
+        setPage(Math.round(progress * (pages - 1)));
       });
     };
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => el.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pages]);
 
+  // Página do meio: rola até o PRIMEIRO card dela — ponto de snap real
+  // (scroll-snap-align:start). Última página: vai até o fim do scroll (não dá
+  // pra alinhar um card ao início sem sobrar espaço vazio depois dele).
   const goTo = (index: number) => {
     const el = trackRef.current;
     if (!el) return;
-    el.scrollTo({ left: index * el.clientWidth, behavior: "smooth" });
+    if (index >= pages - 1) {
+      el.scrollTo({ left: el.scrollWidth - el.clientWidth, behavior: "smooth" });
+      return;
+    }
+    cardRefs.current[index * CARDS_PER_PAGE_DESKTOP]?.scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest",
+    });
   };
 
   return (
     <div className={styles.carouselWrap}>
       <div className={styles.track} ref={trackRef}>
         {cards.map((card, i) => (
-          <div key={i} className={styles.card}>
+          <div
+            key={i}
+            ref={(node) => {
+              cardRefs.current[i] = node;
+            }}
+            className={styles.card}
+          >
             {card.icon && (
               // eslint-disable-next-line @next/next/no-img-element
               <img className={styles.cardIcon} src={card.icon} alt="" />

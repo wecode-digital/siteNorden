@@ -1,7 +1,6 @@
 "use client";
 
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
-import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Atuacao.module.scss";
@@ -9,7 +8,6 @@ import type { AtuacaoProps } from "./types";
 
 export function Atuacao({ title, description, image, imageDesktop }: AtuacaoProps) {
   const { t } = useLocale();
-  const { ref: sectionRef, visible } = useRevealOnScroll<HTMLElement>();
 
   const mobileSrc = t(image) || t(imageDesktop);
   const desktopSrc = t(imageDesktop) || t(image);
@@ -18,7 +16,7 @@ export function Atuacao({ title, description, image, imageDesktop }: AtuacaoProp
   if (!title && !description && !mobileSrc && !desktopSrc) return null;
 
   return (
-    <section ref={sectionRef} className={`${styles.atuacao} ${visible ? styles.visible : ""}`}>
+    <section className={styles.atuacao}>
       {(title || description) && (
         <div className={styles.text}>
           {title && (
