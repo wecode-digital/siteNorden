@@ -1602,5 +1602,267 @@
                 }
             }
         }
+    },
+    {
+        "name": "Trajectory",
+        "schema": {
+            "title": "[Norden] Trajetória",
+            "description": "Título e descrição principal, com linha do tempo (ano, descrição e imagem opcional por item).",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "description": {
+                    "title": "Descrição",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "items": {
+                    "title": "Linha do tempo",
+                    "type": "array",
+                    "items": {
+                        "title": "Item",
+                        "type": "object",
+                        "properties": {
+                            "year": {
+                                "title": "Ano",
+                                "type": "string"
+                            },
+                            "description": {
+                                "title": "Descrição",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            },
+                            "image": {
+                                "title": "Imagem Mobile (opcional)",
+                                "type": "string",
+                                "widget": { "ui:widget": "media-gallery" }
+                            },
+                            "imageDesktop": {
+                                "title": "Imagem Desktop (opcional)",
+                                "type": "string",
+                                "widget": { "ui:widget": "media-gallery" }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Leadership",
+        "schema": {
+            "title": "[Norden] Nossas Lideranças",
+            "description": "Título, descrição e cards de liderança (foto, nome, cargo/descrição, LinkedIn). Uma linha no desktop (vira slider passando de 5 pessoas); coluna única no mobile.",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "description": {
+                    "title": "Descrição",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "people": {
+                    "title": "Lideranças",
+                    "type": "array",
+                    "items": {
+                        "title": "Pessoa",
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "title": "Nome",
+                                "type": "string"
+                            },
+                            "description": {
+                                "title": "Cargo / descrição",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            },
+                            "photo": {
+                                "title": "Foto Mobile (opcional)",
+                                "type": "string",
+                                "widget": { "ui:widget": "media-gallery" }
+                            },
+                            "photoDesktop": {
+                                "title": "Foto Desktop (opcional)",
+                                "type": "string",
+                                "widget": { "ui:widget": "media-gallery" }
+                            },
+                            "linkedin": {
+                                "title": "Link do LinkedIn",
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Growth",
+        "schema": {
+            "title": "[Norden] Nosso Crescimento",
+            "description": "Título/descrição + dados em destaque + diferenciais. Coluna no mobile, linha no desktop — sem carrossel.",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "description": {
+                    "title": "Descrição",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "dataItems": {
+                    "title": "Dados em destaque",
+                    "type": "array",
+                    "items": {
+                        "title": "Dado",
+                        "type": "object",
+                        "properties": {
+                            "value": {
+                                "title": "Valor (ex.: 120%, 50+)",
+                                "type": "string"
+                            },
+                            "label": {
+                                "title": "Legenda",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            }
+                        }
+                    }
+                },
+                "differentiators": {
+                    "title": "Diferenciais",
+                    "type": "array",
+                    "items": {
+                        "title": "Diferencial",
+                        "type": "object",
+                        "properties": {
+                            "image": {
+                                "title": "Imagem Mobile (opcional)",
+                                "type": "string",
+                                "widget": { "ui:widget": "media-gallery" }
+                            },
+                            "imageDesktop": {
+                                "title": "Imagem Desktop (opcional)",
+                                "type": "string",
+                                "widget": { "ui:widget": "media-gallery" }
+                            },
+                            "title": {
+                                "title": "Título",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            },
+                            "description": {
+                                "title": "Descrição",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "AboutMethodology",
+        "schema": {
+            "title": "[Norden] Nossa Metodologia",
+            "description": "Título + cards com título/descrição. Uma linha (scroll horizontal) no mobile; grid de até 3 colunas no desktop.",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
+                "cards": {
+                    "title": "Cards",
+                    "type": "array",
+                    "items": {
+                        "title": "Card",
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "title": "Título",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            },
+                            "description": {
+                                "title": "Descrição",
+                                "type": "object",
+                                "properties": {
+                                    "pt": { "title": "Português", "type": "string" },
+                                    "en": { "title": "English", "type": "string" },
+                                    "es": { "title": "Español", "type": "string" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 ]

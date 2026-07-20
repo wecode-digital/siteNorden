@@ -1,0 +1,189 @@
+.growth {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 64px 20px 56px 20px;
+  background-color: var(--norden-color-white);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+  font-weight: 400; // Rethink Sans Regular
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep);
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.description {
+  margin: 0;
+  font-weight: 300; // Inter Light
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--norden-color-black);
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out 0.08s, transform 0.5s ease-in-out 0.08s;
+}
+
+// ===== Dados em destaque + diferenciais =====
+// Grid em vez de flex-row fixa: sem carrossel, então precisa "quebrar linha"
+// graciosamente se houver mais itens do que cabem — repeat(auto-fit) resolve
+// isso sem precisar saber a quantidade de itens de antemão.
+
+
+
+.dataGrid,
+.differentiatorsGrid {
+  display: grid;
+  grid-template-columns: 1fr; // mobile: coluna única
+  gap: 24px;
+  width: 100%;
+}
+
+.dataGrid{
+  gap: 40px;
+  background-color: #F5F5F5;
+  padding: 32px 0;
+}
+
+.dataItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.dataValue {
+  margin: 0;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep);
+}
+
+.dataLabel {
+  margin: 0;
+  font-weight: 300; // Inter Light
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--norden-color-black);
+}
+
+.diffItem {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.diffImageWrap {
+  width: 100%;
+}
+
+.diffImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.mobileOnly {
+  display: block;
+}
+
+.desktopOnly {
+  display: none;
+}
+
+.diffTitle {
+  margin: 0;
+  font-weight: 400; // Rethink Sans Regular
+  font-size: 18px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep);
+}
+
+.diffDescription {
+  margin: 0;
+  font-weight: 300; // Inter Light
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--norden-color-black);
+}
+
+.visible {
+  .title,
+  .description {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .description {
+    transition: none;
+  }
+}
+
+// ===== Desktop =====
+@media (min-width: 769px) {
+  .growth {
+    gap: 56px;
+    padding: 15px 140px;
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  .head {
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .dataGrid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .differentiatorsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .dataValue {
+    font-size: 48px;
+  }
+
+  .diffTitle {
+    font-size: 20px;
+  }
+
+  .diffDescription {
+    font-size: 14px;
+  }
+
+  .mobileOnly {
+    display: none;
+  }
+
+  .desktopOnly {
+    display: block;
+  }
+}

@@ -1,0 +1,63 @@
+.controls {
+  display: none;
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--norden-color-brand-deep);
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--norden-color-gray-medium);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dotActive {
+  background-color: var(--norden-color-brand);
+}
+
+// Setas + dots só aparecem no desktop — mobile é só swipe.
+@media (min-width: 769px) {
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 24px;
+  }
+}

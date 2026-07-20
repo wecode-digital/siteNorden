@@ -1,11 +1,15 @@
 import type { ComponentType } from "react";
+import AboutMethodology from "./AboutMethodology/AboutMethodology";
 import Atuacao from "./Atuacao/Atuacao";
 import CasesShowcase from "./Cases/CasesShowcase";
 import Certifications from "./Certifications/Certifications";
 import Clients from "./Clients/Clients";
 import Ecosystem from "./Ecosystem/Ecosystem";
+import Growth from "./Growth/Growth";
+import Leadership from "./Leadership/Leadership";
 import Methodology from "./Methodology/Methodology";
 import Solutions from "./Solutions/Solutions";
+import Trajectory from "./Trajectory/Trajectory";
 import VideoHero from "./VideoHero/VideoHero";
 
 /**
@@ -23,6 +27,10 @@ export const sectionRegistry: Record<string, ComponentType<any>> = {
   Solutions,
   Atuacao,
   Certifications,
+  Trajectory,
+  Leadership,
+  Growth,
+  AboutMethodology,
   // Exibição de cases (recebe a lista resolvida por id, injetada no SSR).
   CasesShowcase,
   // "ClientsList" = section de EXIBIÇÃO (posiciona o grid); os dados ficam no

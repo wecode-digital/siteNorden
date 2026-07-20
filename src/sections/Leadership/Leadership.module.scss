@@ -1,4 +1,4 @@
-.solutions {
+.leadership {
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -37,49 +37,21 @@
   transition: opacity 0.5s ease-in-out 0.08s, transform 0.5s ease-in-out 0.08s;
 }
 
-.category {
+// ===== Lista de pessoas =====
+// Mobile: sempre uma coluna, com ou sem slider (o slider só existe no desktop).
+
+.row{
+  gap: 12px !important;
+}
+.row,
+.track {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
-.categoryHead {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease-in-out var(--cat-delay, 0s),
-    transform 0.5s ease-in-out var(--cat-delay, 0s);
-}
-
-.number {
-  font-size: 12px;
-  line-height: 1.1;
-  color: var(--norden-color-brand);
-}
-
-.categoryName {
-  font-size: 18px;
-  line-height: 1.1;
-  color: var(--norden-color-brand-deep);
-}
-
-// ===== Carrossel =====
-.carouselWrap {
-  position: relative;
+  gap: 24px;
   width: 100%;
 }
 
 .track {
-  display: flex;
-  gap: 12px;
-  width: 100%;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
@@ -87,44 +59,74 @@
   }
 }
 
+.carouselWrap {
+  position: relative;
+  width: 100%;
+}
+
 .card {
-  flex: 0 0 76.9%; // ~1.3 cards visíveis no mobile
-  scroll-snap-align: start;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: #F5F5F5;
+}
+
+.photoWrap {
+  width: 50%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: var(--norden-color-gray-light);
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mobileOnly {
+  display: block;
+}
+
+.desktopOnly {
+  display: none;
+}
+
+.info {
   display: flex;
   flex-direction: column;
-  gap: 16px;
   padding: 20px;
-  border-radius: 6px;
-  background-color: var(--norden-color-gray-light);
-  align-items: start;
+  gap: 12px;
 }
 
-.cardIcon {
-  height: 24px;
-  width: auto;
-  object-fit: contain;
-}
-
-.cardTitle {
+.name {
   margin: 0;
-  font-weight: 400; // Inter Regular
+  font-weight: 500;
   font-size: 16px;
   line-height: 1.1;
   color: var(--norden-color-brand-deep);
 }
 
-.cardLabel {
+.role {
   margin: 0;
   font-weight: 300; // Inter Light
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--norden-color-black);
+}
+
+.linkedin {
+  align-self: flex-start;
   font-size: 12px;
-  line-height: 1.2;
-  color: var(--norden-color-brand-deep);
+  color: var(--norden-color-brand);
+  text-decoration: underline;
 }
 
 .visible {
   .title,
-  .description,
-  .categoryHead {
+  .description {
     opacity: 1;
     transform: none;
   }
@@ -132,17 +134,16 @@
 
 @media (prefers-reduced-motion: reduce) {
   .title,
-  .description,
-  .categoryHead {
+  .description {
     transition: none;
   }
 }
 
 // ===== Desktop =====
 @media (min-width: 769px) {
-  .solutions {
+  .leadership {
     gap: 80px;
-    padding: 100px 140px;
+    padding: 16px 140px;
     max-width: 1920px;
     margin: 0 auto;
   }
@@ -159,41 +160,34 @@
     font-size: 16px;
   }
 
-  .category {
-    gap: 24px;
-  }
-
-  .categoryHead {
-    gap: 12px;
-  }
-
-  .number {
-    font-size: 16px;
-  }
-
-  .categoryName {
-    font-size: 26px;
+  .row {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
   }
 
   .track {
-    gap: 24px;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
 
   .card {
-    flex: 0 0 calc((100% - 3 * 24px) / 4); // 4 cards por vez
-    padding: 32px;
+    flex: 0 0 calc((100% - 4 * 24px) / 5); // 5 pessoas por linha/página
+    scroll-snap-align: start;
+    flex-direction: column;
   }
 
-  .cardIcon {
-    height: 32px;
+  .photoWrap{
+    width: 100%;
   }
 
-  .cardTitle {
-    font-size: 20px;
+  .mobileOnly {
+    display: none;
   }
 
-  .cardLabel {
-    font-size: 14px;
-    color: #6e6e6e; // neutral/500
+  .desktopOnly {
+    display: block;
   }
 }
