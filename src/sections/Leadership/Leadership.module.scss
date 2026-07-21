@@ -66,13 +66,13 @@
 
 .card {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   background-color: #F5F5F5;
 }
 
 .photoWrap {
-  width: 50%;
+  width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 8px;
