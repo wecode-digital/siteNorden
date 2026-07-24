@@ -68,6 +68,14 @@
   border-radius: 6px;
 }
 
+.mobileOnly {
+  display: block;
+}
+
+.desktopOnly {
+  display: none;
+}
+
 .visible {
   .head,
   .mosaic {
@@ -84,12 +92,24 @@
 }
 
 // ===== Desktop =====
+// No Figma desktop, o mosaico de fotos vem ANTES do título/descrição (no
+// mobile é o contrário) — troca só de ordem visual (flex `order`), sem mexer
+// na estrutura/DOM.
 @media (min-width: 769px) {
   .hero {
-    gap: 48px;
-    padding: 100px 140px 0 140px;
+    gap: 64px;
+    padding: 64px 140px 0 140px;
     max-width: 1920px;
     margin: 0 auto;
+  }
+
+  .head {
+    gap: 16px;
+    order: 2;
+  }
+
+  .mosaic {
+    order: 1;
   }
 
   .title {
@@ -104,13 +124,25 @@
     aspect-ratio: 1640 / 390;
   }
 
+  .bottomRow {
+    gap: 24px;
+  }
+
   .bottomLeft {
-    flex: 0 0 62%;
+    flex: 0 0 61%;
     aspect-ratio: 1000 / 300;
   }
 
   .bottomRight {
     flex: 1;
     aspect-ratio: 616 / 300;
+  }
+
+  .mobileOnly {
+    display: none;
+  }
+
+  .desktopOnly {
+    display: block;
   }
 }

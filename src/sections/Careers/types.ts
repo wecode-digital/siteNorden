@@ -8,10 +8,12 @@ export interface JobSectionItem {
   content?: string;
 }
 
-/** Conteúdo de uma vaga (section "Job" de um documento do content-type `job`). */
+/**
+ * Uma vaga — item do array `jobs` da section "JobsList" (não é mais um
+ * content-type/documento separado: não há rota por vaga, então não precisa
+ * de SEO/slug próprio).
+ */
 export interface JobContent {
-  /** Slug (settings.seo.slug) — identificador único, não é uma rota navegável. */
-  slug?: string;
   title?: string;
   description?: string;
   /** `false` = só aparece na aba "Todas" do filtro. */
@@ -21,6 +23,7 @@ export interface JobContent {
 
 export interface CareersHeroImage {
   image?: string;
+  imageDesktop?: string;
 }
 
 /** Bloco fixo do topo de /carreiras. */
@@ -30,7 +33,7 @@ export interface CareersHeroProps {
   images?: CareersHeroImage[];
 }
 
-/** Props da section que exibe a lista (dados injetados no SSR via enrichSections). */
+/** Props da section "JobsList" — `jobs` vem direto do CMS (array cadastrado nesta mesma section). */
 export interface JobsListProps {
   title?: string;
   jobs?: JobContent[];

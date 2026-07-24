@@ -104,6 +104,10 @@
   height: 1px;
   background-color: rgba(1, 0, 40, 0.12);
   margin-top: -12px; // cola logo abaixo do header, sem duplicar o gap do .card
+
+  @media screen and (min-width: 1025px) {
+    display: none
+  }
 }
 
 // Descrição + blocos extras: escondidos por padrão no mobile (só aparecem
@@ -175,8 +179,10 @@
   }
 }
 
+// Só existe no desktop (Figma mobile: o card colapsado só tem título + seta —
+// quem expande lá é o próprio header, sem botão separado).
 .applyButton {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   align-self: flex-start;
@@ -336,15 +342,17 @@
   }
 
   .grid {
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
+    // Sem isso, o grid estica todo card da linha pra altura do mais alto —
+    // fechados ficam iguais mesmo assim (mesmo conteúdo), mas um card aberto
+    // (mais alto) não força mais os vizinhos a crescerem junto.
+    align-items: start;
   }
 
   .card {
-    flex: 1 1 calc(33.333% - 16px);
-    min-width: 320px;
-    gap: 16px;
+    gap: 24px;
     padding: 32px;
     border-radius: 8px;
     background-color: var(--norden-color-gray-light);
@@ -355,8 +363,9 @@
     pointer-events: none; // no desktop quem alterna é o botão "Quero me candidatar"
   }
 
-  .chevron {
-    display: none; // só usado no acordeão mobile
+  .header .chevron {
+    display: none; // seta do cabeçalho só existe no acordeão mobile — a dos
+    // blocos extras (Benefícios/Requisitos etc.) continua em qualquer breakpoint.
   }
 
   .jobTitle {
@@ -374,8 +383,7 @@
   }
 
   .applyButton {
-    align-self: stretch;
-    width: 100%;
+    display: flex;
   }
 
   .formCard {

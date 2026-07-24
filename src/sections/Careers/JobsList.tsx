@@ -40,8 +40,8 @@ function ResumeField() {
   );
 }
 
-/** Formulário de candidatura — o slug da vaga vai junto no envio, mas não aparece como campo visível. */
-function ApplicationForm({ jobSlug }: { jobSlug?: string }) {
+/** Formulário de candidatura — o título da vaga vai junto no envio, mas não aparece como campo visível. */
+function ApplicationForm({ jobTitle }: { jobTitle?: string }) {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -52,7 +52,7 @@ function ApplicationForm({ jobSlug }: { jobSlug?: string }) {
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-    if (jobSlug) formData.set("job", jobSlug);
+    if (jobTitle) formData.set("job", jobTitle);
 
     try {
       const res = await fetch("/api/job-application", { method: "POST", body: formData });
@@ -96,8 +96,17 @@ function ApplicationForm({ jobSlug }: { jobSlug?: string }) {
   );
 }
 
-function JobCard({ job }: { job: JobContent }) {
-  const [expanded, setExpanded] = useState(false);
+interface JobCardProps {
+  job: JobContent;
+  expanded: boolean;
+  onToggle: () => void;
+}
+
+function JobCard({ job, expanded, onToggle }: JobCardProps) {
+  // Todos os blocos extras desta vaga podem ficar abertos ao mesmo tempo,
+  // cada um alternando de forma independente — cada vaga tem seu próprio
+  // estado (useState por instância de JobCard), então isso não afeta as
+  // outras vagas.
   const [openSections, setOpenSections] = useState<Set<number>>(new Set());
 
   const toggleSection = (i: number) => {
@@ -117,7 +126,7 @@ function JobCard({ job }: { job: JobContent }) {
       <button
         type="button"
         className={styles.header}
-        onClick={() => setExpanded((v) => !v)}
+        onClick={onToggle}
         aria-expanded={expanded}
       >
         <span className={`${styles.jobTitle} ${rethinkSans.className}`}>{job.title}</span>
@@ -157,22 +166,30 @@ function JobCard({ job }: { job: JobContent }) {
       )}
 
       {!expanded && (
-        <button type="button" className={styles.applyButton} onClick={() => setExpanded(true)}>
+        <button type="button" className={styles.applyButton} onClick={onToggle}>
           Quero me candidatar
         </button>
       )}
 
-      {expanded && <ApplicationForm jobSlug={job.slug} />}
+      {expanded && <ApplicationForm jobTitle={job.title} />}
     </div>
   );
 }
 
 export function JobsList({ title, jobs = [] }: JobsListProps) {
   const [filter, setFilter] = useState<Filter>("open");
+  // Só uma vaga com conteúdo aberto por vez (evita poluir a tela com vários
+  // formulários/descrições abertos ao mesmo tempo) — guardado aqui, não em
+  // cada card, senão cada vaga controlaria seu próprio "aberto" sem saber das
+  // outras. Indexado pela posição em `jobs` (não em `filtered`), pra não
+  // embaralhar ao trocar o filtro.
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   if (jobs.length === 0) return null;
 
-  const filtered = filter === "open" ? jobs.filter((j) => j.open !== false) : jobs;
+  const jobsWithIndex = jobs.map((job, originalIndex) => ({ job, originalIndex }));
+  const filtered =
+    filter === "open" ? jobsWithIndex.filter(({ job }) => job.open !== false) : jobsWithIndex;
 
   return (
     <section className={styles.jobsList}>
@@ -200,8 +217,13 @@ export function JobsList({ title, jobs = [] }: JobsListProps) {
         <p className={styles.empty}>Nenhuma vaga encontrada no momento.</p>
       ) : (
         <div className={styles.grid}>
-          {filtered.map((job, i) => (
-            <JobCard key={job.slug ?? i} job={job} />
+          {filtered.map(({ job, originalIndex }) => (
+            <JobCard
+              key={originalIndex}
+              job={job}
+              expanded={expandedIndex === originalIndex}
+              onToggle={() => setExpandedIndex((prev) => (prev === originalIndex ? null : originalIndex))}
+            />
           ))}
         </div>
       )}

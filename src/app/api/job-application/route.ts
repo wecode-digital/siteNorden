@@ -9,21 +9,20 @@ import { NextResponse, type NextRequest } from "next/server";
  * §5. Ajuste `DATA_ENTITY` (ou defina JOB_APPLICATION_ENTITY no .env) assim
  * que a entity for criada com o nome final.
  *
- * Campos: name, company, email, phone, job (slug da vaga — nunca aparece no
+ * Campos: name, company, email, phone, job (título da vaga — nunca aparece no
  * formulário, vem junto no FormData), submittedAt (gerado aqui, não confia no
  * cliente) + resume (arquivo, anexado num 2º passo — ver §5.1 da spec).
  *
- * ⚠️ O upload do currículo usa o campo de arquivo nativo do Master Data v2
- * (POST /documents/{id}/{field} com o binário do arquivo). Essa parte
- * depende de a data entity ter um campo do tipo arquivo chamado "resume" —
- * validar contra a conta real antes de confiar em produção (não foi possível
- * testar contra uma instância viva). Se esse passo falhar, a candidatura em
- * si (nome/e-mail/vaga) já foi salva — não bloqueia o candidato por causa do
- * anexo.
+ * O upload do currículo usa o endpoint de anexo do Master Data v2: POST
+ * /documents/{id}/{field}/attachments, com o arquivo dentro de um FormData
+ * (campo "file") — não como binário cru. Depende de a data entity ter um
+ * campo do tipo arquivo chamado "resume". Se esse passo falhar, a candidatura
+ * em si (nome/e-mail/vaga) já foi salva — não bloqueia o candidato por causa
+ * do anexo.
  */
 const VTEX_ACCOUNT = "wecode";
 const VTEX_ENV = "myvtex";
-const DATA_ENTITY = process.env.JOB_APPLICATION_ENTITY || "CAND";
+const DATA_ENTITY = process.env.JOB_APPLICATION_ENTITY || "PC";
 const BASE_URL = `https://${VTEX_ACCOUNT}.${VTEX_ENV}.com/api/dataentities/${DATA_ENTITY}/documents`;
 
 export const dynamic = "force-dynamic";
@@ -103,13 +102,16 @@ export async function POST(request: NextRequest) {
   let resumeWarning: string | undefined;
   if (documentId && resume instanceof File && resume.size > 0) {
     try {
-      const uploadResponse = await fetch(`${BASE_URL}/${documentId}/resume`, {
+      const attachmentForm = new FormData();
+      attachmentForm.append("file", resume, resume.name || "curriculo.pdf");
+
+      // Sem "Content-Type" manual: o fetch monta o multipart/form-data com o
+      // boundary correto sozinho quando o body é um FormData — setar na mão
+      // quebra o parse do lado do Master Data.
+      const uploadResponse = await fetch(`${BASE_URL}/${documentId}/resume/attachments`, {
         method: "POST",
-        headers: {
-          ...authHeaders(appKey, appToken),
-          "Content-Type": resume.type || "application/octet-stream",
-        },
-        body: resume,
+        headers: authHeaders(appKey, appToken),
+        body: attachmentForm,
       });
       if (!uploadResponse.ok) {
         resumeWarning = "Candidatura enviada, mas houve um problema ao anexar o currículo.";
