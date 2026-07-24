@@ -18,6 +18,7 @@ import { LOCALES } from "@/i18n/config";
 import { localizedHref } from "@/i18n/routing";
 import type { ClientsConfig } from "@/sections/Clients/types";
 import type { CaseContent, CaseSummary } from "@/sections/Cases/types";
+import type { JobContent } from "@/sections/Careers/types";
 import type { PrivacyPolicyContent } from "@/sections/PrivacyPolicy/types";
 
 // --- Configuração (env-driven) ---
@@ -346,10 +347,33 @@ export async function resolveCasesBySlug(slugs: string[]): Promise<CaseSummary[]
     .filter((c): c is CaseSummary => Boolean(c));
 }
 
+// --- Jobs / Carreiras (content-type `job`) ---
+// Cada vaga é UM documento do content-type `job`, com uma section "Job" que
+// concentra o conteúdo (título, descrição, status, blocos extras) — mesmo
+// desenho do `case`. Sem LocalizedText aqui (decisão do usuário para toda a
+// página de Carreiras — ver specs/careers-page.md).
+
+/** Dados da section "Job" de um documento. */
+function jobSectionData(doc: CmsDocument | undefined): Record<string, unknown> {
+  return (doc?.sections?.find((s) => s.name === "Job")?.data ?? {}) as Record<string, unknown>;
+}
+
+/** Extrai o conteúdo completo de um documento de vaga. */
+function jobContentFromDoc(doc: CmsDocument): JobContent {
+  return { ...(jobSectionData(doc) as JobContent), slug: docSlug(doc) };
+}
+
+/** Todas as vagas publicadas (ordem do CMS) — a section "JobsList" recebe este array no SSR. */
+export async function getAllJobs(): Promise<JobContent[]> {
+  const docs = await getAllContent("job");
+  return docs.map(jobContentFromDoc).filter((j) => Boolean(j.slug));
+}
+
 /**
  * Enriquece as sections de uma página com dados buscados no servidor:
  * - `ClientsList` recebe a config do content-type Clientes.
  * - `CasesShowcase` recebe os cases resolvidos (todos, ou pela lista de slugs).
+ * - `JobsList` recebe todas as vagas do content-type `job`.
  * Usada pela Home e pela rota de landing pages.
  */
 export async function enrichSections(sections: CmsSection[]): Promise<CmsSection[]> {
@@ -365,6 +389,9 @@ export async function enrichSections(sections: CmsSection[]): Promise<CmsSection
           .filter((s): s is string => Boolean(s));
         const cases = allCases ? await getAllCases() : await resolveCasesBySlug(slugs);
         return { ...section, data: { ...section.data, cases } };
+      }
+      if (section.name === "JobsList") {
+        return { ...section, data: { ...section.data, jobs: await getAllJobs() } };
       }
       return section;
     })

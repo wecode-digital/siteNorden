@@ -1864,5 +1864,101 @@
                 }
             }
         }
+    },
+    {
+        "name": "Job",
+        "schema": {
+            "title": "[Norden] Vaga — conteúdo",
+            "description": "Conteúdo de uma vaga (content-type 'job'): título, descrição geral, status e blocos extras. Página de Carreiras é única — não há rota por vaga, então não localizado (só PT, sem widget de idioma).",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título da vaga",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Descrição (informações gerais)",
+                    "description": "Aparece sempre no desktop; no mobile só depois de expandir a vaga.",
+                    "type": "string",
+                    "widget": { "ui:widget": "draftjs-rich-text" }
+                },
+                "open": {
+                    "title": "Vaga em aberto?",
+                    "description": "Desmarcado = a vaga só aparece na aba 'Todas' do filtro, não em 'Em aberto'.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "sections": {
+                    "title": "Blocos extras (ex.: Responsabilidades, Requisitos, Benefícios)",
+                    "description": "Cada bloco vira um botão que abre/fecha só aquele conteúdo, de forma independente dos outros.",
+                    "type": "array",
+                    "items": {
+                        "title": "Bloco",
+                        "type": "object",
+                        "properties": {
+                            "buttonLabel": {
+                                "title": "Texto do botão",
+                                "type": "string"
+                            },
+                            "content": {
+                                "title": "Conteúdo (revelado ao clicar)",
+                                "type": "string",
+                                "widget": { "ui:widget": "draftjs-rich-text" }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "CareersHero",
+        "schema": {
+            "title": "[Norden] Carreiras — topo da página",
+            "description": "Bloco fixo do topo de /carreiras: título, descrição e mosaico de fotos. Só PT (sem widget de idioma).",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título",
+                    "type": "string",
+                    "default": "It's all about people"
+                },
+                "description": {
+                    "title": "Descrição",
+                    "type": "string"
+                },
+                "images": {
+                    "title": "Fotos (mosaico)",
+                    "description": "1ª imagem = foto grande de cima; 2ª e 3ª = par de baixo, lado a lado.",
+                    "type": "array",
+                    "items": {
+                        "title": "Foto",
+                        "type": "object",
+                        "properties": {
+                            "image": {
+                                "title": "Imagem",
+                                "type": "string",
+                                "widget": { "ui:widget": "media-gallery" }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "JobsList",
+        "schema": {
+            "title": "[Norden] Carreiras — lista de vagas",
+            "description": "Título + filtro (Em aberto/Todas) + a lista de vagas nesta página. As vagas em si ficam cadastradas no content-type 'job', separado — esta section só marca onde a lista aparece; os dados são injetados automaticamente no SSR (mesmo padrão de 'ClientsList'/'CasesShowcase').",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "title": "Título",
+                    "type": "string",
+                    "default": "Confira as vagas e faça parte do nosso time!"
+                }
+            }
+        }
     }
 ]

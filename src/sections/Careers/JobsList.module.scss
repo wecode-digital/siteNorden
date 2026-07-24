@@ -1,0 +1,384 @@
+.jobsList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 64px 20px;
+  background-color: var(--norden-color-white);
+}
+
+.listHead {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+  font-weight: 400; // Rethink Sans Regular
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--norden-color-brand-deep);
+}
+
+.filterRow {
+  display: flex;
+  gap: 12px;
+}
+
+.filterTab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border: 1px solid var(--norden-color-brand);
+  border-radius: 4px;
+  background: none;
+  color: var(--norden-color-brand);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.filterActive {
+  border-color: var(--norden-color-brand);
+  background-color: var(--norden-color-brand);
+  color: var(--norden-color-white);
+}
+
+.empty {
+  margin: 0;
+  font-size: 14px;
+  color: var(--norden-color-black);
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+// ===== Card de vaga =====
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.jobTitle {
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.1;
+  color: var(--norden-color-brand-deep);
+}
+
+.chevron {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--norden-color-brand-deep);
+  transition: transform 0.2s ease-in-out;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.divider {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(1, 0, 40, 0.12);
+  margin-top: -12px; // cola logo abaixo do header, sem duplicar o gap do .card
+}
+
+// Descrição + blocos extras: escondidos por padrão no mobile (só aparecem
+// com a vaga expandida); no desktop ficam sempre visíveis (ver media query).
+.description,
+.extraSections {
+  display: none;
+}
+
+.description {
+  font-weight: 300; // Inter Light
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--norden-color-black);
+  white-space: pre-wrap;
+
+  p {
+    margin: 0 0 16px;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.extraSections {
+  flex-direction: column;
+  gap: 12px;
+}
+
+.extraSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(1, 0, 40, 0.12);
+}
+
+.extraButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--norden-color-brand-deep);
+
+  .chevron {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.extraContent {
+  font-weight: 300; // Inter Light
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--norden-color-black);
+
+  p {
+    margin: 0 0 12px;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.applyButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  height: 42px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--norden-color-brand);
+  color: var(--norden-color-white);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: var(--norden-color-brand-deep);
+  }
+}
+
+// Vaga expandida (mobile): revela descrição + blocos extras; a seta já vira
+// via .chevronOpen. O botão "Quero me candidatar" não existe nesse estado.
+.expanded {
+  .description {
+    display: block;
+  }
+  .extraSections {
+    display: flex;
+  }
+  .divider {
+    display: none;
+  }
+}
+
+// ===== Formulário de candidatura =====
+.formCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 24px;
+  padding: 32px;
+  border-radius: 8px;
+  background-color: var(--norden-color-gray-light);
+}
+
+.formIntro {
+  margin: 0;
+  width: 100%;
+  font-weight: 300; // Inter Light
+  font-size: 14px;
+  color: var(--norden-color-black);
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 20px;
+  border: 1px solid #ececec;
+  border-radius: 4px;
+  background-color: var(--norden-color-white);
+  font-size: 12px;
+  color: var(--norden-color-black);
+
+  &::placeholder {
+    color: #6e6e6e;
+  }
+}
+
+.fileField {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 14px 20px;
+  border: 1px solid #ececec;
+  border-radius: 4px;
+  background-color: var(--norden-color-white);
+  cursor: pointer;
+}
+
+.fileLabel {
+  font-size: 12px;
+  color: #6e6e6e;
+}
+
+.fileLink {
+  color: #6e6e6e;
+  text-decoration: underline;
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 42px;
+  padding: 12px 40px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--norden-color-brand-deep);
+  color: var(--norden-color-white);
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.successMessage {
+  margin: 0;
+  width: 100%;
+  font-size: 14px;
+  color: var(--norden-color-brand-deep);
+}
+
+.errorMessage {
+  margin: 0;
+  font-size: 13px;
+  color: #c0392b;
+}
+
+// ===== Desktop =====
+@media (min-width: 769px) {
+  .jobsList {
+    gap: 40px;
+    padding: 100px 140px;
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  .listHead {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .card {
+    flex: 1 1 calc(33.333% - 16px);
+    min-width: 320px;
+    gap: 16px;
+    padding: 32px;
+    border-radius: 8px;
+    background-color: var(--norden-color-gray-light);
+  }
+
+  .header {
+    cursor: default;
+    pointer-events: none; // no desktop quem alterna é o botão "Quero me candidatar"
+  }
+
+  .chevron {
+    display: none; // só usado no acordeão mobile
+  }
+
+  .jobTitle {
+    font-size: 26px;
+  }
+
+  // Desktop: descrição e blocos extras sempre visíveis, independente de expanded.
+  .description {
+    display: block;
+    font-size: 16px;
+  }
+
+  .extraSections {
+    display: flex;
+  }
+
+  .applyButton {
+    align-self: stretch;
+    width: 100%;
+  }
+
+  .formCard {
+    background-color: var(--norden-color-white);
+  }
+}
