@@ -19,10 +19,6 @@
   font-size: 24px;
   line-height: 1.1;
   color: var(--norden-color-brand-deep);
-
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .description {
@@ -31,10 +27,6 @@
   font-size: 14px;
   line-height: 1.2;
   color: var(--norden-color-black);
-
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease-in-out 0.08s, transform 0.5s ease-in-out 0.08s;
 }
 
 // ===== Lista de pessoas =====
@@ -124,21 +116,6 @@
   text-decoration: underline;
 }
 
-.visible {
-  .title,
-  .description {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .title,
-  .description {
-    transition: none;
-  }
-}
-
 // ===== Desktop =====
 @media (min-width: 769px) {
   .leadership {
@@ -163,7 +140,6 @@
   .row {
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
   }
 
   .track {

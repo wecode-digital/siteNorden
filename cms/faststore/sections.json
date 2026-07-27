@@ -347,6 +347,27 @@
                                 }
                             }
                         },
+                        "messagePlaceholder": {
+                            "title": "Placeholder — Mensagem",
+                            "type": "object",
+                            "properties": {
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Mensagem"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Message"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Mensaje"
+                                }
+                            }
+                        },
                         "submitLabel": {
                             "title": "Texto do botão",
                             "type": "object",
@@ -587,6 +608,208 @@
                             "url": {
                                 "title": "Link",
                                 "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "ContactForm",
+        "schema": {
+            "title": "[Norden] Marquee + Formulário de contato",
+            "description": "Mesmo bloco do topo do Footer (frase em loop + formulário), para usar em outras páginas. ATENÇÃO: o Footer já exibe esse bloco em toda página (é global) — não adicione esta section em páginas que já mostram o Footer padrão, para não duplicar o formulário/marquee (e o id \"contato\" usado pelo botão de contato do Header).",
+            "type": "object",
+            "properties": {
+                "marqueePhrase": {
+                    "title": "Frase do marquee (loop)",
+                    "type": "object",
+                    "properties": {
+                        "pt": {
+                            "title": "Português",
+                            "type": "string",
+                            "default": "Pronto para evoluir?"
+                        },
+                        "en": {
+                            "title": "English",
+                            "type": "string",
+                            "default": "Ready to evolve?"
+                        },
+                        "es": {
+                            "title": "Español",
+                            "type": "string",
+                            "default": "¿Listo para evolucionar?"
+                        }
+                    }
+                },
+                "form": {
+                    "title": "Formulário",
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "title": "Título do formulário",
+                            "type": "object",
+                            "properties": {
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Contato"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Contact"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Contacto"
+                                }
+                            }
+                        },
+                        "heading": {
+                            "title": "Chamada",
+                            "type": "object",
+                            "properties": {
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "namePlaceholder": {
+                            "title": "Placeholder — Nome",
+                            "type": "object",
+                            "properties": {
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Nome"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Name"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Nombre"
+                                }
+                            }
+                        },
+                        "companyPlaceholder": {
+                            "title": "Placeholder — Empresa",
+                            "type": "object",
+                            "properties": {
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Empresa"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Company"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Empresa"
+                                }
+                            }
+                        },
+                        "emailPlaceholder": {
+                            "title": "Placeholder — E-mail",
+                            "type": "object",
+                            "properties": {
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "E-mail"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "E-mail"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Correo electrónico"
+                                }
+                            }
+                        },
+                        "phonePlaceholder": {
+                            "title": "Placeholder — Telefone",
+                            "type": "object",
+                            "properties": {
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Telefone"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Phone"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Teléfono"
+                                }
+                            }
+                        },
+                        "messagePlaceholder": {
+                            "title": "Placeholder — Mensagem",
+                            "type": "object",
+                            "properties": {
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Mensagem"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Message"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Mensaje"
+                                }
+                            }
+                        },
+                        "submitLabel": {
+                            "title": "Texto do botão",
+                            "type": "object",
+                            "properties": {
+                                "pt": {
+                                    "title": "Português",
+                                    "type": "string",
+                                    "default": "Enviar"
+                                },
+                                "en": {
+                                    "title": "English",
+                                    "type": "string",
+                                    "default": "Send"
+                                },
+                                "es": {
+                                    "title": "Español",
+                                    "type": "string",
+                                    "default": "Enviar"
+                                }
                             }
                         }
                     }

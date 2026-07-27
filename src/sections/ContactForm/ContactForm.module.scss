@@ -1,0 +1,20 @@
+// Réplica do wrapper ".top" do Footer (Footer.module.scss) — mesmo bloco
+// (marquee + formulário), fora do contexto do rodapé.
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  padding: 32px 0 48px;
+  overflow: hidden;
+  color: var(--norden-color-white);
+  background-color: var(--norden-color-brand); // #000050
+}
+
+@media (min-width: 769px) {
+  .contactForm {
+    gap: 80px;
+    padding: 80px 0;
+    background-color: var(--norden-color-brand-deep); // #010028
+  }
+}

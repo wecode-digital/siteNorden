@@ -6,6 +6,7 @@ import JobsList from "./Careers/JobsList";
 import CasesShowcase from "./Cases/CasesShowcase";
 import Certifications from "./Certifications/Certifications";
 import Clients from "./Clients/Clients";
+import ContactForm from "./ContactForm/ContactForm";
 import Ecosystem from "./Ecosystem/Ecosystem";
 import Growth from "./Growth/Growth";
 import Leadership from "./Leadership/Leadership";
@@ -35,6 +36,7 @@ export const sectionRegistry: Record<string, ComponentType<any>> = {
   AboutMethodology,
   CareersHero,
   JobsList,
+  ContactForm,
   // Exibição de cases (recebe a lista resolvida por id, injetada no SSR).
   CasesShowcase,
   // "ClientsList" = section de EXIBIÇÃO (posiciona o grid); os dados ficam no

@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 /**
  * Envio do formulário do footer para o Master Data da VTEX (conta wecode).
  * As credenciais (APP_KEY/APP_TOKEN) ficam SOMENTE no servidor — nunca no browser.
- * dataEntity: FN · campos: email, name, company, phone.
+ * dataEntity: FN · campos: email, name, company, phone, message.
  */
 const VTEX_ACCOUNT = "wecode";
 const VTEX_ENV = "myvtex";
@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
     company: body.company,
     email: body.email,
     phone: body.phone,
+    message: body.message,
   };
 
   try {

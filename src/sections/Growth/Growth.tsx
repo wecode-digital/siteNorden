@@ -1,7 +1,6 @@
 "use client";
 
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
-import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Growth.module.scss";
 import type { GrowthDataItem, GrowthDifferentiator, GrowthProps } from "./types";
@@ -59,12 +58,10 @@ function DifferentiatorItem({ item }: { item: GrowthDifferentiator }) {
 }
 
 export function Growth({ title, description, dataItems = [], differentiators = [] }: GrowthProps) {
-  const { ref: sectionRef, visible } = useRevealOnScroll<HTMLElement>();
-
   if (!title && dataItems.length === 0 && differentiators.length === 0) return null;
 
   return (
-    <section ref={sectionRef} className={`${styles.growth} ${visible ? styles.visible : ""}`}>
+    <section className={styles.growth}>
       <div className={styles.head}>
         {title && (
           <AnimatedText as="h2" className={`${styles.title} ${rethinkSans.className}`} value={title} />

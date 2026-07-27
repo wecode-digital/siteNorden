@@ -55,6 +55,7 @@ export interface FooterFormData {
   companyPlaceholder?: LocalizedText;
   emailPlaceholder?: LocalizedText;
   phonePlaceholder?: LocalizedText;
+  messagePlaceholder?: LocalizedText;
   submitLabel?: LocalizedText;
 }
 

@@ -3,7 +3,6 @@
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import CarouselControls from "@/components/Carousel/CarouselControls";
 import { useCarousel } from "@/components/Carousel/useCarousel";
-import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Trajectory.module.scss";
 import type { TrajectoryItem, TrajectoryProps } from "./types";
@@ -82,12 +81,10 @@ function TrajectoryTimeline({ items }: { items: TrajectoryItem[] }) {
 }
 
 export function Trajectory({ title, description, items = [] }: TrajectoryProps) {
-  const { ref: sectionRef, visible } = useRevealOnScroll<HTMLElement>();
-
   if (!title && items.length === 0) return null;
 
   return (
-    <section ref={sectionRef} className={`${styles.trajectory} ${visible ? styles.visible : ""}`}>
+    <section className={styles.trajectory}>
       <div className={styles.head}>
         {title && (
           <AnimatedText as="h2" className={`${styles.title} ${rethinkSans.className}`} value={title} />

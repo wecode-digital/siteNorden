@@ -3,7 +3,6 @@
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import CarouselControls from "@/components/Carousel/CarouselControls";
 import { useCarousel } from "@/components/Carousel/useCarousel";
-import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Leadership.module.scss";
 import type { LeadershipPerson, LeadershipProps } from "./types";
@@ -94,12 +93,10 @@ function LeadershipGrid({ people }: { people: LeadershipPerson[] }) {
 }
 
 export function Leadership({ title, description, people = [] }: LeadershipProps) {
-  const { ref: sectionRef, visible } = useRevealOnScroll<HTMLElement>();
-
   if (!title && people.length === 0) return null;
 
   return (
-    <section ref={sectionRef} className={`${styles.leadership} ${visible ? styles.visible : ""}`}>
+    <section className={styles.leadership}>
       <div className={styles.head}>
         {title && (
           <AnimatedText as="h2" className={`${styles.title} ${rethinkSans.className}`} value={title} />

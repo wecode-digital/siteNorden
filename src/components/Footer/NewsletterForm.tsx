@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { rethinkSans } from "@/lib/fonts";
@@ -19,8 +19,11 @@ const DEFAULTS = {
   company: { pt: "Empresa", en: "Company", es: "Empresa" },
   email: { pt: "E-mail", en: "E-mail", es: "Correo electrónico" },
   phone: { pt: "Telefone", en: "Phone", es: "Teléfono" },
+  message: { pt: "Mensagem", en: "Message", es: "Mensaje" },
   submit: { pt: "Enviar", en: "Send", es: "Enviar" },
 };
+
+const MESSAGE_MAX_LENGTH = 750;
 
 const MESSAGES = {
   required: { pt: "*Preenchimento obrigatório", en: "*Required field", es: "*Campo obligatorio" },
@@ -33,6 +36,11 @@ const MESSAGES = {
     pt: "*Telefone preenchido incorretamente",
     en: "*Invalid phone",
     es: "*Teléfono inválido",
+  },
+  messageMax: {
+    pt: `*Máximo de ${MESSAGE_MAX_LENGTH} caracteres`,
+    en: `*Maximum ${MESSAGE_MAX_LENGTH} characters`,
+    es: `*Máximo ${MESSAGE_MAX_LENGTH} caracteres`,
   },
   success: { pt: "Formulário enviado", en: "Form submitted", es: "Formulario enviado" },
   submitError: {
@@ -77,12 +85,16 @@ const isValidPhone = (v: string) => {
   return len >= 10 && len <= 14;
 };
 
-type FieldName = "name" | "company" | "email" | "phone";
+type FieldName = "name" | "company" | "email" | "phone" | "message";
 type Status = "idle" | "loading" | "success" | "error";
-const EMPTY = { name: "", company: "", email: "", phone: "" };
+const EMPTY = { name: "", company: "", email: "", phone: "", message: "" };
 
 /** Valida um campo e retorna a mensagem (LocalizedText) ou null se válido. */
 function validateField(field: FieldName, value: string): LocalizedText | null {
+  // "message" é opcional — só valida o limite de caracteres.
+  if (field === "message") {
+    return value.length > MESSAGE_MAX_LENGTH ? MESSAGES.messageMax : null;
+  }
   if (!value.trim()) return MESSAGES.required;
   if (field === "email" && !isValidEmail(value)) return MESSAGES.email;
   if (field === "phone" && !isValidPhone(value)) return MESSAGES.phone;
@@ -101,6 +113,7 @@ export function NewsletterForm({ form }: { form?: FooterFormData }) {
     company: attempted ? validateField("company", values.company) : null,
     email: attempted ? validateField("email", values.email) : null,
     phone: attempted ? validateField("phone", values.phone) : null,
+    message: attempted ? validateField("message", values.message) : null,
   };
 
   const update = (field: FieldName, value: string) => {
@@ -112,7 +125,7 @@ export function NewsletterForm({ form }: { form?: FooterFormData }) {
     event.preventDefault();
     setAttempted(true);
 
-    const fields: FieldName[] = ["name", "company", "email", "phone"];
+    const fields: FieldName[] = ["name", "company", "email", "phone", "message"];
     const hasError = fields.some((f) => validateField(f, values[f]) !== null);
     if (hasError) return; // barra o envio
 
@@ -136,24 +149,34 @@ export function NewsletterForm({ form }: { form?: FooterFormData }) {
     field: FieldName,
     type: string,
     placeholder: LocalizedText,
-    extra?: { inputMode?: "numeric"; mask?: boolean }
-  ) => (
-    <div className={styles.field}>
-      <input
-        className={styles.input}
-        type={type}
-        name={field}
-        inputMode={extra?.inputMode}
-        placeholder={t(form?.[`${field}Placeholder` as keyof FooterFormData] as LocalizedText) || t(placeholder)}
-        value={values[field]}
-        aria-invalid={Boolean(errors[field])}
-        onChange={(e) =>
-          update(field, extra?.mask ? maskPhone(e.target.value) : e.target.value)
-        }
-      />
-      {errors[field] && <span className={styles.error}>{t(errors[field])}</span>}
-    </div>
-  );
+    extra?: { inputMode?: "numeric"; mask?: boolean; textarea?: boolean; maxLength?: number }
+  ) => {
+    const sharedProps = {
+      name: field,
+      placeholder:
+        t(form?.[`${field}Placeholder` as keyof FooterFormData] as LocalizedText) || t(placeholder),
+      value: values[field],
+      "aria-invalid": Boolean(errors[field]),
+      onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+        update(field, extra?.mask ? maskPhone(e.currentTarget.value) : e.currentTarget.value),
+    };
+
+    return (
+      <div className={styles.field}>
+        {extra?.textarea ? (
+          <textarea
+            className={`${styles.input} ${styles.textarea}`}
+            maxLength={extra.maxLength}
+            rows={4}
+            {...sharedProps}
+          />
+        ) : (
+          <input className={styles.input} type={type} inputMode={extra?.inputMode} {...sharedProps} />
+        )}
+        {errors[field] && <span className={styles.error}>{t(errors[field])}</span>}
+      </div>
+    );
+  };
 
   return (
     <form id="contato" className={styles.form} onSubmit={handleSubmit} noValidate>
@@ -174,6 +197,10 @@ export function NewsletterForm({ form }: { form?: FooterFormData }) {
           {renderField("company", "text", DEFAULTS.company)}
           {renderField("email", "email", DEFAULTS.email)}
           {renderField("phone", "tel", DEFAULTS.phone, { inputMode: "numeric", mask: true })}
+          {renderField("message", "text", DEFAULTS.message, {
+            textarea: true,
+            maxLength: MESSAGE_MAX_LENGTH,
+          })}
         </div>
 
         <button

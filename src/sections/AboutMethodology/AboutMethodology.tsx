@@ -1,18 +1,15 @@
 "use client";
 
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
-import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./AboutMethodology.module.scss";
 import type { AboutMethodologyProps } from "./types";
 
 export function AboutMethodology({ title, cards = [] }: AboutMethodologyProps) {
-  const { ref: sectionRef, visible } = useRevealOnScroll<HTMLElement>();
-
   if (!title && cards.length === 0) return null;
 
   return (
-    <section ref={sectionRef} className={`${styles.methodology} ${visible ? styles.visible : ""}`}>
+    <section className={styles.methodology}>
       {title && (
         <AnimatedText as="h2" className={`${styles.title} ${rethinkSans.className}`} value={title} />
       )}
