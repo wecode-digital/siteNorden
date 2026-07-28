@@ -46,6 +46,25 @@
     margin: 0 0 12px;
     padding-left: 20px;
   }
+
+  // h6 = convenção para quotes (estilo tipo LinkedIn): itálico + borda esquerda.
+  h6 {
+    margin: 0 0 18px;
+    padding-left: 16px;
+    border-left: 3px solid var(--norden-color-brand);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.5;
+
+    @media screen and (min-width: 1025px) {
+      font-size: 1.125rem;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 @mixin rich-text-desktop {
