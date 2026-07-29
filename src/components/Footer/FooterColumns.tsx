@@ -4,6 +4,7 @@ import Link from "next/link";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { localizedHref } from "@/i18n/routing";
+import { hasLocale } from "@/i18n/text";
 import { draftToHtml } from "@/lib/draftToHtml";
 import styles from "./Footer.module.scss";
 import type { FooterColumn } from "./types";
@@ -26,7 +27,7 @@ export function FooterColumns({ columns }: { columns?: FooterColumn[] }) {
         return(
         <section key={index} className={styles.column}>
           {column.title && (
-            <AnimatedText as="h3" className={styles.columnTitle} value={column.title} />
+            <AnimatedText as="h3" className={styles.columnTitle} value={column.title} strict />
           )}
 
           {column.type === "social" && (
@@ -52,17 +53,20 @@ export function FooterColumns({ columns }: { columns?: FooterColumn[] }) {
 
           {column.type === "links" && (
             <ul className={styles.linkList}>
-              {column.links?.map((item, i) => (
-                <li key={i}>
-                  <Link href={localizedHref(item.url || "#", locale)} className={styles.link}>
-                    <AnimatedText value={item.label} />
-                  </Link>
-                </li>
-              ))}
+              {column.links?.map((item, i) => {
+                if (!hasLocale(item.label, locale)) return null;
+                return (
+                  <li key={i}>
+                    <Link href={localizedHref(item.url || "#", locale)} className={styles.link}>
+                      <AnimatedText value={item.label} strict />
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           )}
 
-          {column.type === "richtext" && (
+          {column.type === "richtext" && hasLocale(column.body, locale) && (
             // O widget draftjs-rich-text salva ContentState "raw" do draft-js;
             // convertemos para HTML (texto escapado, tags/links sanitizados).
             <div

@@ -2,7 +2,7 @@
 
 import { useLocale } from "@/i18n/LocaleProvider";
 import { rethinkSans } from "@/lib/fonts";
-import type { LocalizedText } from "@/i18n/text";
+import { hasLocale, type LocalizedText } from "@/i18n/text";
 import styles from "./Footer.module.scss";
 
 /**
@@ -10,9 +10,9 @@ import styles from "./Footer.module.scss";
  * até -50%, garantindo repetição contínua e sem emenda. Respeita reduced-motion.
  */
 export function Marquee({ phrase }: { phrase?: LocalizedText | string }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
+  if (!hasLocale(phrase, locale)) return null;
   const text = t(phrase);
-  if (!text) return null;
 
   const sequence = Array.from({ length: 4 }, (_, i) => (
     <span key={i} className={styles.marqueeItem}>

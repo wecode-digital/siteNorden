@@ -19,3 +19,17 @@ export function t(
   if (typeof value === "string") return value;
   return value[locale] || value[DEFAULT_LOCALE] || Object.values(value).find(Boolean) || "";
 }
+
+/**
+ * Verifica se há cadastro explícito para o idioma pedido, sem aplicar o
+ * fallback de `t()`. Use quando a ausência de tradução deve ocultar o texto
+ * em vez de cair para outro idioma (ex.: footer).
+ */
+export function hasLocale(
+  value: LocalizedText | string | undefined | null,
+  locale: Locale
+): boolean {
+  if (value == null) return false;
+  if (typeof value === "string") return value.trim() !== "";
+  return Boolean(value[locale] && value[locale]!.trim() !== "");
+}

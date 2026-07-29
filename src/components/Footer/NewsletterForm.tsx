@@ -4,7 +4,7 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { rethinkSans } from "@/lib/fonts";
-import type { LocalizedText } from "@/i18n/text";
+import { hasLocale, type LocalizedText } from "@/i18n/text";
 import styles from "./Footer.module.scss";
 import type { FooterFormData } from "./types";
 
@@ -102,7 +102,7 @@ function validateField(field: FieldName, value: string): LocalizedText | null {
 }
 
 export function NewsletterForm({ form }: { form?: FooterFormData }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const [values, setValues] = useState(EMPTY);
   const [attempted, setAttempted] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
@@ -151,10 +151,12 @@ export function NewsletterForm({ form }: { form?: FooterFormData }) {
     placeholder: LocalizedText,
     extra?: { inputMode?: "numeric"; mask?: boolean; textarea?: boolean; maxLength?: number }
   ) => {
+    const cmsPlaceholder = form?.[`${field}Placeholder` as keyof FooterFormData] as
+      | LocalizedText
+      | undefined;
     const sharedProps = {
       name: field,
-      placeholder:
-        t(form?.[`${field}Placeholder` as keyof FooterFormData] as LocalizedText) || t(placeholder),
+      placeholder: hasLocale(cmsPlaceholder, locale) ? t(cmsPlaceholder) : t(placeholder),
       value: values[field],
       "aria-invalid": Boolean(errors[field]),
       onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -184,10 +186,10 @@ export function NewsletterForm({ form }: { form?: FooterFormData }) {
         <AnimatedText
           as="h3"
           className={`${styles.formTitle} ${rethinkSans.className}`}
-          value={form?.title ?? DEFAULTS.title}
+          value={hasLocale(form?.title, locale) ? form?.title : DEFAULTS.title}
         />
         <p className={styles.formHeading}>
-          <AnimatedText value={form?.heading ?? DEFAULTS.heading} />
+          <AnimatedText value={hasLocale(form?.heading, locale) ? form?.heading : DEFAULTS.heading} />
         </p>
       </div>
 
@@ -209,7 +211,9 @@ export function NewsletterForm({ form }: { form?: FooterFormData }) {
           disabled={status === "loading"}
           aria-busy={status === "loading"}
         >
-          <AnimatedText value={form?.submitLabel ?? DEFAULTS.submit} />
+          <AnimatedText
+            value={hasLocale(form?.submitLabel, locale) ? form?.submitLabel : DEFAULTS.submit}
+          />
         </button>
 
         {status === "success" && <p className={styles.success}>{t(MESSAGES.success)}</p>}

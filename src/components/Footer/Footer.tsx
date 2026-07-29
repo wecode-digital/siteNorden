@@ -5,6 +5,7 @@ import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { NordenLogo } from "@/components/Header/icons";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { localizedHref } from "@/i18n/routing";
+import { hasLocale } from "@/i18n/text";
 import { FooterColumns } from "./FooterColumns";
 import { Marquee } from "./Marquee";
 import { NewsletterForm } from "./NewsletterForm";
@@ -50,11 +51,18 @@ export function Footer({ data }: { data?: FooterData | null }) {
             </p>
             {policyLinks.length > 0 && (
               <div className={styles.policies}>
-                {policyLinks.map((policy, index) => (
-                  <Link key={index} href={localizedHref(policy.url || "#", locale)} className={styles.policyLink}>
-                    <AnimatedText value={policy.label} />
-                  </Link>
-                ))}
+                {policyLinks.map((policy, index) => {
+                  if (!hasLocale(policy.label, locale)) return null;
+                  return (
+                    <Link
+                      key={index}
+                      href={localizedHref(policy.url || "#", locale)}
+                      className={styles.policyLink}
+                    >
+                      <AnimatedText value={policy.label} strict />
+                    </Link>
+                  );
+                })}
               </div>
             )}
           </div>
