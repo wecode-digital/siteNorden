@@ -6,6 +6,7 @@ import { useLocale } from "@/i18n/LocaleProvider";
 import { draftToHtml } from "@/lib/draftToHtml";
 import styles from "./Methodology.module.scss";
 import type { MethodologyProps } from "./types";
+import { rethinkSans } from "@/lib/fonts";
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
@@ -134,7 +135,7 @@ export function Methodology({ quote, listTitle, items = [] }: MethodologyProps) 
       {(listTitle || items.length > 0) && (
         <div className={styles.listBlock}>
           {listTitle && (
-            <h2 className={`${styles.listTitle} `}>
+            <h2 className={`${styles.listTitle} ${rethinkSans.className}`}>
               {t(listTitle)}
             </h2>
           )}

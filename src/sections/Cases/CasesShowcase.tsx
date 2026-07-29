@@ -7,6 +7,7 @@ import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { localizedHref } from "@/i18n/routing";
 import styles from "./CasesShowcase.module.scss";
+import { rethinkSans } from "@/lib/fonts";
 import type { CaseSummary, CasesShowcaseProps } from "./types";
 
 const DEFAULT_MORE = { pt: "Ver mais cases", en: "See more cases", es: "Ver más casos" };
@@ -35,7 +36,7 @@ function Card({ item }: { item: CaseSummary }) {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={item.logo} alt="" className={styles.cardLogo} />
           )}
-          <h3 className={styles.cardTitle}>
+          <h3 className={`${styles.cardTitle}`}>
             <AnimatedText value={item.title} className={styles.cardTitleText} />
           </h3>
           {item.tags && item.tags.length > 0 && (
@@ -106,7 +107,7 @@ export function CasesShowcase({
       className={`${styles.cases} ${visible ? styles.visible : ""}`}
     >
       {title && (
-        <h2 className={styles.title}>
+        <h2 className={`${styles.title} ${rethinkSans.className}`}>
           <AnimatedText value={title} />
         </h2>
       )}
