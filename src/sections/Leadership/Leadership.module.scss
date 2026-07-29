@@ -60,7 +60,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: #F5F5F5;
 }
 
 .photoWrap {
@@ -68,7 +67,6 @@
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 8px;
-  background-color: var(--norden-color-gray-light);
 }
 
 .photo {
@@ -119,10 +117,11 @@
 // ===== Desktop =====
 @media (min-width: 769px) {
   .leadership {
-    gap: 80px;
+    gap: 48px;
     padding: 16px 140px;
     max-width: 1920px;
     margin: 0 auto;
+    padding-bottom: 64px;
   }
 
   .head {
@@ -140,6 +139,7 @@
   .row {
     flex-direction: row;
     flex-wrap: nowrap;
+    gap: 24px !important;
   }
 
   .track {
@@ -153,6 +153,8 @@
     flex: 0 0 calc((100% - 4 * 24px) / 5); // 5 pessoas por linha/página
     scroll-snap-align: start;
     flex-direction: column;
+    background-color: #F5F5F5;
+    border-radius: 6px;
   }
 
   .photoWrap{
