@@ -2000,6 +2000,15 @@
                         }
                     }
                 },
+                "backupText": {
+                    "title": "Texto de apoio",
+                    "type": "object",
+                    "properties": {
+                        "pt": { "title": "Português", "type": "string" },
+                        "en": { "title": "English", "type": "string" },
+                        "es": { "title": "Español", "type": "string" }
+                    }
+                },
                 "differentiators": {
                     "title": "Diferenciais",
                     "type": "array",

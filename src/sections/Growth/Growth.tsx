@@ -57,7 +57,7 @@ function DifferentiatorItem({ item }: { item: GrowthDifferentiator }) {
   );
 }
 
-export function Growth({ title, description, dataItems = [], differentiators = [] }: GrowthProps) {
+export function Growth({ title, description, dataItems = [], differentiators = [], backupText }: GrowthProps) {
   if (!title && dataItems.length === 0 && differentiators.length === 0) return null;
 
   return (
@@ -81,6 +81,12 @@ export function Growth({ title, description, dataItems = [], differentiators = [
         </div>
       )}
 
+      {backupText && (
+        <p className={styles.description}>
+          <AnimatedText value={backupText} />
+        </p>
+      )}
+
       {differentiators.length > 0 && (
         <div className={styles.differentiatorsGrid}>
           {differentiators.map((item, i) => (
@@ -88,6 +94,7 @@ export function Growth({ title, description, dataItems = [], differentiators = [
           ))}
         </div>
       )}
+
     </section>
   );
 }

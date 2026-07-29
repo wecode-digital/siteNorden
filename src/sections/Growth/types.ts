@@ -19,4 +19,5 @@ export interface GrowthProps {
   description?: LocalizedText;
   dataItems?: GrowthDataItem[];
   differentiators?: GrowthDifferentiator[];
+  backupText?:LocalizedText
 }
