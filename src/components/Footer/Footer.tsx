@@ -31,10 +31,6 @@ export function Footer({ data }: { data?: FooterData | null }) {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.top}>
-        <Marquee phrase={data?.marqueePhrase ?? DEFAULT_MARQUEE} />
-        <NewsletterForm form={data?.form} />
-      </div>
 
       <div className={styles.main}>
         <FooterColumns columns={data?.columns} />

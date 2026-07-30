@@ -1,10 +1,8 @@
 "use client";
 
-import { type CSSProperties } from "react";
 import AnimatedText from "@/components/AnimatedText/AnimatedText";
 import CarouselControls from "@/components/Carousel/CarouselControls";
 import { useCarousel } from "@/components/Carousel/useCarousel";
-import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import { rethinkSans } from "@/lib/fonts";
 import styles from "./Solutions.module.scss";
 import type { SolutionCard, SolutionsProps } from "./types";
@@ -37,15 +35,10 @@ function SolutionsCarousel({ cards }: { cards: SolutionCard[] }) {
 }
 
 export function Solutions({ title, description, categories = [] }: SolutionsProps) {
-  const { ref: sectionRef, visible } = useRevealOnScroll<HTMLElement>();
-
   if (!title && categories.length === 0) return null;
 
   return (
-    <section
-      ref={sectionRef}
-      className={`${styles.solutions} ${visible ? styles.visible : ""}`}
-    >
+    <section className={styles.solutions}>
       <div className={styles.head}>
         {title && (
           <AnimatedText as="h2" className={`${styles.title} ${rethinkSans.className}`} value={title} />
@@ -58,12 +51,11 @@ export function Solutions({ title, description, categories = [] }: SolutionsProp
       </div>
 
       {categories.map((category, i) => {
-        const catStyle = { "--cat-delay": `${0.1 + i * 0.06}s` } as CSSProperties;
         const cards = category.tags ?? [];
         if (!category.name && cards.length === 0) return null;
         return (
           <div key={i} className={styles.category}>
-            <div className={`${styles.categoryHead} ${rethinkSans.className}`} style={catStyle}>
+            <div className={`${styles.categoryHead} ${rethinkSans.className}`}>
               <span className={styles.number}>{badge(i + 1)}</span>
               <AnimatedText className={styles.categoryName} value={category.name} />
             </div>

@@ -342,15 +342,7 @@
     font-size: 28px;
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    // Sem isso, o grid estica todo card da linha pra altura do mais alto —
-    // fechados ficam iguais mesmo assim (mesmo conteúdo), mas um card aberto
-    // (mais alto) não força mais os vizinhos a crescerem junto.
-    align-items: start;
-  }
+
 
   .card {
     gap: 24px;

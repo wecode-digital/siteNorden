@@ -11,10 +11,6 @@
   flex-direction: column;
   gap: 16px;
   width: 100%;
-
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .title {
@@ -47,11 +43,6 @@
   padding: 16px 12px;
   border-radius: 6px;
   background-color: var(--norden-color-gray-light);
-
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease-in-out var(--card-delay, 0s),
-    transform 0.5s ease-in-out var(--card-delay, 0s);
 }
 
 .cardIcon {
@@ -82,21 +73,6 @@
   font-size: 12px;
   line-height: 1.1;
   color: var(--norden-color-black);
-}
-
-.visible {
-  .head,
-  .card {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .head,
-  .card {
-    transition: none;
-  }
 }
 
 // ===== Desktop =====
