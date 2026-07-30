@@ -6,6 +6,15 @@ import { DEFAULT_LOCALE, type Locale } from "./config";
  */
 export type LocalizedText = Partial<Record<Locale, string>>;
 
+// Hífen normal é ponto de quebra de linha para o navegador — troca por um
+// hífen que não quebra para a palavra não ser dividida ("e-" / "commerce")
+// quando o texto aperta no fim da linha.
+const NO_BREAK_HYPHEN = "‑";
+
+function preventWordBreaks(text: string): string {
+  return text.replace(/\be-commerce\b/gi, (match) => match.replace("-", NO_BREAK_HYPHEN));
+}
+
 /**
  * Resolve um texto localizado para o idioma dado.
  * Fallback: idioma pedido → português (padrão) → primeiro valor preenchido → "".
@@ -16,8 +25,11 @@ export function t(
   locale: Locale
 ): string {
   if (value == null) return "";
-  if (typeof value === "string") return value;
-  return value[locale] || value[DEFAULT_LOCALE] || Object.values(value).find(Boolean) || "";
+  const resolved =
+    typeof value === "string"
+      ? value
+      : value[locale] || value[DEFAULT_LOCALE] || Object.values(value).find(Boolean) || "";
+  return preventWordBreaks(resolved);
 }
 
 /**
